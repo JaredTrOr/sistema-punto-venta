@@ -1,0 +1,41 @@
+body {
+    position: relative;
+}
+
+.main-container {
+    margin: 4rem auto; 
+    padding: 2rem;
+    max-width: 50rem;
+}
+
+.login-form-container { margin-top: 7rem; }
+
+.input-text {
+    padding: 1rem;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid var(--light-gray);
+}
+
+.btn-ingresar {
+    padding: 1rem;
+    width: 15rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--main-purple);
+    color: var(--light);
+    margin-top: 4rem;
+}
+
+.btn-ingresar:hover {
+    background-color: var(--main-purple-hover);
+}
+
+.logo-image {
+    width: 17rem;
+    z-index: -1;
+
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+}
