@@ -10,13 +10,6 @@ body {
 
 .login-form-container { margin-top: 7rem; }
 
-.input-text {
-    padding: 1rem;
-    border-radius: 5px;
-    width: 100%;
-    border: 1px solid var(--light-gray);
-}
-
 .btn-ingresar {
     padding: 1rem;
     width: 15rem;

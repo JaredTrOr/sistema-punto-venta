@@ -1,1 +1,30 @@
 <app-navbar-empleados></app-navbar-empleados>
+
+<section class="main-container">
+    <div class="venta-container">
+        <p class="venta-title">Venta</p>
+    </div>
+    <div class="productos-container">
+        <input type="text" class="input-text" placeholder="Buscar por nombre, categoría">
+
+        <div class="dropdown mt-3">
+            <button class="btn-filter btn btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span>Todos</span> 
+
+                <div class="d-flex gap-2">
+                    <span class="cantidad-producto">50</span>
+                    <i class="bi bi-chevron-compact-down bold"></i>
+                </div>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+
+        <div class="mt-5">
+            <p class="venta-title">Categoría</p>
+        </div>
+    </div>
+</section>

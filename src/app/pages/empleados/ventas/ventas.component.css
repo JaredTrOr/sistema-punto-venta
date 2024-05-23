@@ -1,0 +1,33 @@
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    height: 92vh;
+}
+
+.main-container > * {
+    margin: 0.7rem;
+    padding: 1.3rem;
+
+    border-radius: 5px;
+    background-color: var(--light-white-gray);
+}
+
+.venta-title {
+    font-size: 2rem;
+}
+
+.cantidad-producto {
+    background-color: var(--light);
+    color: black;
+    padding: 2px;
+    border: none;
+    border-radius: 3px;
+}
+
+.btn-filter {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    text-align: left;
+    width: 30%;
+}

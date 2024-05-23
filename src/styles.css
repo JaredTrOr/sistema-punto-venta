@@ -1,4 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Monsterrat', sans-serif;
+}
+
+:root {
+    --light: #fff;
+    --light-gray: #ccc;
+    --light-white-gray: #f8f8f8;
+    --main-purple: #5259ff;
+    --main-purple-hover: #3f46e5;
+}
+
 @font-face {
   font-family: 'Monsterrat';
   font-style: normal;
@@ -13,13 +28,6 @@
     src: url('./assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
 
-:root {
-    --light: #fff;
-    --light-gray: #ccc;
-    --main-purple: #5259ff;
-    --main-purple-hover: #3f46e5;
-}
-
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Monsterrat-bold';
 }
@@ -29,15 +37,15 @@ a {
     color: var(--light);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Monsterrat', sans-serif;
-}
-
 .bold {
     font-weight: bolder;
+}
+
+.input-text {
+    padding: 1rem;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid var(--light-gray);
 }
 
 
