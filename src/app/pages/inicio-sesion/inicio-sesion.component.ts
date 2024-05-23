@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Usuario } from '../../models/UsuarioEjemplo';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class InicioSesionComponent {
 
-  usuario!: Usuario;
+  usuario = { usuario: '', password: ''};
   usuarios: Usuario[] = [];
 
   constructor(private router: Router) {
@@ -26,7 +27,17 @@ export class InicioSesionComponent {
   }
 
   iniciarSesion() {
-    this.router.navigate(['/ventas'])
+
+    console.log(this.usuario)
+
+    if(this.usuario.usuario === 'admin' && this.usuario.password === 'admin') {
+      this.router.navigate(['/admin-productos']);
+    } else if(this.usuario.usuario === 'empleado' && this.usuario.password === 'empleado') {
+      this.router.navigate(['/ventas']);
+    }
+    else {
+      Swal.fire('Error', 'Usuario o contraseña incorrectos', 'error');
+    }
   }
 
 }

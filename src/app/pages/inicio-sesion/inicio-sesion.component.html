@@ -5,12 +5,12 @@
     <div class="login-form-container">
         <div class="login-form-row">
             <p class="bold"><label for="username">Usuario:</label></p>
-            <input id="username" class="input-text" type="text" placeholder="Ingrese su usuario">
+            <input [(ngModel)]="usuario.usuario" id="username" class="input-text" type="text" placeholder="Ingrese su usuario">
         </div>
 
         <div class="login-form-row mt-5">
             <p class="bold"><label for="password">Contraseña:</label></p>
-            <input id="password" class="input-text" type="password" placeholder="Ingrese su contraseña">
+            <input [(ngModel)]="usuario.password" id="password" class="input-text" type="password" placeholder="Ingrese su contraseña">
         </div>
 
         <div class="d-flex justify-content-center">
