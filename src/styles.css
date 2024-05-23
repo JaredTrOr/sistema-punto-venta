@@ -7,6 +7,8 @@
 }
 
 :root {
+    --black: #000;
+    --dark: #2E2E2E;
     --light: #fff;
     --gray: #C9C9C9;
     --light-gray: #ccc;
@@ -33,6 +35,12 @@ h1,h2,h3,h4,h5,h6 {
     font-family: 'Monsterrat-bold';
 }
 
+.btns {
+    border: none;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
 a {
     text-decoration: none;
     color: var(--light);
@@ -47,6 +55,10 @@ a {
     border-radius: 5px;
     width: 100%;
     border: 1px solid var(--light-gray);
+}
+
+.circle {
+    border-radius: 100%;
 }
 
 

@@ -6,7 +6,37 @@
         <p class="venta-title">Venta</p>
 
         <div class="carrito-venta">
-            
+            <table *ngIf="carritoProductos.length" class="table">
+                <thead>
+                    <th>Producto</th>
+                    <th>Cant</th>
+                    <th>Importe</th>
+                    <th>Total</th>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let producto of carritoProductos">
+                        <td>{{ producto.producto.nombre }}</td>
+                        <td class="d-flex gap-3 align-items-center">
+                            <button class="control-buttons">-</button> {{ producto.cantidad }} <button class="control-buttons">+</button>
+                        </td>
+                        <td>${{ producto.producto.precio }}</td>
+                        <td>${{ producto.cantidad * producto.producto.precio }}</td>
+                        <td (click)="eliminarProducto(producto.producto.id)" class="quitar-carrito"><i class="bi bi-trash"></i></td>
+                    </tr>
+            </table>
+        </div>
+
+        <div class="despliegue-total">
+            <div class="cantidad-precio">
+                <p class="categoria">({{ getTotalProductos() }}) Total</p>
+                <h2>${{ getTotal() }}</h2>
+            </div>
+
+            <div class="botones-total">
+                <button class="btns btn-pagar">Pagar</button>
+                <button class="btns btn-limpiar">Limpiar</button>
+            </div>
         </div>
     </div>
 
@@ -33,7 +63,7 @@
             <p class="venta-title">Categoría</p>
 
             <div class="box-container">
-                <div *ngFor="let producto of productos" class="box">
+                <div (click)="agregarProducto(producto)" *ngFor="let producto of productos" class="box">
                     <h3>ID: {{ producto.id }}</h3>
 
                     <div class="box-body">

@@ -1,6 +1,6 @@
 .main-container {
     display: grid;
-    grid-template-columns: 30rem 1fr;
+    grid-template-columns: 40rem 1fr;
     height: 92vh;
 }
 
@@ -17,12 +17,36 @@
 }
 
 .carrito-venta {
+    margin-top: 1rem;
     width: 100%;
-    height: 62vh;
+    height: 60vh;
+    overflow: scroll;
 
-    background-color: gray;
-    border: 2px dotted var(--dark);
+    border-bottom: 2px dotted var(--black);
 }
+
+.cantidad-precio {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+table td,th {
+    padding: 1.3rem;
+}
+
+.botones-total {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.botones-total > * { height: 4.2rem; }
+.btn-pagar { background-color: var(--main-purple); color: var(--light); }
+.btn-pagar:hover { background-color: var(--main-purple-hover); }
+.btn-limpiar { background-color: var(--dark); color: var(--light); }
 
 .cantidad-producto {
     background-color: var(--light);
@@ -51,7 +75,7 @@
 .box-container {
     height: 61vh;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     gap: 1.5rem;
     
     overflow: scroll;
@@ -63,8 +87,22 @@
     border-radius: 3px;
     height: 14rem; 
     padding: 1rem;
+    cursor: pointer;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.control-buttons {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--light);
+    border: 1px solid var(--black);
+}
+
+.quitar-carrito {
+    cursor: pointer;
 }
