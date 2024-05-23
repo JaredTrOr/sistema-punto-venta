@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Producto } from '../../../models/ProductoEjemplo';
+import Swal from 'sweetalert2';
 
 interface VentaProducto {
   cantidad: number;
@@ -145,6 +146,45 @@ export class VentasComponent {
     }
 
     return total;
+  }
+
+  realizarCompra() {
+    if(!this.carritoProductos.length) {
+      Swal.fire("No hay productos, no se pued realizar la compra", "", "error");
+      return;
+    }
+    Swal.fire({
+      title: "¿Seguro que quieres realizar la venta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, realizar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.carritoProductos = [];
+        Swal.fire("Las compra se ha realizado con éxito", "", "success");
+      }
+    });
+  }
+
+  limpiarCarrito() {
+    if(!this.carritoProductos.length) {
+      Swal.fire("No hay ventas para limpiar", "", "info");
+      return;
+    }
+    Swal.fire({
+      title: "¿Seguro que quieres limpiar las ventas?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, limpiar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.carritoProductos = [];
+      }
+    });
   }
 
 }
