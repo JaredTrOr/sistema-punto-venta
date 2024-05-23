@@ -1,6 +1,6 @@
 .main-container {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 30rem 1fr;
     height: 92vh;
 }
 
@@ -16,6 +16,14 @@
     font-size: 2rem;
 }
 
+.carrito-venta {
+    width: 100%;
+    height: 62vh;
+
+    background-color: gray;
+    border: 2px dotted var(--dark);
+}
+
 .cantidad-producto {
     background-color: var(--light);
     color: black;
@@ -29,5 +37,34 @@
     justify-content: space-between;
     padding: 0.5rem;
     text-align: left;
-    width: 30%;
+    width: 20rem;
+}
+
+.categoria { font-size: 1.2rem; }
+.nombre-producto { font-size: 1.7rem; }
+
+.box-body > *{
+    margin: 0;
+    padding: 0;
+}
+
+.box-container {
+    height: 61vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+    
+    overflow: scroll;
+}
+
+.box {
+    background-color: var(--light);
+    border: 1px solid var(--gray);
+    border-radius: 3px;
+    height: 14rem; 
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

@@ -1,9 +1,15 @@
 <app-navbar-empleados></app-navbar-empleados>
 
 <section class="main-container">
+
     <div class="venta-container">
         <p class="venta-title">Venta</p>
+
+        <div class="carrito-venta">
+            
+        </div>
     </div>
+
     <div class="productos-container">
         <input type="text" class="input-text" placeholder="Buscar por nombre, categoría">
 
@@ -25,6 +31,18 @@
 
         <div class="mt-5">
             <p class="venta-title">Categoría</p>
+
+            <div class="box-container">
+                <div *ngFor="let producto of productos" class="box">
+                    <h3>ID: {{ producto.id }}</h3>
+
+                    <div class="box-body">
+                        <p class="categoria">{{ producto.categoria }}</p>
+                        <p class="nombre-producto">{{ producto.nombre }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </section>
