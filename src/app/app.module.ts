@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { InicioSesionComponent } from './pages/inicio-sesion/inicio-sesion.component';
 import { VentasComponent } from './pages/empleados/ventas/ventas.component';
 import { NavbarEmpleadosComponent } from './components/navbar-empleados/navbar-empleados.component';
+import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InicioSesionComponent,
     VentasComponent,
-    NavbarEmpleadosComponent
+    NavbarEmpleadosComponent,
+    NavbarAdminComponent
   ],
   imports: [
     BrowserModule,
