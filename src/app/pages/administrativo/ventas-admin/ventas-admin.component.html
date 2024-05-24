@@ -1,0 +1,53 @@
+<app-navbar-admin></app-navbar-admin>
+
+<section class="p-5">
+    <h2>VENTAS</h2>
+
+    <div class="d-flex gap-3 ">
+        <select class="filtro mt-4" name="" id="">
+            <option value="0">Fechas</option>
+            <option value="1">Hoy</option>
+            <option value="2">Ayer</option>
+            <option value="3">Últimos 7 días</option>
+        </select>
+
+        <button class="btns btn-exportar">Exportar</button>
+    </div>
+
+    <div class="ventas-container mt-5">
+        <div *ngFor="let venta of ventas" class="venta-card">
+            <div class="card-controllers">
+                <i class="bi bi-pencil-square"></i>
+                <!-- <i class="bi bi-trash"></i> -->
+            </div>
+            <h4>ID de venta: {{ venta.idVenta }}</h4>
+            
+            <div class="informacion">
+                <p>Sucursal: {{ venta.sucursal }}</p>
+                <p>Fecha: {{ venta.fecha }}</p>
+                <p>Hora: {{ venta.hora }}</p>
+            </div>
+
+            <p class="mt-5 bold">Productos vendidos:</p>
+
+            <div class="productos-vendidos-container">
+                <div *ngFor="let producto of venta.productos">
+                    <p class="bold">{{ producto.nombre }}</p>
+    
+                    <div class="producto-info">
+                        <p>Cantidad: {{ producto.cantidad }}</p>
+                        <p>Importe: ${{ producto.importe }}</p>
+                        <p>Total: {{ producto.total }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="producto-info-footer mt-3">
+                <p>Cantidad general: 23</p>
+                <p>Cantidad general: $27.00</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>

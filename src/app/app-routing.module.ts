@@ -4,7 +4,7 @@ import { InicioSesionComponent } from './pages/inicio-sesion/inicio-sesion.compo
 import { VentasComponent } from './pages/empleados/ventas/ventas.component';
 
 import { ProductosComponent as AdminProductosComponent } from './pages/administrativo/productos/productos.component';
-import { VentasComponent as AdminVentasComponent } from './pages/administrativo/ventas/ventas.component';
+import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas-admin.component';
 import { EditarVentasComponent as AdminEditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
 
 const routes: Routes = [
@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'admin-ventas',
     title: 'Administrar ventas',
-    component: AdminVentasComponent
+    component: VentasAdminComponent
   },
   {
     path: 'admin-editar-ventas',

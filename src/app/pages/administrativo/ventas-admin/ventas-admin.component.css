@@ -1,0 +1,56 @@
+.btn-exportar {
+    padding: 1rem;
+    background-color: var(--light);
+    border: 1px solid var(--black);
+}
+
+.ventas-container {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+
+    height: 65vh;
+    overflow: scroll;
+}
+
+.venta-card {
+    padding: 1.5rem;
+    border-radius: 7px;
+    background-color: var(--card-gray);
+    position: relative;
+}
+
+.card-controllers {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    display: flex;
+    gap: 1rem;
+}
+
+.card-controllers > * {
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.productos-vendidos-container {
+    height: 8.3rem;
+    overflow: scroll;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+}
+
+.productos-vendidos-container > *{
+    padding: 10px;
+    background-color: var(--main-purple);
+    border-radius: 5px;
+    color: var(--light);
+}
+
+.productos-vendidos-container .producto-info p{
+    margin: 0;
+    padding: 0;
+}

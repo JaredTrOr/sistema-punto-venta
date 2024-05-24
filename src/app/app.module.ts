@@ -11,6 +11,7 @@ import { NavbarEmpleadosComponent } from './components/navbar-empleados/navbar-e
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { ProductosComponent } from './pages/administrativo/productos/productos.component';
 import { EditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
+import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas-admin.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EditarVentasComponent } from './pages/administrativo/editar-ventas/edit
     NavbarEmpleadosComponent,
     NavbarAdminComponent,
     ProductosComponent,
-    EditarVentasComponent
+    EditarVentasComponent,
+    VentasAdminComponent
   ],
   imports: [
     BrowserModule,

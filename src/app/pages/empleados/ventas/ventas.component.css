@@ -106,12 +106,3 @@ table td,th {
 .quitar-carrito {
     cursor: pointer;
 }
-
-.filtro {
-    border: none;
-    border-radius: 5px;
-    color: var(--light);
-    background-color: var(--dark);
-    padding: 10px;
-    width: 30rem;
-}
