@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioSesionComponent } from './pages/inicio-sesion/inicio-sesion.component';
 import { VentasComponent } from './pages/empleados/ventas/ventas.component';
-import { AdminProductosComponent } from './pages/administrativo/admin-productos/admin-productos.component';
-import { AdminVentasComponent } from './pages/administrativo/admin-ventas/admin-ventas.component';
-import { AdminEditarVentasComponent } from './pages/administrativo/admin-editar-ventas/admin-editar-ventas.component';
+
+import { ProductosComponent as AdminProductosComponent } from './pages/administrativo/productos/productos.component';
+import { VentasComponent as AdminVentasComponent } from './pages/administrativo/ventas/ventas.component';
+import { EditarVentasComponent as AdminEditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
 
 const routes: Routes = [
   {

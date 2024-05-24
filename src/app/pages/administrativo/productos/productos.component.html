@@ -1,0 +1,65 @@
+<app-navbar-admin></app-navbar-admin>
+
+<div class="row p-5">
+    <div class="col-lg-4">
+        <h2>PRODUCTOS</h2>
+
+        <div class="form-container mt-5">
+            <div class="form-row">
+                <p class="bold"><label for="">Nombre del producto: </label></p>
+                <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+            </div>
+
+            <div class="form-row mt-5">
+                <p class="bold"><label for="">Categoría: </label></p>
+                <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+            </div>
+
+            <div class="form-row mt-5">
+                <p class="bold"><label for="">Descripción: </label></p>
+                <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+            </div>
+
+            <div class="form-row mt-5">
+                <p class="bold"><label for="">Precio: </label></p>
+                <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+            </div>
+
+            <div class="form-row mt-5">
+                <button class="btns btn-agregar-producto">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <input class="input-text" type="text" placeholder="Buscar por nombre, categoría, id">
+
+        <div class="table-container">
+            <table class="table mt-5">
+                <thead>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Operaciones</th>
+                </thead>
+    
+                <tbody>
+                    <tr *ngFor="let producto of productos">
+                        <td>{{ producto.id }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>descripción</td>
+                        <td>{{ producto.precio }}</td>
+                        <td class="d-flex gap-4">
+                            <button class="btn btn-warning">Editar</button>
+                            <button class="btn btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+        
+    </div>
+</div>

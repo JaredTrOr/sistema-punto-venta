@@ -9,6 +9,8 @@ import { InicioSesionComponent } from './pages/inicio-sesion/inicio-sesion.compo
 import { VentasComponent } from './pages/empleados/ventas/ventas.component';
 import { NavbarEmpleadosComponent } from './components/navbar-empleados/navbar-empleados.component';
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
+import { ProductosComponent } from './pages/administrativo/productos/productos.component';
+import { EditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.com
     InicioSesionComponent,
     VentasComponent,
     NavbarEmpleadosComponent,
-    NavbarAdminComponent
+    NavbarAdminComponent,
+    ProductosComponent,
+    EditarVentasComponent
   ],
   imports: [
     BrowserModule,

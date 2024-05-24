@@ -1,0 +1,9 @@
+.btn-agregar-producto {
+    background-color: var(--main-purple);
+    color: var(--light);
+}
+
+.table-container {
+    height: 75vh;
+    overflow: scroll;
+}
