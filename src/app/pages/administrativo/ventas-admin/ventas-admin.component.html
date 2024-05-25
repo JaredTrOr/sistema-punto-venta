@@ -17,8 +17,7 @@
     <div class="ventas-container mt-5">
         <div *ngFor="let venta of ventas" class="venta-card">
             <div class="card-controllers">
-                <i class="bi bi-pencil-square"></i>
-                <!-- <i class="bi bi-trash"></i> -->
+                <i routerLink="/admin-editar-ventas/{{ venta.idVenta }}" class="bi bi-pencil-square"></i>
             </div>
             <h4>ID de venta: {{ venta.idVenta }}</h4>
             
@@ -28,7 +27,7 @@
                 <p>Hora: {{ venta.hora }}</p>
             </div>
 
-            <p class="mt-5 bold">Productos vendidos:</p>
+            <p class="mt-5 bold">Productos vendidos: {{ venta.productos.length }}</p>
 
             <div class="productos-vendidos-container">
                 <div *ngFor="let producto of venta.productos">

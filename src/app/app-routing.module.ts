@@ -29,7 +29,7 @@ const routes: Routes = [
     component: VentasAdminComponent
   },
   {
-    path: 'admin-editar-ventas',
+    path: 'admin-editar-ventas/:id',
     title: 'Editar ventas',
     component: AdminEditarVentasComponent
   },

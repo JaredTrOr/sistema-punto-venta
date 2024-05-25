@@ -1,1 +1,50 @@
-<p>editar-ventas works!</p>
+<app-navbar-admin></app-navbar-admin>
+
+<section class="p-5">
+    <div class="row custom-row">
+        <h2>EDITAR VENTAS</h2>
+
+        <div class="col-lg-4 mt-5">
+            <h4>ID de venta: {{ ventaSeleccionada.idVenta }}</h4>
+            <p>Sucursal: {{ ventaSeleccionada.sucursal }}</p>
+            <p>Fecha: {{ ventaSeleccionada.fecha }}</p>
+            <p>Hora: {{ ventaSeleccionada.hora }}</p>
+        </div>
+        <div class="col-lg-4 mt-5">
+            <p><span class="bold">Cantidad general:</span>  {{ ventaSeleccionada.cantidadGeneral }}</p>
+            <p><span class="bold">Total general:</span>  {{ ventaSeleccionada.totalGeneral }}</p>
+        </div>
+        <div class="col-lg-4 mt-5">
+            <div class="d-flex gap-3">
+                <button class="btn btn-warning p-3">Editar</button>
+                <button class="btn btn-danger p-3">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row custom-row mt-5">
+        <div class="productos-vendidos-container">
+            <div class="producto-card" *ngFor="let producto of ventaSeleccionada.productos">
+                <h4 class="bold">{{ producto.nombre }}</h4>
+
+                <div class="producto-info">
+                    <div>
+                        <p><label for="cantidad">Cantidad:</label></p> 
+                        <input id="cantidad" type="number" class="input-text" placeholder="{{ producto.cantidad }}">
+                    </div>
+                    <div>
+                        <p><label for="importe">Importe:</label></p> 
+                        <input id="importe" type="number" class="input-text" placeholder="{{ producto.importe }}">
+                    </div>
+                    <div>
+                        <p><label for="total">Total:</label></p> 
+                        <input id="total" type="number" class="input-text" placeholder="{{ producto.total }}">
+                    </div>
+                    <div class="card-controllers">
+                        <i class="bi bi-trash text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

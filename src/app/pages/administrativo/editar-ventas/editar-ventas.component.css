@@ -1,0 +1,42 @@
+.productos-vendidos-container {
+    height: 29rem;
+    overflow: scroll;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+}
+
+.productos-vendidos-container > *{
+    padding: 10px;
+    background-color: var(--main-purple);
+    border-radius: 5px;
+    color: var(--light);
+}
+
+.productos-vendidos-container .producto-info p{
+    margin: 0;
+    padding: 0;
+}
+
+.producto-card {
+    height: 23rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+.card-controllers {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    display: flex;
+    gap: 1rem;
+}
+
+.card-controllers > * {
+    font-size: 3rem;
+    cursor: pointer;
+}

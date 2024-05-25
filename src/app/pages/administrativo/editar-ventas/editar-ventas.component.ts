@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ventas } from '../../../utils/ventas'
 
 @Component({
   selector: 'app-editar-ventas',
@@ -7,4 +9,18 @@ import { Component } from '@angular/core';
 })
 export class EditarVentasComponent {
 
+  idVenta!: number;
+  ventas = ventas;
+  ventaSeleccionada: any;
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.idVenta = Number(params['id']);
+      this.ventaSeleccionada = this.ventas.find(venta => venta.idVenta === this.idVenta); 
+    });
+
+
+  }
 }
