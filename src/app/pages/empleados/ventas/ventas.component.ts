@@ -16,6 +16,9 @@ export class VentasComponent {
   productos: Producto[] = [];
   carritoProductos: VentaProducto[] = [];
 
+  categoriaSeleccionada = 'todos';
+  busquedaNombre = '';
+
   constructor() {}
 
   ngOnInit() {
@@ -186,5 +189,15 @@ export class VentasComponent {
       }
     });
   }
+
+  filtrarCategoria(): Producto[] {
+    return this.productos.filter(producto => {
+      if (this.categoriaSeleccionada === 'todos') {
+        return true;
+      }
+      return this.categoriaSeleccionada.toLowerCase() === producto.categoria.toLowerCase()
+    });
+  }
+  
 
 }

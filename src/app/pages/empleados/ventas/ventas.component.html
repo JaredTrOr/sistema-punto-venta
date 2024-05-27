@@ -41,20 +41,20 @@
     </div>
 
     <div class="productos-container">
-        <input type="text" class="input-text" placeholder="Buscar por nombre, categoría">
+        <input [(ngModel)]="busquedaNombre" type="text" class="input-text" placeholder="Buscar por nombre, categoría">
 
-        <select class="mt-3 filtro" name="" id="">
-            <option value="">Todos</option>
-            <option value="">Categoría 1</option>
-            <option value="">Categoría 2</option>
-            <option value="">Categoría 3</option>
+        <select [(ngModel)]="categoriaSeleccionada" class="mt-3 filtro" name="" id="">
+            <option value="todos">Todos</option>
+            <option value="categoria 1">Categoría 1</option>
+            <option value="categoria 2">Categoría 2</option>
+            <option value="categoria 3">Categoría 3</option>
         </select>
 
         <div class="mt-5">
-            <p class="venta-title">Categoría</p>
+            <p class="venta-title">Categoría &gt; {{ categoriaSeleccionada }}</p>
 
             <div class="box-container">
-                <div (click)="agregarProducto(producto)" *ngFor="let producto of productos" class="box">
+                <div (click)="agregarProducto(producto)" *ngFor="let producto of filtrarCategoria()" class="box">
                     <h3>ID: {{ producto.id }}</h3>
 
                     <div class="box-body">
