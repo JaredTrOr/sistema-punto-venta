@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Producto } from '../../../models/ProductoEjemplo';
 import Swal from 'sweetalert2';
+import { ProductosService } from '../../../services/productos.service';
 
 interface VentaProducto {
   cantidad: number;
@@ -19,9 +20,18 @@ export class VentasComponent {
   categoriaSeleccionada = 'todos';
   busquedaNombre = '';
 
-  constructor() {}
+  constructor(private productoService: ProductosService) {}
 
   ngOnInit() {
+    this.productoService.getProductos().subscribe(data => {
+      console.log(data.map(doc => {
+        return {
+          ...doc.payload.doc.data() as {},
+            id: doc.payload.doc.id
+        };
+      }));
+    });
+    
     this.productos = [
       {
         id: 1,

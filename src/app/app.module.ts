@@ -1,10 +1,16 @@
+//Modulos de Angular
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
+//Firebase
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from '../environments/environment.development';
+
+//Componentes
 import { InicioSesionComponent } from './pages/inicio-sesion/inicio-sesion.component';
 import { VentasComponent } from './pages/empleados/ventas/ventas.component';
 import { NavbarEmpleadosComponent } from './components/navbar-empleados/navbar-empleados.component';
@@ -27,7 +33,9 @@ import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
