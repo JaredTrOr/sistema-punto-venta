@@ -7,5 +7,5 @@ export class Producto {
 
     precioPromo?: number;
     precioMin?: number;
-    status?: boolean;
+    status?: number;
 }
