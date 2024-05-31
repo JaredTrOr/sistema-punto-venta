@@ -1,5 +1,6 @@
 export class Producto {
-    idProducto?: string;
+    idFirebase?: string;
+    idProducto?: number;
     imagen!: string;
     descripcion!: string;
     categoria!: string;

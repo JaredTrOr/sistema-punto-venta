@@ -1,5 +1,5 @@
 export class ProductoVenta {
-    idProducto?: string;
+    idProducto?: number;
     nombreProducto!: string;
     importe!: number;
     cantidad!: number;

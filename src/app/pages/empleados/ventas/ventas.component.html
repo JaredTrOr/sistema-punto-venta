@@ -16,13 +16,15 @@
 
                 <tbody>
                     <tr *ngFor="let producto of carritoProductos">
-                        <td>{{ producto.producto.nombre }}</td>
+                        <td>{{ producto.nombreProducto }}</td>
                         <td class="d-flex gap-3 align-items-center">
-                            <button class="control-buttons">-</button> {{ producto.cantidad }} <button class="control-buttons">+</button>
+                            <button (click)="restarProducto(producto)" class="control-buttons">-</button> 
+                                {{ producto.cantidad }} 
+                            <button (click)="sumarProducto(producto)" class="control-buttons">+</button>
                         </td>
-                        <td>${{ producto.producto.precio }}</td>
-                        <td>${{ producto.cantidad * producto.producto.precio }}</td>
-                        <td (click)="eliminarProducto(producto.producto.id)" class="quitar-carrito"><i class="bi bi-trash"></i></td>
+                        <td>${{ producto.importe }}</td>
+                        <td>${{ producto.cantidad * producto.importe }}</td>
+                        <td (click)="eliminarProducto(producto.idProducto)" class="quitar-carrito"><i class="bi bi-trash"></i></td>
                     </tr>
             </table>
         </div>
@@ -40,14 +42,17 @@
         </div>
     </div>
 
-    <div class="productos-container">
-        <input [(ngModel)]="busquedaNombre" type="text" class="input-text" placeholder="Buscar por nombre, categoría">
+    <div *ngIf="loadingData" class="text-center">
+        <img src="../../../../assets/images/loading_image.gif" alt="Imagen de cargar">
+        <h2>Cargando productos...</h2>
+    </div>
+
+    <div *ngIf="!loadingData" class="productos-container">
+        <input [(ngModel)]="busquedaTexto" type="text" class="input-text" placeholder="Buscar por nombre">
 
         <select [(ngModel)]="categoriaSeleccionada" class="mt-3 filtro" name="" id="">
             <option value="todos">Todos</option>
-            <option value="categoria 1">Categoría 1</option>
-            <option value="categoria 2">Categoría 2</option>
-            <option value="categoria 3">Categoría 3</option>
+            <option *ngFor="let categoria of categorias" value="{{ categoria }}">{{ categoria }}</option>
         </select>
 
         <div class="mt-5">
@@ -55,11 +60,11 @@
 
             <div class="box-container">
                 <div (click)="agregarProducto(producto)" *ngFor="let producto of filtrarCategoria()" class="box">
-                    <h3>ID: {{ producto.id }}</h3>
+                    <h3>ID: {{ producto.idProducto }}</h3>
 
                     <div class="box-body">
                         <p class="categoria">{{ producto.categoria }}</p>
-                        <p class="nombre-producto">{{ producto.nombre }}</p>
+                        <p class="nombre-producto">{{ producto.descripcion }}</p>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { Producto } from '../../../models/ProductoEjemplo';
 import Swal from 'sweetalert2';
 import { ProductosService } from '../../../services/productos.service';
-
-interface VentaProducto {
-  cantidad: number;
-  producto: Producto;
-}
+import { Producto } from '../../../models/Producto';
+import { ProductoVenta } from '../../../models/ProductoVenta';
+import { Venta } from '../../../models/Ventas';
+import  { Tiempo}   from '../../../utils/tiempo';
+import { VentasService } from '../../../services/ventas.service';
 
 @Component({
   selector: 'app-ventas',
@@ -14,121 +13,39 @@ interface VentaProducto {
   styleUrl: './ventas.component.css'
 })
 export class VentasComponent {
+
   productos: Producto[] = [];
-  carritoProductos: VentaProducto[] = [];
+  carritoProductos: ProductoVenta[] = [];
+  categorias: string[] = [];
+  tiempo = new Tiempo();
 
   categoriaSeleccionada = 'todos';
-  busquedaNombre = '';
+  busquedaTexto = '';
 
-  constructor(private productoService: ProductosService) {}
+  loadingData: boolean = true;
+
+  constructor(private productoService: ProductosService, private ventaService: VentasService) {}
 
   ngOnInit() {
     this.productoService.getProductos().subscribe(data => {
-      console.log(data.map(doc => {
+      this.productos = data.map(doc => {
+        this.loadingData = false;
         return {
-          ...doc.payload.doc.data() as {},
-            id: doc.payload.doc.id
+          ...doc.payload.doc.data() as Producto,
+            idFirebase: doc.payload.doc.id
         };
-      }));
+      });
+
+      this.categorias = this.productos.map(producto => producto.categoria);
+      this.categorias = [...new Set(this.categorias)];
+
     });
     
-    this.productos = [
-      {
-        id: 1,
-        nombre: 'Producto 1',
-        precio: 100.00,
-        categoria: 'Categoria 1'
-      },
-      {
-        id: 2,
-        nombre: 'Producto 2',
-        precio: 200.00,
-        categoria: 'Categoria 2'
-      },
-      {
-        id: 3,
-        nombre: 'Producto 3',
-        precio: 300.00,
-        categoria: 'Categoria 3'
-      },
-      {
-        id: 4,
-        nombre: 'Producto 4',
-        precio: 150.00,
-        categoria: 'Categoria 1'
-      },
-      {
-        id: 5,
-        nombre: 'Producto 5',
-        precio: 250.00,
-        categoria: 'Categoria 2'
-      },
-      {
-        id: 6,
-        nombre: 'Producto 6',
-        precio: 350.00,
-        categoria: 'Categoria 3'
-      },
-      {
-        id: 7,
-        nombre: 'Producto 7',
-        precio: 175.00,
-        categoria: 'Categoria 1'
-      },
-      {
-        id: 8,
-        nombre: 'Producto 8',
-        precio: 275.00,
-        categoria: 'Categoria 2'
-      },
-      {
-        id: 9,
-        nombre: 'Producto 9',
-        precio: 375.00,
-        categoria: 'Categoria 3'
-      },
-      {
-        id: 10,
-        nombre: 'Producto 10',
-        precio: 200.00,
-        categoria: 'Categoria 1'
-      },
-      {
-        id: 11,
-        nombre: 'Producto 11',
-        precio: 300.00,
-        categoria: 'Categoria 2'
-      },
-      {
-        id: 12,
-        nombre: 'Producto 12',
-        precio: 400.00,
-        categoria: 'Categoria 3'
-      },
-      {
-        id: 13,
-        nombre: 'Producto 13',
-        precio: 225.00,
-        categoria: 'Categoria 1'
-      },
-      {
-        id: 14,
-        nombre: 'Producto 14',
-        precio: 325.00,
-        categoria: 'Categoria 2'
-      },
-      {
-        id: 15,
-        nombre: 'Producto 15',
-        precio: 425.00,
-        categoria: 'Categoria 3'
-      }
-  ];
   }
 
   agregarProducto(producto: Producto) {
 
-    const productoEnCarrito = this.carritoProductos.find(productoCarrito => productoCarrito.producto.id === producto.id);
+    const productoEnCarrito = this.carritoProductos.find(productoCarrito => productoCarrito.idProducto === producto.idProducto);
 
     if(productoEnCarrito) {
       productoEnCarrito.cantidad++;
@@ -136,13 +53,16 @@ export class VentasComponent {
     }
 
     this.carritoProductos.push({
+      idProducto: producto.idProducto ? producto.idProducto : -1,
+      nombreProducto: producto.descripcion,
+      importe: producto.precio,
       cantidad: 1,
-      producto
+      total: producto.precio
     });
   }
 
-  eliminarProducto(productoId: number) {
-    const productoEnCarrito = this.carritoProductos.find(productoCarrito => productoCarrito.producto.id === productoId);
+  eliminarProducto(productoId?: number) {
+    const productoEnCarrito = this.carritoProductos.find(productoCarrito => productoCarrito.idProducto === productoId);
 
     const indexOfProductoEnCarrito = this.carritoProductos.indexOf(productoEnCarrito!);
     this.carritoProductos.splice(indexOfProductoEnCarrito, 1);
@@ -155,10 +75,21 @@ export class VentasComponent {
   getTotal() {
     let total = 0;
     for (const producto of this.carritoProductos) {
-      total += producto.producto.precio * producto.cantidad;
+      total += producto.importe * producto.cantidad;
     }
 
     return total;
+  }
+
+  sumarProducto(producto: ProductoVenta) {
+    producto.cantidad++;
+  }
+
+  restarProducto(producto: ProductoVenta) {
+    if(producto.cantidad === 1) {
+      return;
+    }
+    producto.cantidad--;
   }
 
   realizarCompra() {
@@ -173,8 +104,20 @@ export class VentasComponent {
       confirmButtonText: "Si, realizar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+
+        //Realizar la compra
+        const venta: Venta = {
+          sucursal: "Sucursal 1",
+          fecha: this.tiempo.getDate(),
+          hora: this.tiempo.getHora(),
+          productos: this.carritoProductos,
+          cantidadGeneral: this.getTotalProductos(),
+          totalGeneral: this.getTotal()
+        }
+
+        this.ventaService.createVenta(venta);
+
         this.carritoProductos = [];
         Swal.fire("Las compra se ha realizado con éxito", "", "success");
       }
@@ -201,12 +144,14 @@ export class VentasComponent {
   }
 
   filtrarCategoria(): Producto[] {
-    return this.productos.filter(producto => {
-      if (this.categoriaSeleccionada === 'todos') {
-        return true;
-      }
-      return this.categoriaSeleccionada.toLowerCase() === producto.categoria.toLowerCase()
+    const productosFiltrados = this.productos.filter(producto => {
+      return (
+        (producto.descripcion.includes(this.busquedaTexto.toUpperCase())) &&
+        (this.categoriaSeleccionada === 'todos' || producto.categoria === this.categoriaSeleccionada)
+      );
     });
+
+    return productosFiltrados;
   }
   
 
