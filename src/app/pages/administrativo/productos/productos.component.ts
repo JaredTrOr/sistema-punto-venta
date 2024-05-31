@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProductosService } from '../../../services/productos.service';
 
 @Component({
   selector: 'app-productos',
@@ -98,4 +99,19 @@ export class ProductosComponent {
       categoria: 'Categoria 3'
     }
   ];
+
+  constructor(private productosService: ProductosService) {}
+
+  // ngOnInit(): void {
+  //   this.productosService.getProductos().subscribe(data => {
+  //     this.productos = data.map(doc => {
+  //       return {
+  //         ...doc.payload.doc.data() as Producto,
+  //         idProducto: doc.payload.doc.id
+  //       }
+  //     });
+
+  //     //Escribir archivo JSON de los cambios en los productos
+  //   });
+  // }
 }

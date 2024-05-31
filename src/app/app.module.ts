@@ -18,6 +18,7 @@ import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.com
 import { ProductosComponent } from './pages/administrativo/productos/productos.component';
 import { EditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
 import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas-admin.component';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule.enablePersistence(),
     AngularFireDatabaseModule
   ],
   providers: [],
