@@ -6,6 +6,7 @@ import { ProductoVenta } from '../../../models/ProductoVenta';
 import { Venta } from '../../../models/Ventas';
 import  { Tiempo}   from '../../../utils/tiempo';
 import { VentasService } from '../../../services/ventas.service';
+import { ElectronService } from '../../../services/electron.service';
 
 @Component({
   selector: 'app-ventas',
@@ -24,7 +25,11 @@ export class VentasComponent {
 
   loadingData: boolean = true;
 
-  constructor(private productoService: ProductosService, private ventaService: VentasService) {}
+  constructor(
+    private productoService: ProductosService, 
+    private ventaService: VentasService,
+    private electronService: ElectronService
+  ) {}
 
   ngOnInit() {
     this.productoService.getProductos().subscribe(data => {
@@ -116,7 +121,11 @@ export class VentasComponent {
           totalGeneral: this.getTotal()
         }
 
+        //Guardar la venta en firebase
         this.ventaService.createVenta(venta);
+
+        //Guardar venta en local
+        this.electronService.send('save-venta', venta);
 
         this.carritoProductos = [];
         Swal.fire("Las compra se ha realizado con éxito", "", "success");

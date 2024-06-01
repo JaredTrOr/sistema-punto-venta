@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const url = require("url");
 const path = require("path");
 
@@ -9,6 +9,7 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
+            preload: path.join(__dirname, 'electron', 'preload.js'),
             nodeIntegration: true
         }
     })
@@ -40,4 +41,10 @@ app.on('window-all-closed', function () {
 
 app.on('activate', function () {
     if (mainWindow === null) createWindow()
+})
+
+ipcMain.on('save-venta', (event, data) => {
+    console.log(data);
+
+    //Escribir el archivo aqui
 })
