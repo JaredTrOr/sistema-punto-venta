@@ -1,8 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const url = require("url");
 const path = require("path");
+const FileHandler = require('./electron/filehandler');
 
 let mainWindow
+const fileHandler = new FileHandler();
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -43,8 +45,11 @@ app.on('activate', function () {
     if (mainWindow === null) createWindow()
 })
 
-ipcMain.on('save-venta', (event, data) => {
+ipcMain.on('escribir-venta', (event, data) => {
     console.log(data);
 
-    //Escribir el archivo aqui
+    const fechaFormateada = data.fecha.replace(/\//g, "-");
+
+    //Escribir el archivo aqui;
+    fileHandler.escribirArchivo(`/ventas/${fechaFormateada}.json`, data);
 })
