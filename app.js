@@ -46,10 +46,11 @@ app.on('activate', function () {
 })
 
 ipcMain.on('escribir-venta', (event, data) => {
-    console.log(data);
-
     const fechaFormateada = data.fecha.replace(/\//g, "-");
+    fileHandler.escribirArchivo(`./files/ventas/${fechaFormateada}.json`, data);
+})
 
-    //Escribir el archivo aqui;
-    fileHandler.escribirArchivo(`/ventas/${fechaFormateada}.json`, data);
+ipcMain.on('leer-ventas', async (event, data) => {
+    const ventas = await fileHandler.leerArchivo(`./files/ventas/${data}.json`);
+    event.reply('leer-ventas', ventas);
 })

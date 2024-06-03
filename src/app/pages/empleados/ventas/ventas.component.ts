@@ -41,6 +41,14 @@ export class VentasComponent {
         };
       });
 
+      if(!this.productos.length) {
+        //Traer productos de local
+        this.electronService.send('leer-productos', 'obtener productos');
+        const productosLocal = this.electronService.on('leer-productos', (event, productos) => {
+          
+        });
+      }
+
       this.categorias = this.productos.map(producto => producto.categoria);
       this.categorias = [...new Set(this.categorias)];
 

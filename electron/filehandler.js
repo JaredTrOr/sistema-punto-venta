@@ -6,8 +6,6 @@ class FileHandler {
     constructor () {}
 
     async leerArchivo(filepath) {
-        filepath = path.join(__dirname, '../files', filepath);
-
         try {
             const data = await fs.readFile(filepath, 'utf-8');
             console.log('Se leyó el archivo correctamente');
@@ -18,9 +16,8 @@ class FileHandler {
         }
     }
 
-    async escribirArchivo(filepath, data) {
-        filepath = path.join(__dirname, '../files', filepath);
-        
+    async escribirArchivo(filepath, data) {     
+        console.log('Escribiendo archivo en: ', filepath); 
         if (!await this.archivoExiste(filepath)) {
             try {
                 await fs.writeFile(filepath, JSON.stringify([data]));
@@ -45,9 +42,7 @@ class FileHandler {
     }
 
     async actualizarArchivo(filepath, data) {
-        filepath = path.join(__dirname, '../files', filepath);
-
-        const file = JSON.parse(await this.leerArchivo());
+        const file = JSON.parse(await this.leerArchivo(filepath));
         const index = file.findIndex((item) => item.id === data.id);
         file[index] = data;
         
@@ -55,7 +50,7 @@ class FileHandler {
         console.log('Se actualizó el archivo correctamente');
     }
 
-    async borrarRegistro() {
+    async borrarRegistro(filepath, data) {
         filepath = path.join(__dirname, '../files', filepath);
         
         const file = JSON.parse(await leerArchivo());
