@@ -22,7 +22,7 @@ export class ElectronService {
         if (window.electron && window.electron.ipcRenderer) {
             window.electron.ipcRenderer.on(channel, listener);
         }
-    }
+    } 
 
     removeAllListeners(channel: string) {
         if (window.electron && window.electron.ipcRenderer) {

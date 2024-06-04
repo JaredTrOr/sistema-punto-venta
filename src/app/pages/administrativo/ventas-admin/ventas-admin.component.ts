@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { VentasService } from '../../../services/ventas.service';
 import { Venta } from '../../../models/Ventas';
+import { ElectronService } from '../../../services/electron.service';
+import { Tiempo } from '../../../utils/tiempo';
 
 @Component({
   selector: 'app-ventas-admin',
@@ -10,21 +12,22 @@ import { Venta } from '../../../models/Ventas';
 export class VentasAdminComponent {
 
   ventas: Venta[] = [];
+  tiempo = new Tiempo();
 
-  constructor(private ventasService: VentasService) { }
-
-  ngOnInit(): void {
-    this.ventasService.getVentas().subscribe(data => {
-      this.ventas = data.map(doc => {
-        return {
-          ...doc.payload.doc.data() as Venta,
-          idVenta: doc.payload.doc.id
-        }
-      });
-
-      //Escribir archivo JSON de los cambios en las venas
-    })
+  constructor(
+    private ventasService: VentasService,
+    private electronService: ElectronService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { 
+    
+   }
+    
+  ngOnInit() {
+    this.electronService.send('leer-ventas', this.tiempo.getDate());
+    this.electronService.on('leer-ventas', (event, ventas: Venta[]) => {
+      this.ventas = [];
+      this.ventas = ventas;
+      this.changeDetectorRef.detectChanges();
+    });
   }
-
-  
 }

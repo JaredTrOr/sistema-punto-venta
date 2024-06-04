@@ -7,7 +7,7 @@ class FileHandler {
 
     async leerArchivo(filepath) {
         try {
-            const data = await fs.readFile(filepath, 'utf-8');
+            const data = JSON.parse(await fs.readFile(filepath, 'utf-8'));
             console.log('Se leyó el archivo correctamente');
             return data;
         } catch(e) {
@@ -28,7 +28,7 @@ class FileHandler {
         }
 
         else {
-            const dataFile = JSON.parse(await this.leerArchivo(filepath));
+            const dataFile = await this.leerArchivo(filepath);
             dataFile.push(data);
 
             try {
