@@ -16,6 +16,7 @@ import { ElectronService } from '../../../services/electron.service';
 export class VentasComponent {
 
   productos: Producto[] = [];
+
   carritoProductos: ProductoVenta[] = [];
   categorias: string[] = [];
   tiempo = new Tiempo();
@@ -40,14 +41,6 @@ export class VentasComponent {
             idFirebase: doc.payload.doc.id
         };
       });
-
-      if(!this.productos.length) {
-        //Traer productos de local
-        this.electronService.send('leer-productos', 'obtener productos');
-        const productosLocal = this.electronService.on('leer-productos', (event, productos) => {
-          
-        });
-      }
 
       this.categorias = this.productos.map(producto => producto.categoria);
       this.categorias = [...new Set(this.categorias)];

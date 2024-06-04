@@ -25,4 +25,17 @@ export class ProductosService {
     this.firestore.doc('productos/' + id).delete();
   }
 
+  getNuevoProducto(): Producto {
+    return  {
+      idProducto: 0,
+      imagen: '',
+      descripcion: '',
+      categoria: '',
+      precio: 0,
+      precioPromo: 0,
+      precioMin: 0,
+      status: 1
+    }
+  }
+
 }

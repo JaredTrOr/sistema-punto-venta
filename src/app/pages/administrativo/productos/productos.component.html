@@ -16,23 +16,35 @@
             </div>
 
             <div class="form-row mt-5">
-                <p class="bold"><label for="">Descripción: </label></p>
-                <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+                <p class="bold"><label for="">Precio: </label></p>
+                <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
             </div>
 
             <div class="form-row mt-5">
-                <p class="bold"><label for="">Precio: </label></p>
+                <p class="bold"><label for="">Precio promo: </label></p>
+                <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+            </div>
+
+            <div class="form-row mt-5">
+                <p class="bold"><label for="">Precio min: </label></p>
                 <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
             </div>
 
             <div class="form-row mt-5">
                 <button class="btns btn-agregar-producto">Agregar</button>
             </div>
+
+            
         </div>
     </div>
 
     <div class="col-lg-8">
-        <input class="input-text" type="text" placeholder="Buscar por nombre, categoría, id">
+        <input [(ngModel)]="busquedaTexto" class="input-text" type="text" placeholder="Buscar por nombre">
+
+        <select [(ngModel)]="categoriaSeleccionada" class="mt-5 filtro" name="" id="">
+            <option value="todos">Todos</option>
+            <option *ngFor="let categoria of categorias" value="{{ categoria }}">{{ categoria }}</option>
+        </select>
 
         <div class="table-container">
             <table class="table mt-5">
@@ -40,17 +52,15 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    <th>Descripción</th>
                     <th>Precio</th>
                     <th>Operaciones</th>
                 </thead>
     
                 <tbody>
-                    <tr *ngFor="let producto of productos">
-                        <td>{{ producto.id }}</td>
-                        <td>{{ producto.nombre }}</td>
+                    <tr *ngFor="let producto of filtrarCategoria()">
+                        <td>{{ producto.idProducto }}</td>
+                        <td>{{ producto.descripcion }}</td>
                         <td>{{ producto.categoria }}</td>
-                        <td>descripción</td>
                         <td>{{ producto.precio }}</td>
                         <td class="d-flex gap-4">
                             <button class="btn btn-warning">Editar</button>
