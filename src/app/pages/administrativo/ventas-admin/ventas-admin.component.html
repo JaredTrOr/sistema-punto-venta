@@ -5,16 +5,16 @@
 
     <div class="d-flex gap-3 ">
         <select class="filtro mt-4" name="" id="">
-            <option value="0">Fechas</option>
-            <option value="1">Hoy</option>
-            <option value="2">Ayer</option>
-            <option value="3">Últimos 7 días</option>
+            <option value="0">Hoy</option>
+            <option value="1">Ayer</option>
+            <option value="">Últimos 7 días</option>
         </select>
 
-        <button class="btns btn-exportar">Exportar</button>
+        <button *ngIf="ventas.length" class="btns btn-exportar">Exportar</button>
+        <button *ngIf="ventas.length" class="btns btn-exportar">Realizar corte</button>
     </div>
 
-    <div class="mt-3 radio-buttons-container">
+    <div class="mt-5 radio-buttons-container">
         <div class="radio-button-row">
           <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
           <label for="radioVentasGeneral">  Ventas generales</label>
