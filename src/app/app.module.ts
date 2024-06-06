@@ -19,6 +19,8 @@ import { ProductosComponent } from './pages/administrativo/productos/productos.c
 import { EditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
 import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas-admin.component';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { VentasGeneralComponent } from './components/ventas-general/ventas-general.component';
+import { VentasProductosComponent } from './components/ventas-productos/ventas-productos.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     NavbarAdminComponent,
     ProductosComponent,
     EditarVentasComponent,
-    VentasAdminComponent
+    VentasAdminComponent,
+    VentasGeneralComponent,
+    VentasProductosComponent
   ],
   imports: [
     BrowserModule,

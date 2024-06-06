@@ -16,49 +16,22 @@
 
     <div class="mt-3 radio-buttons-container">
         <div class="radio-button-row">
-            <input type="radio" name="radioVenta" class="">
-            <label for="">Ventas generales</label>
+          <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
+          <label for="radioVentasGeneral">  Ventas generales</label>
         </div>
-
+      
         <div class="mt-3 radio-button-row">
-            <input type="radio" name="radioVenta" class="">
-            <label for="">Ventas por producto</label>
+          <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
+          <label for="radioVentasProducto">  Ventas por producto</label>
         </div>
     </div>
+      
 
-    <div class="ventas-container mt-5">
-        <div *ngFor="let venta of ventas" class="venta-card">
-            <div class="card-controllers">
-                <i routerLink="/admin-editar-ventas/{{ venta.idVenta }}" class="bi bi-pencil-square"></i>
-            </div>
-            <h4>ID de venta: {{ venta.idVenta }}</h4>
-            
-            <div class="informacion">
-                <p>Sucursal: {{ venta.sucursal }}</p>
-                <p>Fecha: {{ venta.fecha }}</p>
-                <p>Hora: {{ venta.hora }}</p>
-            </div>
-
-            <p class="mt-5 bold">Productos vendidos: {{ venta.productos.length }}</p>
-
-            <div class="productos-vendidos-container">
-                <div *ngFor="let producto of venta.productos">
-                    <p class="bold">{{ producto.nombreProducto }}</p>
-    
-                    <div class="producto-info">
-                        <p>Cantidad: {{ producto.cantidad }}</p>
-                        <p>Importe: ${{ producto.importe }}</p>
-                        <p>Total: {{ producto.total }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="producto-info-footer mt-3">
-                <p>Cantidad general: {{ venta.cantidadGeneral }}</p>
-                <p>Cantidad general: ${{ venta.totalGeneral }}</p>
-            </div>
-        </div>
-
+    <div class="mt-5" *ngIf="!ventas.length">
+      <h3>No hay ventas aún</h3>
     </div>
+
+    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas"></app-ventas-general>
+    <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventas]="ventas"></app-ventas-productos>
 
 </section>

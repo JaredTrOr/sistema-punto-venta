@@ -1,0 +1,34 @@
+<div class="ventas-container mt-5">
+    <div *ngFor="let venta of ventas" class="venta-card">
+        <div class="card-controllers">
+            <i routerLink="/admin-editar-ventas/{{ venta.idVenta }}" class="bi bi-pencil-square"></i>
+        </div>
+        <h4>ID de venta: {{ venta.idVenta }}</h4>
+        
+        <div class="informacion">
+            <p>Sucursal: {{ venta.sucursal }}</p>
+            <p>Fecha: {{ venta.fecha }}</p>
+            <p>Hora: {{ venta.hora }}</p>
+        </div>
+
+        <p class="mt-5 bold">Productos vendidos: {{ venta.productos.length }}</p>
+
+        <div class="productos-vendidos-container">
+            <div *ngFor="let producto of venta.productos">
+                <p class="bold">{{ producto.nombreProducto }}</p>
+
+                <div class="producto-info">
+                    <p>Cantidad: {{ producto.cantidad }}</p>
+                    <p>Importe: ${{ producto.importe }}</p>
+                    <p>Total: ${{ producto.total }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="producto-info-footer mt-3">
+            <p>Cantidad general: {{ venta.cantidadGeneral }}</p>
+            <p>Cantidad general: ${{ venta.totalGeneral }}</p>
+        </div>
+    </div>
+
+</div>

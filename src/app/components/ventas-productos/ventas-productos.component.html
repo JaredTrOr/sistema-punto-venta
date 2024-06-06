@@ -1,0 +1,17 @@
+<table class="table mt-5">
+    <thead>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Importe</th>
+        <th>Total</th>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let producto of ventasPorProducto">
+            <td>{{ producto.nombreProducto }}</td>
+            <td>{{ producto.cantidad }}</td>
+            <td>{{ producto.importe }}</td>
+            <td>{{ producto.total }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -112,6 +112,10 @@ export class VentasComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
+        this.carritoProductos.forEach(producto => {
+          producto.total = producto.importe * producto.cantidad;
+        })
+
         //Realizar la compra
         const venta: Venta = {
           sucursal: "Sucursal 1",

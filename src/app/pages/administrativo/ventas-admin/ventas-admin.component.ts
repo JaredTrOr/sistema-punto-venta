@@ -13,6 +13,7 @@ export class VentasAdminComponent {
 
   ventas: Venta[] = [];
   tiempo = new Tiempo();
+  ventasProductos: string = 'ventasGeneral';
 
   constructor(
     private ventasService: VentasService,
