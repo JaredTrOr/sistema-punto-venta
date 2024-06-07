@@ -51,11 +51,22 @@ app.on('activate', function () {
 
 // Eventos de IPC (Inter Process Communication)
 ipcMain.on('escribir-venta', (event, data) => {
-    fileHandler.escribirArchivo(`./files/ventas/${formatearFecha(data.fecha)}.json`, data);
+    //Formateo de fecha
+    const fechaFormateada = formatearFecha(data.fecha);
+
+    const rutaDirectorio = path.join(__dirname, 'files', 'ventas', `${fechaFormateada}`); //--> Ruta para crear el directorio
+    fileHandler.crearDirectorio(rutaDirectorio); //--> Creación del directorio si no existe
+
+    //Creación de rutas para el archivo general y auxiliar
+    const rutaArchivo = path.join(rutaDirectorio, `${fechaFormateada}.json`); //--> Ruta para escribir el archivo general
+    const rutaArchivoAuxiliar = path.join(rutaDirectorio, `auxiliar.json`); //--> Ruta para escribir el archivo auxiliar
+
+    //Creación de archivos general y auxiliar
+    fileHandler.escribirArchivo(rutaArchivo, data); //--> Escritura del archivo general
+    fileHandler.escribirArchivo(rutaArchivoAuxiliar, data); //--> Escritura del archivo auxiliar
 })
 
 ipcMain.on('leer-ventas', async (event, fecha) => {
-    const ventas = await fileHandler.leerArchivo(`./files/ventas/${formatearFecha(fecha)}.json`);
+    const ventas = await fileHandler.leerArchivo(`./files/ventas/${formatearFecha(fecha)}/${formatearFecha(fecha)}.json`);
     event.reply('leer-ventas', ventas);
-    console.log('FIN DEL PROCESO MAIN')
 })

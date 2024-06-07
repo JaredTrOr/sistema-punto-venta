@@ -10,8 +10,8 @@
         <tr *ngFor="let producto of ventasPorProducto">
             <td>{{ producto.nombreProducto }}</td>
             <td>{{ producto.cantidad }}</td>
-            <td>{{ producto.importe }}</td>
-            <td>{{ producto.total }}</td>
+            <td>${{ producto.importe }}</td>
+            <td>${{ producto.total }}</td>
         </tr>
     </tbody>
 </table>

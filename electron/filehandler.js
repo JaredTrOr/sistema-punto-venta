@@ -18,7 +18,9 @@ class FileHandler {
 
     async escribirArchivo(filepath, data) {     
         console.log('Escribiendo archivo en: ', filepath); 
-        if (!await this.archivoExiste(filepath)) {
+
+        //Si el archivo no existe, lo crea y escribe el registro
+        if (!await this.archivoDirExiste(filepath)) {
             try {
                 await fs.writeFile(filepath, JSON.stringify([data]));
                 console.log('Se escribió el archivo correctamente');
@@ -61,12 +63,23 @@ class FileHandler {
         console.log('Se actualizó el archivo correctamente');
     }
 
-    async archivoExiste(filepath) {
+    async archivoDirExiste(filepath) {
         try {
             await fs.access(filepath, fs.constants.F_OK);
             return true; 
         } catch (err) {
             return false;
+        }
+    }
+
+    async crearDirectorio(filepath) {
+        try {
+            if (!await this.archivoDirExiste(filepath)) {
+                await fs.mkdir(filepath, { recursive: true });
+                console.log('Directorio creado correctamente');
+            }
+        } catch(e) {
+            console.log(`Error al crear el directorio: ${e}`);
         }
     }
 }

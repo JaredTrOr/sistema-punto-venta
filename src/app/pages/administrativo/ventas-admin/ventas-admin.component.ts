@@ -31,4 +31,9 @@ export class VentasAdminComponent {
       this.changeDetectorRef.detectChanges();
     });
   }
+
+  realizarCorte() {
+    //1.- Guardar en un archivo la fecha y hora de corte con los datos
+    //2.- Cambiar de archivo para crear un nuevo archivo con los datos de la nueva venta (nuevo corte)
+  }
 }
