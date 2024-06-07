@@ -3,6 +3,11 @@ const url = require("url");
 const path = require("path");
 const FileHandler = require('./electron/filehandler');
 
+//MongoDB
+const connectionMongoDB = require('./backend/connection')
+const Venta = require('./backend/models/Venta')
+const Corte = require('./backend/models/Corte')
+
 let mainWindow
 const fileHandler = new FileHandler();
 
@@ -69,4 +74,28 @@ ipcMain.on('escribir-venta', (event, data) => {
 ipcMain.on('leer-ventas', async (event, fecha) => {
     const ventas = await fileHandler.leerArchivo(`./files/ventas/${formatearFecha(fecha)}/${formatearFecha(fecha)}.json`);
     event.reply('leer-ventas', ventas);
+})
+
+// Eventos de MongoDB
+
+connectionMongoDB()
+
+ipcMain.on('create-venta', async (event, data) => {  
+    data.fechaHora = new Date();
+    try {
+        await Venta.create(data)
+        console.log({success: true, message: 'Venta creada'})
+    } catch(err) {
+        console.log({success: false, message: err})
+    }
+})
+
+ipcMain.on('get-ventas', async (event, data) => {
+    try {
+        const ventas = await Venta.find()
+        event.reply('get-ventas', JSON.stringify(ventas))
+        console.log({success: true, message: 'Ventas obtenidas'})
+    } catch(err) {
+        console.log({success: false, message: err})
+    }
 })

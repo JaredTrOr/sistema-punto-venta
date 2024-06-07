@@ -130,7 +130,7 @@ export class VentasComponent {
         this.ventaService.createVenta(venta);
 
         //Guardar venta en local
-        this.electronService.send('escribir-venta', venta);
+        this.electronService.send('create-venta', venta);
 
         this.carritoProductos = [];
         Swal.fire("Las compra se ha realizado con éxito", "", "success");

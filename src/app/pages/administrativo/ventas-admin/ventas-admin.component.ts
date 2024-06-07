@@ -24,11 +24,11 @@ export class VentasAdminComponent {
    }
     
   ngOnInit() {
-    this.electronService.send('leer-ventas', this.tiempo.getDate());
-    this.electronService.on('leer-ventas', (event, ventas: Venta[]) => {
-      this.ventas = [];
-      this.ventas = ventas;
-      this.changeDetectorRef.detectChanges();
+    this.electronService.send('get-ventas', null);
+    this.electronService.on('get-ventas', (event, ventas) => {
+      const ventasParse = JSON.parse(ventas);
+      console.log(ventasParse);
+      this.ventas = ventasParse;
     });
   }
 
