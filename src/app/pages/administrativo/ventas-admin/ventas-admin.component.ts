@@ -4,6 +4,7 @@ import { Venta } from '../../../models/Ventas';
 import { ElectronService } from '../../../services/electron.service';
 import { Tiempo } from '../../../utils/tiempo';
 import Swal from 'sweetalert2';
+import { VentasPorProducto } from '../../../models/VentasPorProducto';
 
 @Component({
   selector: 'app-ventas-admin',
@@ -12,11 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class VentasAdminComponent {
 
-  ventas: Venta[] = [];
+  ventas: Venta[] = []; // --> Ventas generales
+
   tiempo = new Tiempo();
   ventasProductos: string = 'ventasGeneral';
 
   ventasDespuesCorte: Venta[] = [];
+  ventasPorProducto: VentasPorProducto[] = [];
 
   constructor(
     private ventasService: VentasService,
@@ -51,7 +54,30 @@ export class VentasAdminComponent {
       this.ventasDespuesCorte = [];
       this.ventasDespuesCorte = JSON.parse(ventas);
       this.changeDetectorRef.detectChanges();
+
+      // Ordenar ventas por producto
+      this.ordenarVentasPorProducto();
     });
+  }
+
+  ordenarVentasPorProducto() {
+    let ventasPorProductoAux: any[] = [];
+
+    this.ventasDespuesCorte.forEach(venta => {
+      ventasPorProductoAux = ventasPorProductoAux.concat(venta.productos);
+    })
+
+   ventasPorProductoAux.forEach(producto => {
+    const productoEnArreglo = this.ventasPorProducto.find(p => p.nombreProducto === producto.nombreProducto);
+
+    if (productoEnArreglo) {
+      productoEnArreglo.cantidad += producto.cantidad;
+      productoEnArreglo.total = productoEnArreglo.cantidad * productoEnArreglo.importe;
+    }
+    else {
+      this.ventasPorProducto.push({...producto});
+    }
+   })
   }
 
   realizarCorte() {
@@ -72,7 +98,7 @@ export class VentasAdminComponent {
             this.getVentasDespuesCorte() //--> Refrescar componentes
 
             Swal.fire("El corte se ha realizado con éxito", "", "success");
-
+            this.exportarPDF(`Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`);
           }
         })
 
@@ -81,7 +107,11 @@ export class VentasAdminComponent {
 
   }
 
-  exportarPDF() {
-    
+  exportarPDF(tituloPDF: string) {
+    const data = {
+      tituloPDF,
+      ventas: this.ventasPorProducto,
+    }
+    this.electronService.send('exportar-pdf', data);
   }
 }

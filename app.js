@@ -1,12 +1,17 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const url = require("url");
 const path = require("path");
+
+//FileHandler
 const FileHandler = require('./electron/filehandler');
 
 //MongoDB
 const connectionMongoDB = require('./backend/connection')
 const Venta = require('./backend/models/Venta')
 const Corte = require('./backend/models/Corte')
+
+//PDF
+const exportarPDF = require('./electron/exportarPDF')
 
 let mainWindow
 const fileHandler = new FileHandler();
@@ -183,4 +188,9 @@ ipcMain.on('create-corte', async (event, tituloCorte) => {
     } catch(err) {
         console.log({success: false, message: err})
     }
+})
+
+// Eventos de PDF
+ipcMain.on('exportar-pdf', async (event, data) => {
+    exportarPDF(data)
 })

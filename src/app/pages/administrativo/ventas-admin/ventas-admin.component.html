@@ -10,7 +10,11 @@
             <option value="">Últimos 7 días</option>
         </select> -->
 
-        <button *ngIf="ventasDespuesCorte.length" class="btns btn-exportar">Exportar</button>
+        <button (click)="exportarPDF('Exportación de ventas del día' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())" 
+        *ngIf="ventasDespuesCorte.length" class="btns btn-exportar">
+          Exportar
+        </button>
+
         <button (click)="realizarCorte()" *ngIf="ventasDespuesCorte.length && ventasProductos==='ventasProducto'" class="btns btn-exportar">Realizar corte</button>
     </div>
 
@@ -26,7 +30,7 @@
       </div>
     </div>
 
-    <app-ventas-productos *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasProducto'" [ventas]="ventasDespuesCorte"></app-ventas-productos>
+    <app-ventas-productos *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
     <app-ventas-general *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte"></app-ventas-general>
 
 </section>
