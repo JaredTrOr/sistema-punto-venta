@@ -6,7 +6,7 @@ export class Venta {
     fecha?: string;
     hora?: string;
 
-    fechaHora?: Date;
+    timestamp?: Date;
 
     productos!: ProductoVenta[];
     cantidadGeneral!: number;

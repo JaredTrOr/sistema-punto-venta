@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Venta } from '../../models/Ventas';
 
-
 interface VentasPorProducto {
   nombreProducto: string;
   cantidad: number;
@@ -20,6 +19,9 @@ export class VentasProductosComponent {
   ventasPorProductoAux: VentasPorProducto[] = [];
   ventasPorProducto: VentasPorProducto[] = [];
 
+  constructor(
+  ) { }
+
   ngOnInit() {
     this.ventas.forEach(venta => {
       this.ventasPorProductoAux = this.ventasPorProductoAux.concat(venta.productos);
@@ -37,6 +39,9 @@ export class VentasProductosComponent {
     }
    })
 
+  }
 
+  getTotalVentas() {
+    return this.ventasPorProducto.reduce((acc, producto) => acc + producto.total, 0);
   }
 }

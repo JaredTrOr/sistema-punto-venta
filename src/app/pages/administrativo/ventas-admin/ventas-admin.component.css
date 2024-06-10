@@ -3,3 +3,7 @@
     background-color: var(--light);
     border: 1px solid var(--black);
 }
+
+.no-ventas {
+    margin-top: 5rem;
+}

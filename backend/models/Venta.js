@@ -3,7 +3,9 @@ const Schema = mongoose.Schema
 
 const Venta = new Schema({
     sucursal: String,
-    fechaHora: {
+    fecha: String,
+    hora: String,
+    timestamp: {
         type: Date,
         default: Date.now
     },

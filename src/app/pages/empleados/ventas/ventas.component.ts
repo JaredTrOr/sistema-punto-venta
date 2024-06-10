@@ -121,6 +121,7 @@ export class VentasComponent {
           sucursal: "Sucursal 1",
           fecha: this.tiempo.getDate(),
           hora: this.tiempo.getHora(),
+          timestamp: new Date(),
           productos: this.carritoProductos,
           cantidadGeneral: this.getTotalProductos(),
           totalGeneral: this.getTotal()

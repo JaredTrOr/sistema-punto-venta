@@ -1,3 +1,7 @@
+<div *ngIf="!ventas.length">
+    <h1>No hay ventas del día de hoy</h1>
+</div>
+
 <div class="ventas-container mt-5">
     <div *ngFor="let venta of ventas" class="venta-card">
         <div class="card-controllers">

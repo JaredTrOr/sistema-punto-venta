@@ -4,14 +4,14 @@
     <h2>VENTAS</h2>
 
     <div class="d-flex gap-3 ">
-        <select class="filtro mt-4" name="" id="">
+        <!-- <select class="filtro mt-4" name="" id="">
             <option value="0">Hoy</option>
             <option value="1">Ayer</option>
             <option value="">Últimos 7 días</option>
-        </select>
+        </select> -->
 
-        <button *ngIf="ventas.length" class="btns btn-exportar">Exportar</button>
-        <button *ngIf="ventas.length" class="btns btn-exportar">Realizar corte</button>
+        <button *ngIf="ventasDespuesCorte.length" class="btns btn-exportar">Exportar</button>
+        <button (click)="realizarCorte()" *ngIf="ventasDespuesCorte.length && ventasProductos==='ventasProducto'" class="btns btn-exportar">Realizar corte</button>
     </div>
 
     <div class="mt-5 radio-buttons-container">
@@ -19,19 +19,14 @@
         <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
         <label for="radioVentasGeneral">  Ventas generales</label>
       </div>
-      
-        <div class="mt-3 radio-button-row">
-          <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
-          <label for="radioVentasProducto">  Ventas por producto</label>
-        </div>
-    </div>
-      
 
-    <div class="mt-5" *ngIf="!ventas.length">
-      <h3>No hay ventas aún</h3>
+      <div class="mt-3 radio-button-row">
+        <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
+        <label for="radioVentasProducto">  Ventas por producto</label>
+      </div>
     </div>
 
-    <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventas]="ventas"></app-ventas-productos>
-    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas"></app-ventas-general>
+    <app-ventas-productos *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasProducto'" [ventas]="ventasDespuesCorte"></app-ventas-productos>
+    <app-ventas-general *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte"></app-ventas-general>
 
 </section>

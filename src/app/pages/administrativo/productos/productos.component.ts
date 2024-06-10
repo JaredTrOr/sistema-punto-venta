@@ -29,6 +29,7 @@ export class ProductosComponent {
 
       this.categorias = this.productos.map(producto => producto.categoria);
       this.categorias = [...new Set(this.categorias)];
+      this.categorias.splice(this.categorias.indexOf('1'), 1)
 
     });
   }
