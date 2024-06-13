@@ -6,6 +6,8 @@ import { VentasComponent } from './pages/empleados/ventas/ventas.component';
 import { ProductosComponent as AdminProductosComponent } from './pages/administrativo/productos/productos.component';
 import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas-admin.component';
 import { EditarVentasComponent as AdminEditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
+import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar-ventas.component';
+import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,11 @@ const routes: Routes = [
     component: VentasComponent
   },
   {
+    path: 'mostrar-ventas',
+    title: 'Mostrar ventas',
+    component: MostrarVentasComponent
+  },
+  {
     path: 'admin-productos',
     title: 'Administrar productos',
     component: AdminProductosComponent
@@ -27,6 +34,11 @@ const routes: Routes = [
     path: 'admin-ventas',
     title: 'Administrar ventas',
     component: VentasAdminComponent
+  },
+  {
+    path: 'admin-ventas-filtros',
+    title: 'Filtros de ventas',
+    component: VentasFiltrosComponent
   },
   {
     path: 'admin-editar-ventas/:id',

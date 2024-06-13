@@ -2,16 +2,15 @@ const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
 const { exec } = require('child_process');
 
+const { v4: uuidv4 } = require('uuid');
+
 function exportarPDF(data) {
 
-    console.log('DATA')
-    console.log(data);
-
-    console.log('VENTAS');
-    console.log(data.ventas);
+    const myId = uuidv4();
+    const fechaArreglo = data.hora.split(':')
 
     let doc = new PDFDocument({ margin: 30, size: 'A4' });
-    const writeStream = fs.createWriteStream('./document.pdf');
+    const writeStream = fs.createWriteStream(`./files/corte_${data.fecha}_${fechaArreglo[0]}.${fechaArreglo[1]}.pdf`);
     doc.pipe(writeStream);
 
     ; (async function () {
@@ -62,7 +61,7 @@ function exportarPDF(data) {
 
         // Open the PDF document after it is written
         writeStream.on('finish', () => {
-            const filePath = 'document.pdf';
+            const filePath = `./files/corte_${data.fecha}_${fechaArreglo[0]}.${fechaArreglo[1]}.pdf`;
 
             // Use default application to open the PDF based on OS
             switch (process.platform) {

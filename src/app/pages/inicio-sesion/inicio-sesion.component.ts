@@ -31,7 +31,7 @@ export class InicioSesionComponent {
     console.log(this.usuario)
 
     if(this.usuario.usuario === 'admin' && this.usuario.password === 'admin') {
-      this.router.navigate(['/admin-ventas']);
+      this.router.navigate(['/admin-ventas-filtros']);
     } else if(this.usuario.usuario === 'empleado' && this.usuario.password === 'empleado') {
       this.router.navigate(['/ventas']);
     }

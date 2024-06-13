@@ -21,6 +21,8 @@ import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { VentasGeneralComponent } from './components/ventas-general/ventas-general.component';
 import { VentasProductosComponent } from './components/ventas-productos/ventas-productos.component';
+import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar-ventas.component';
+import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { VentasProductosComponent } from './components/ventas-productos/ventas-p
     EditarVentasComponent,
     VentasAdminComponent,
     VentasGeneralComponent,
-    VentasProductosComponent
+    VentasProductosComponent,
+    MostrarVentasComponent,
+    VentasFiltrosComponent
   ],
   imports: [
     BrowserModule,
