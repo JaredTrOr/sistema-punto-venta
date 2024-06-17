@@ -113,32 +113,49 @@ async function getVentasFiltradas(event, filtro) {
         }
     }
 
-    //Establecer la hora si existe
-    // if (filtro.filtroHoraInicio !== 'x') {
-    //     const [horaInicio, minutoInicio] = filtro.filtroHoraInicio.split(':');
-    //     fechaInicio.setHours(horaInicio, minutoInicio);
+    //Obtener la hora
+    let horaInicio, horaFin;
 
-    //     //Establecer una hora fin de una diferencia de 1 hora
-    //     fechaFin.setHours(horaInicio, minutoInicio);
-    //     fechaFin.setHours(fechaFin.getHours() + 1);
-    // }
+    let consulta = {
+        timestamp: {
+            $gte: fechaInicio,
+            $lte: fechaFin
+        }, 
+    }
 
-    // if (filtro.filtroHoraFin !== 'x') {
-    //     const [horaFin, minutoFin] = filtro.filtroHoraFin.split(':');
-    //     fechaFin.setHours(horaFin, minutoFin);
-    // }
+    //Si se selecciona la hora de inicio
+    if (filtro.filtroHoraInicio !== 'x') {
+        const [hora] = filtro.filtroHoraInicio.split(':');
+        let horaInt = parseInt(hora)
 
-    // console.log(fechaInicio, fechaFin)
-    // console.log(fechaInicio.getHours(), fechaFin.getHours())
+        horaInicio = horaInt;
+        horaFin = horaInt + 1;
+    }
+
+    //Si se selecciona la hora de fin
+    if (filtro.filtroHoraFin !== 'x') {
+        const [hora] = filtro.filtroHoraFin.split(':');
+        let horaInt = parseInt(hora)
+
+        horaFin = horaInt;
+    }
+
+    //Si se selecciona la hora de inicio y la hora de fin realiza la consulta junto con las horas
+    if (horaInicio && horaFin) {
+        consulta = {
+            ...consulta,
+            $expr: {
+                $and: [
+                  { $gte: [{ $toInt: { $substr: ["$hora", 0, 2] } }, horaInicio] },
+                  { $lt: [{ $toInt: { $substr: ["$hora", 0, 2] } }, horaFin] }
+                ]
+              }
+        }
+    }
 
     //Realizar la consulta
     try {
-        const ventasFiltradas = await Venta.find({
-            timestamp: {
-                $gte: fechaInicio,
-                $lte: fechaFin
-            }
-        });
+        const ventasFiltradas = await Venta.find(consulta);
 
         event.reply('get-ventas-filtradas', JSON.stringify(ventasFiltradas))
         console.log({success: true, message: 'Ventas filtradas obtenidas'})
