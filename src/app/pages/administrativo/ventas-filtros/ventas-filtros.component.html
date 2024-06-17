@@ -1,125 +1,99 @@
 <app-navbar-admin></app-navbar-admin>
-<section class="p-5">
-  <h2>Ventas generales</h2>
-
-  <div class="filtros-container mt-5">
-
-    <div class="filtro-dia-cmbox">
-      <select name="" id="" class="filtro">
-        <option value="0">Hoy</option>
-        <option value="1">Ayer</option>
-        <option value="2">Últimos 7 días</option>
-        <option value="3">Últimos 30 días</option>
-        <option value="4">Este mes</option>
-        <option value="5">Mes pasado</option>
-        <option value="6">Este año</option>
-        <option value="7">Año pasado</option>
-      </select>
-    </div>
-
-    <div class="filtro-check mt-4">
-      Más filtros
-      <input [(ngModel)]="masFiltros" type="checkbox">
-    </div>
-
-    <div *ngIf="masFiltros" class="mas-filtros mt-4">
-      <div class="filtro-dia d-flex gap-5 mt-5">
-        <div>
-          <label for="">Fecha Inicio</label>
-          <input type="date">
+<div class="ventas-filtro-container mt-3 p-4">
+  <section>
+    <h2>Ventas generales</h2>
+  
+    <div class="filtros-container mt-5">
+  
+      <!--FILTRO DÍA-->
+      <div class="filtro-dia-cmbox">
+        <select [(ngModel)]="filtroPorDia" name="" id="" class="filtro">
+          <option value="todas">Todas</option>
+          <option value="hoy">Hoy</option>
+          <option value="ayer">Ayer</option>
+          <option value="ultimos-7-dias">Últimos 7 días</option>
+          <option value="ultimos-30-dias">Últimos 30 días</option>
+          <option value="mes-pasado">Mes pasado</option>
+          <option value="este-año">Este año</option>
+          <option value="año-pasado">Año pasado</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+  
+      <!--FILTRO FECHA ESPECÍFICA O RANGO-->
+      <div *ngIf="filtroPorDia === 'otro'" class="mt-4 filtro-fecha">
+  
+        <div class="fecha-container">
+          <div>
+            <input [(ngModel)]="radioFiltroFecha" id="fecha-especifica" type="radio" value="fecha-especifica"> 
+            <label for="fecha-especifica">Fecha específica</label>
+          </div>
+          <input type="date" [(ngModel)]="filtroFechaEspecifica" [disabled]=" radioFiltroFecha !== 'fecha-especifica' ">
         </div>
-
-        <div>
-          <label for="">Fecha Fin</label>
-          <input type="date">
+  
+        <div class="fecha-container">
+          <div>
+            <input [(ngModel)]="radioFiltroFecha" id="rango-fechas" type="radio" value="fecha-rango">
+            <label for="rango-fechas">Rango de fechas</label>
+          </div>
+  
+          <div>
+            <input type="date" [(ngModel)]="filtroFechaInicio" [disabled]=" radioFiltroFecha !== 'fecha-rango' ">
+            <input type="date" [(ngModel)]="filtroFechaFin" [disabled]=" radioFiltroFecha !== 'fecha-rango' ">
+          </div>
         </div>
       </div>
-
-      <div class="filtro-hora mt-5 d-flex gap-5">
+  
+      <!--FILTRO HORA-->
+      <div class="filtro-hora mt-4">
         <div>
-          <label for="">Hora Inicio</label>
-          <select name="" id="" class="horas">
-            <option value="0">00:00</option>
-            <option value="1">01:00</option>
-            <option value="2">02:00</option>
-            <option value="3">03:00</option>
-            <option value="4">04:00</option>
-            <option value="5">05:00</option>
-            <option value="6">06:00</option>
-            <option value="7">07:00</option>
-            <option value="8">08:00</option>
-            <option value="9">09:00</option>
-            <option value="10">10:00</option>
-            <option value="11">11:00</option>
-            <option value="12">12:00</option>
-            <option value="13">13:00</option>
-            <option value="14">14:00</option>
-            <option value="15">15:00</option>
-            <option value="16">16:00</option>
-            <option value="17">17:00</option>
-            <option value="18">18:00</option>
-            <option value="19">19:00</option>
-            <option value="20">20:00</option>
-            <option value="21">21:00</option>
-            <option value="22">22:00</option>
-            <option value="23">23:00</option>
+          <label for="">Hora Inicio:</label>
+          <select [(ngModel)]="filtroHoraInicio" name="" id="" class="horas">
+            <option value="x">Escoge una hora</option>
+            <option *ngFor="let hora of horas" value="{{ hora.value }}">{{ hora.viewValue }}</option>
           </select>
         </div>
-
+  
         <div>
-          <label for="">Hora Inicio</label>
-          <select name="" id="" class="horas">
-            <option value="0">00:00</option>
-            <option value="1">01:00</option>
-            <option value="2">02:00</option>
-            <option value="3">03:00</option>
-            <option value="4">04:00</option>
-            <option value="5">05:00</option>
-            <option value="6">06:00</option>
-            <option value="7">07:00</option>
-            <option value="8">08:00</option>
-            <option value="9">09:00</option>
-            <option value="10">10:00</option>
-            <option value="11">11:00</option>
-            <option value="12">12:00</option>
-            <option value="13">13:00</option>
-            <option value="14">14:00</option>
-            <option value="15">15:00</option>
-            <option value="16">16:00</option>
-            <option value="17">17:00</option>
-            <option value="18">18:00</option>
-            <option value="19">19:00</option>
-            <option value="20">20:00</option>
-            <option value="21">21:00</option>
-            <option value="22">22:00</option>
-            <option value="23">23:00</option>
+          <label for="">Hora Fin:</label>
+          <select [(ngModel)]="filtroHoraFin" name="" id="" class="horas">
+            <option value="x">Escoge una hora</option>
+            <option *ngFor="let hora of horas" value="{{ hora.value }}">{{ hora.viewValue }}</option>
           </select>
         </div>
       </div>
+  
+      <!--BOTON DE APLICAR FILTRO-->
+      <button (click)="aplicarCambios()" class="mt-4 btn-aplicar-filtros">Aplicar cambios</button>
     </div>
-  </div>
+  
+  </section>
+  
+  <section>
+    <div class="container-botones">
+      <button
+      (click)="exportarPDF('Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())"
+      *ngIf="ventas.length" class="btns btn-exportar">
+      Exportar
+    </button>
 
-  <button
-    (click)="exportarPDF('Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())"
-    *ngIf="ventas.length" class="btns btn-exportar">
-    Exportar
-  </button>
-
-  <div class="mt-5 radio-buttons-container">
-    <div class="radio-button-row">
-      <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
-      <label for="radioVentasGeneral"> Ventas generales</label>
+      <div class="radio-buttons-container d-flex gap-3">
+        <div class="radio-button-row">
+          <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
+          <label for="radioVentasGeneral"> Ventas generales</label>
+        </div>
+    
+        <div class="radio-button-row">
+          <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto"
+            [(ngModel)]="ventasProductos">
+          <label for="radioVentasProducto"> Ventas por producto</label>
+        </div>
+      </div>
     </div>
 
-    <div class="mt-3 radio-button-row">
-      <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto"
-        [(ngModel)]="ventasProductos">
-      <label for="radioVentasProducto"> Ventas por producto</label>
+    <div class="container-ventas mt-3">
+      <app-ventas-general *ngIf="ventas.length && ventasProductos === 'ventasGeneral'" [ventas]="ventas"></app-ventas-general>
+      <app-ventas-productos *ngIf="ventas.length && ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
     </div>
-  </div>
-
-  <app-ventas-productos *ngIf="ventas.length && ventasProductos === 'ventasProducto'"
-    [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
-  <app-ventas-general *ngIf="ventas.length && ventasProductos === 'ventasGeneral'"
-    [ventas]="ventas"></app-ventas-general>
-</section>
+  </section>
+</div>

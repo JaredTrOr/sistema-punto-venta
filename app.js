@@ -8,7 +8,7 @@ const connectionMongoDB = require('./backend/connection')
 const { 
     getVentas, 
     createVenta, 
-    getVentasFecha, 
+    getVentasFiltradas, 
     updateVentas, 
     deleteVenta 
 } = require('./backend/controllers/ventas')
@@ -66,9 +66,9 @@ connectionMongoDB()
 //Ventas
 ipcMain.on('create-venta', createVenta)
 ipcMain.on('get-ventas', getVentas)
-ipcMain.on('get-ventas-select-fecha', getVentasFecha)
+ipcMain.on('get-ventas-filtradas', getVentasFiltradas)
 ipcMain.on('update-ventas', updateVentas)
-ipcMain.on('delete-venta', deleteVenta)
+ipcMain.on('delete-venta', deleteVenta) 
 //Cortes
 ipcMain.on('get-venta-despues-corte', getVentasDespuesCorte)
 ipcMain.on('create-corte', createCorte)
