@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Usuario } from '../../models/UsuarioEjemplo';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ElectronService } from '../../services/electron.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -13,31 +14,23 @@ export class InicioSesionComponent {
   usuario = { usuario: '', password: ''};
   usuarios: Usuario[] = [];
 
-  constructor(private router: Router) {
-    this.usuarios = [
-      {
-        usuario: 'empleado',
-        password: 'empleado'
-      },
-      {
-        usuario: 'admin',
-        password: 'admin'
-      }
-    ]
-  }
+  constructor(
+    private router: Router, 
+    private electronService: ElectronService
+  ) { }
 
   iniciarSesion() {
 
-    console.log(this.usuario)
-
-    if(this.usuario.usuario === 'admin' && this.usuario.password === 'admin') {
-      this.router.navigate(['/admin-ventas-filtros']);
-    } else if(this.usuario.usuario === 'empleado' && this.usuario.password === 'empleado') {
-      this.router.navigate(['/ventas']);
-    }
-    else {
-      Swal.fire('Error', 'Usuario o contraseña incorrectos', 'error');
-    }
+    this.electronService.send('iniciar-sesion', this.usuario);
+    this.electronService.on('iniciar-sesion', (event, response) => {
+      response = JSON.parse(response);
+      if (response.success) {
+        this.router.navigate([response.ruta]);
+      }
+      else {
+        Swal.fire('Error', response.message, 'error');
+      }
+    });
   }
 
 }

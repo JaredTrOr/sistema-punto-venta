@@ -18,6 +18,7 @@ const {
 } = require('./backend/controllers/cortes');
 //Exportación controller
 const { exportacionPDF } = require('./backend/controllers/exportacion');
+const { iniciarSesion } = require('./backend/controllers/empleados')
 
 let mainWindow
 
@@ -63,6 +64,8 @@ app.on('activate', function () {
 // Eventos de MongoDB
 connectionMongoDB()
 
+//Login
+ipcMain.on('iniciar-sesion', iniciarSesion)
 //Ventas
 ipcMain.on('create-venta', createVenta)
 ipcMain.on('get-ventas', getVentas)
