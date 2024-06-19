@@ -84,16 +84,15 @@
         </div>
     
         <div class="radio-button-row">
-          <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto"
-            [(ngModel)]="ventasProductos">
+          <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
           <label for="radioVentasProducto"> Ventas por producto</label>
         </div>
       </div>
     </div>
 
     <div class="container-ventas mt-3">
-      <app-ventas-general *ngIf="ventas.length && ventasProductos === 'ventasGeneral'" [ventas]="ventas"></app-ventas-general>
-      <app-ventas-productos *ngIf="ventas.length && ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
+      <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas"></app-ventas-general>
+      <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
     </div>
   </section>
 </div>

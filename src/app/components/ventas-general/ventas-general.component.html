@@ -1,8 +1,9 @@
-<div *ngIf="!ventas.length">
-    <h1>No hay ventas del día de hoy</h1>
+<div *ngIf="!ventas.length" class="mt-5">
+    <h3>No se han encontrado ventas aún</h3>
 </div>
 
 <div class="ventas-container">
+
     <div *ngFor="let venta of ventas" class="venta-card">
         <div class="card-controllers">
             <i routerLink="/admin-editar-ventas/{{ venta.idVenta }}" class="bi bi-pencil-square"></i>
