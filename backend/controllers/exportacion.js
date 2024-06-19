@@ -1,5 +1,5 @@
 const exportarPDF = require('../utils/exportarPDF')
-const {formatearFecha} = require('../utils/formateos')
+const { formatearFecha } = require('../utils/formateos')
 
 function exportacionPDF (event, data) {
     data.fecha = formatearFecha(data.fecha);

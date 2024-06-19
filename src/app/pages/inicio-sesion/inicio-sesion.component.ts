@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Usuario } from '../../models/UsuarioEjemplo';
+import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ElectronService } from '../../services/electron.service';
@@ -12,11 +11,11 @@ import { ElectronService } from '../../services/electron.service';
 export class InicioSesionComponent {
 
   usuario = { usuario: '', password: ''};
-  usuarios: Usuario[] = [];
 
   constructor(
     private router: Router, 
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private ngZone: NgZone
   ) { }
 
   iniciarSesion() {
@@ -25,7 +24,9 @@ export class InicioSesionComponent {
     this.electronService.on('iniciar-sesion', (event, response) => {
       response = JSON.parse(response);
       if (response.success) {
-        this.router.navigate([response.ruta]);
+        this.ngZone.run(() => {
+          this.router.navigateByUrl(response.ruta);
+        })  
       }
       else {
         Swal.fire('Error', response.message, 'error');

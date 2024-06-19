@@ -72,7 +72,7 @@
   <section>
     <div class="container-botones">
       <button
-      (click)="exportarPDF('Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())"
+      (click)="exportarPDF()"
       *ngIf="ventas.length" class="btns btn-exportar">
       Exportar
     </button>

@@ -17,6 +17,7 @@ export class VentasFiltrosComponent {
   ventas: Venta[] = []; // --> Ventas generales
   ventasPorProducto: VentasPorProducto[] = [];
   horas: Hora[] = [];
+  ventasProductos: string = 'ventasGeneral';
 
   //Filtros
   filtroPorDia = 'todas';
@@ -31,7 +32,6 @@ export class VentasFiltrosComponent {
   filtroHoraFin = 'x';
 
   tiempo = new Tiempo();
-  ventasProductos: string = 'ventasGeneral';
 
   constructor(
     private ventasService: VentasService,
@@ -109,12 +109,25 @@ export class VentasFiltrosComponent {
     })
   }
 
-  exportarPDF(tituloPDF: string) {
+  exportarPDF() {
     const data = {
-      tituloPDF,
+      tituloPDF: 'Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora(),
       fecha: this.tiempo.getDate(),
       hora: this.tiempo.getHora(),
       ventas: this.ventasPorProducto,
+      filtros: {
+        filtroPorDia: this.filtroPorDia, //--> Determina si se filtra por hoy, ayer, semana, mes, año, otro 
+
+        radioFiltroFecha: this.radioFiltroFecha, // --> Determina si se filtra por fecha específica o en rango
+
+        filtroFechaEspecifica: this.filtroFechaEspecifica,
+
+        filtroFechaInicio: this.filtroFechaInicio,
+        filtroFechaFin: this.filtroFechaFin,
+
+        filtroHoraInicio: this.filtroHoraInicio, // --> Hora opcional
+        filtroHoraFin: this.filtroHoraFin,
+      }
     }
     this.electronService.send('exportar-pdf', data);
   }

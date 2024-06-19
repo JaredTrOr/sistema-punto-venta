@@ -1,84 +1,110 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
-const { exec } = require('child_process');
-
-const { v4: uuidv4 } = require('uuid');
+const { app, dialog } = require('electron');
+const path = require('path');
 
 function exportarPDF(data) {
 
-    const myId = uuidv4();
-    const fechaArreglo = data.hora.split(':')
+    const options = {
+        title: 'Guardar PDF',
+        name: 'corte.pdf',
+        defaultPath: path.join(app.getPath('documents'), `corte_${data.fecha}_${data.hora}.pdf`),
+        filters: [
+            { name: 'PDF Files', extensions: ['pdf'] },
+        ]
+    };
 
-    let doc = new PDFDocument({ margin: 30, size: 'A4' });
-    const writeStream = fs.createWriteStream(`./files/corte_${data.fecha}_${fechaArreglo[0]}.${fechaArreglo[1]}.pdf`);
-    doc.pipe(writeStream);
+    //Mensaje desplegable para guardar el archivo
+    dialog.showSaveDialog(options).then(({filePath}) => {
+        if (filePath) {
+            const doc = new PDFDocument({ margin: 30, size: 'A4' });
+            const writeStream = fs.createWriteStream(filePath);
+            doc.pipe(writeStream);
 
-    ; (async function () {
-        // Title and subtitle
-        doc.font("Helvetica-Bold").fontSize(14).text("PANADERIAS SAN CAYETANO");
-        doc.font("Helvetica").fontSize(12).text(data.tituloPDF);
+            (async function () {
+                console.log(data.filtros)
+                doc.font("Helvetica-Bold").fontSize(14).text("PANADERIAS SAN CAYETANO");
+                doc.font("Helvetica").fontSize(12).text(data.filtros ? obtenerTituloPDF(data.filtros) : data.tituloPDF);
 
-        // Add margin between subtitle and table
-        doc.moveDown(3);
+                doc.moveDown(3);
 
-        // table
-        const table = {
-            headers: [
-                { label: "Nombre de producto", property: 'nombreProducto', width: 150, renderer: null },
-                { label: "Cantidad", property: 'cantidad', width: 150, renderer: null },
-                { label: "Importe", property: 'importe', width: 100, renderer: null },
-                { label: "Total", property: 'total', width: 150, renderer: null },
-                {},
-                {
-                    property: 'price4',
-                    renderer: (value, indexColumn, indexRow, row, rectRow, rectCell) => { }
-                },
-            ],
-            // complex data
-            datas: data.ventas,
-            // simple data
-            rows: [
-                [
-                    "Total:",
-                    "",
-                    "",
-                    `$ ${ data.ventas.reduce((acc, item) => acc + item.total, 0) }`
-                ],
-                // [...],
-            ],
-        };
+                // Table
+                const table = {
+                    headers: [
+                        { label: "Nombre de producto", property: 'nombreProducto', width: 150, renderer: null },
+                        { label: "Cantidad", property: 'cantidad', width: 150, renderer: null },
+                        { label: "Importe", property: 'importe', width: 100, renderer: null },
+                        { label: "Total", property: 'total', width: 150, renderer: null },
+                        {},
+                        {
+                            property: 'price4',
+                            renderer: (value, indexColumn, indexRow, row, rectRow, rectCell) => { }
+                        },
+                    ],
+                    datas: data.ventas,
 
-        // the magic
-        doc.table(table, {
-            prepareHeader: () => doc.font("Helvetica-Bold").fontSize(8),
-            prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
-                doc.font("Helvetica").fontSize(8);
-                indexColumn === 0 && doc.addBackground(rectRow, '', 0.15);
-            },
-        });
-        // done!
-        doc.end();
+                    rows: [
+                        [
+                            "Total:",
+                            "",
+                            "",
+                            `$ ${data.ventas.reduce((acc, item) => acc + item.total, 0)}`
+                        ],
+                    ],
+                };
 
-        // Open the PDF document after it is written
-        writeStream.on('finish', () => {
-            const filePath = `./files/corte_${data.fecha}_${fechaArreglo[0]}.${fechaArreglo[1]}.pdf`;
+                // Create table
+                doc.table(table, {
+                    prepareHeader: () => doc.font("Helvetica-Bold").fontSize(8),
+                    prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+                        doc.font("Helvetica").fontSize(8);
+                        indexColumn === 0 && doc.addBackground(rectRow, '', 0.15);
+                    },
+                });
 
-            // Use default application to open the PDF based on OS
-            switch (process.platform) {
-                case 'darwin':
-                    exec(`open ${filePath}`);
-                    break;
-                case 'win32':
-                    exec(`start ${filePath}`);
-                    break;
-                case 'linux':
-                    exec(`xdg-open ${filePath}`);
-                    break;
-                default:
-                    console.log('PDF created at:', filePath);
-            }
-        });
-    })();
+                // Finish and close document
+                doc.end();
+
+                writeStream.on('finish', () => {
+                    console.log('PDF guardado en:', filePath);
+                });
+            })();
+        }
+    }).catch(err => {
+        console.log('Save dialog error:', err);
+    });
+}
+
+function obtenerTituloPDF(filtros) {
+    let titulo = '';
+
+    //Exportación de ventas de los días
+
+    //--> Por selección
+    if (filtros.filtroPorDia === 'todas') {
+        titulo = 'Exportación de todas las ventas';
+    }
+    else if (filtros.filtroPorDia !== 'otro') titulo = `Exportación de ventas de ${filtros.filtroPorDia}`;
+
+    else {
+         //--> Por fecha específica
+        if (filtros.radioFiltroFecha === 'fecha-especifica') titulo = `Exportación de ventas del día ${filtros.filtroFechaEspecifica}`;
+    
+        //--> Por rango de fechas
+        else if (filtros.radioFiltroFecha === 'fecha-rango') titulo = `Exportación de ventas del ${filtros.filtroFechaInicio} al ${filtros.filtroFechaFin}`;
+
+    }
+
+    //Exportación de ventas de las horas
+
+    if (filtros.filtroHoraInicio !== 'x' && filtros.filtroHoraFin !== 'x') 
+        titulo += ` de las ${filtros.filtroHoraInicio} a las ${filtros.filtroHoraFin}`;
+    else if (filtros.filtroHoraInicio !== 'x') 
+        titulo += ` a las ${filtros.filtroHoraInicio}`;
+
+    console.log(titulo)
+    return titulo;
+
 }
 
 module.exports = exportarPDF;

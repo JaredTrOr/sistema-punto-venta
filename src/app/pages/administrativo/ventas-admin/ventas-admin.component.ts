@@ -104,9 +104,8 @@ export class VentasAdminComponent {
 
       }
     });
-
   }
-
+  
   exportarPDF(tituloPDF: string) {
     const data = {
       tituloPDF,
