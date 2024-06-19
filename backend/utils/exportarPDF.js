@@ -8,7 +8,7 @@ function exportarPDF(data) {
     const options = {
         title: 'Guardar PDF',
         name: 'corte.pdf',
-        defaultPath: path.join(app.getPath('documents'), `corte_${data.fecha}_${data.hora}.pdf`),
+        defaultPath: path.join(app.getPath('documents'), `exportacion_${data.fecha}_${data.hora}.pdf`),
         filters: [
             { name: 'PDF Files', extensions: ['pdf'] },
         ]
