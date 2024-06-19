@@ -88,10 +88,22 @@ function obtenerTituloPDF(filtros) {
 
     else {
          //--> Por fecha específica
-        if (filtros.radioFiltroFecha === 'fecha-especifica') titulo = `Exportación de ventas del día ${filtros.filtroFechaEspecifica}`;
+        if (filtros.radioFiltroFecha === 'fecha-especifica') {
+            const [anio, mes, dia] = filtros.filtroFechaEspecifica.split('-');
+            const fechaString = `${dia}/${mes}/${anio}`;
+            titulo = `Exportación de ventas del día ${fechaString}`;
+        }
     
         //--> Por rango de fechas
-        else if (filtros.radioFiltroFecha === 'fecha-rango') titulo = `Exportación de ventas del ${filtros.filtroFechaInicio} al ${filtros.filtroFechaFin}`;
+        else if (filtros.radioFiltroFecha === 'fecha-rango') {
+            const [anioInicio, mesInicio, diaInicio] = filtros.filtroFechaInicio.split('-');
+            const [anioFin, mesFin, diaFin] = filtros.filtroFechaFin.split('-');
+
+            const fechaInicioString = `${diaInicio}/${mesInicio}/${anioInicio}`;
+            const fechaFinString = `${diaFin}/${mesFin}/${anioFin}`;
+
+            titulo = `Exportación de ventas del ${fechaInicioString} al ${fechaFinString}`;
+        }
 
     }
 
