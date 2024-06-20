@@ -1,9 +1,9 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const url = require("url");
 const path = require("path");
 
 //MongoDB
-const connectionMongoDB = require('./backend/connection')
+const connectionMongoDB = require('./backend/connection');
 //Ventas controller
 const { 
     getVentas, 
@@ -11,14 +11,15 @@ const {
     getVentasFiltradas, 
     updateVentas, 
     deleteVenta 
-} = require('./backend/controllers/ventas')
+} = require('./backend/controllers/ventas');
 //Cortes controller
 const {
     getVentasDespuesCorte, createCorte
 } = require('./backend/controllers/cortes');
 //Exportación controller
 const { exportacionPDF } = require('./backend/controllers/exportacion');
-const { iniciarSesion } = require('./backend/controllers/empleados')
+const { iniciarSesion } = require('./backend/controllers/empleados');
+const { getProductos } = require('./backend/controllers/productos');
 
 let mainWindow
 
@@ -77,3 +78,5 @@ ipcMain.on('get-venta-despues-corte', getVentasDespuesCorte)
 ipcMain.on('create-corte', createCorte)
 // Eventos de PDF
 ipcMain.on('exportar-pdf', exportacionPDF)
+//Productos
+ipcMain.on('get-productos', getProductos)

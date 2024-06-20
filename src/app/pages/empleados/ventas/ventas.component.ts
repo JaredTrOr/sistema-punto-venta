@@ -33,19 +33,35 @@ export class VentasComponent {
   ) {}
 
   ngOnInit() {
-    this.productoService.getProductos().subscribe(data => {
-      this.productos = data.map(doc => {
+
+    //Obtención de productos desde el firebase
+    this.productoService.getProductos().subscribe(
+      data => {
+        this.productos = data.map(doc => {
+          return {
+            ...doc.payload.doc.data() as Producto,
+              idFirebase: doc.payload.doc.id
+          };
+        });
+    
+        this.categorias = this.productos.map(producto => producto.categoria);
+        this.categorias = [...new Set(this.categorias)];
         this.loadingData = false;
-        return {
-          ...doc.payload.doc.data() as Producto,
-            idFirebase: doc.payload.doc.id
-        };
-      });
+      },
+      error => {
+        console.log(`Error al obtener los productos desde firebase: ${error}`)
 
-      this.categorias = this.productos.map(producto => producto.categoria);
-      this.categorias = [...new Set(this.categorias)];
-
-    });
+        //Obtener productos desde el local
+        this.electronService.send('get-productos', null);
+        this.electronService.on('get-productos', (event,productos) => {
+          console.log('Productos obtenidos desde el local')
+          this.productos = JSON.parse(productos);
+          this.categorias = this.productos.map(producto => producto.categoria);
+          this.categorias = [...new Set(this.categorias)];
+          this.loadingData = false;
+        });
+      }
+    );
     
   }
 
