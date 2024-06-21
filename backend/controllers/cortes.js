@@ -23,7 +23,7 @@ async function getVentasDespuesCorte (event, data) {
     }
 }
 
-async function createCorte (event, tituloCorte) {
+async function createCorte (event, data) {
     try { 
         //Obtener el último corte o la primera venta que se realizó para obtener la fecha de inicio
 
@@ -36,7 +36,10 @@ async function createCorte (event, tituloCorte) {
             const [ultimoCorte] = await Corte.find().sort({_id: -1}).limit(1)
             //Checar tiempo fin
             await Corte.create({
-                tituloCorte: tituloCorte,
+                idVenta: data.idVenta,
+                tituloCorte: data.tituloCorte,
+                fechaCorte: data.fechaCorte,
+                horaCorte: data.horaCorte,
                 tiempoInicio: ultimoCorte.tiempoFin,
                 tiempoFin: new Date()
             })

@@ -7,6 +7,7 @@ import { Venta } from '../../../models/Ventas';
 import  { Tiempo}   from '../../../utils/tiempo';
 import { VentasService } from '../../../services/ventas.service';
 import { ElectronService } from '../../../services/electron.service';
+import { generarId } from '../../../utils/generadorId';
 
 @Component({
   selector: 'app-ventas',
@@ -75,15 +76,17 @@ export class VentasComponent {
     }
 
     this.carritoProductos.push({
-      idProducto: producto.idProducto ? producto.idProducto : -1,
+      idProducto: producto.idProducto,
+      idProductoNumerico: producto.idProductoNumerico,
       nombreProducto: producto.descripcion,
       importe: producto.precio,
       cantidad: 1,
       total: producto.precio
     });
+
   }
 
-  eliminarProducto(productoId?: number) {
+  eliminarProducto(productoId?: string) {
     const productoEnCarrito = this.carritoProductos.find(productoCarrito => productoCarrito.idProducto === productoId);
 
     const indexOfProductoEnCarrito = this.carritoProductos.indexOf(productoEnCarrito!);
@@ -132,9 +135,10 @@ export class VentasComponent {
           producto.total = producto.importe * producto.cantidad;
         })
 
-        //Realizar la compra
+        //Realizar la compra 
         const venta: Venta = {
-          sucursal: "Sucursal 1",
+          idVenta: generarId(),
+          sucursal: "Sucursal Testing",
           fecha: this.tiempo.getDate(),
           hora: this.tiempo.getHora(),
           timestamp: new Date(),

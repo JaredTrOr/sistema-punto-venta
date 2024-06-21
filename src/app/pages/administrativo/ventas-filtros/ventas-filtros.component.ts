@@ -82,6 +82,7 @@ export class VentasFiltrosComponent {
     this.electronService.send('get-ventas', null);
     this.electronService.on('get-ventas', (event, ventas) => {
       this.ventas = JSON.parse(ventas);
+      console.log(this.ventas)
       this.changeDetectorRef.detectChanges();
 
       this.ordenarVentasPorProducto();

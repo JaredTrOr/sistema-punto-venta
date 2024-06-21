@@ -60,7 +60,7 @@
 
             <div class="box-container">
                 <div (click)="agregarProducto(producto)" *ngFor="let producto of filtrarCategoria()" class="box">
-                    <h3>ID: {{ producto.idProducto }}</h3>
+                    <h3>ID: {{ producto.idProductoNumerico ? producto.idProductoNumerico : producto.idProducto }}</h3>
 
                     <div class="box-body">
                         <p class="categoria">{{ producto.categoria }}</p>

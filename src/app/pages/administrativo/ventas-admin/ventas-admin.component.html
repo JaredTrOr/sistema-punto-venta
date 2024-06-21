@@ -1,8 +1,4 @@
 <!-- <app-navbar-admin></app-navbar-admin> -->
-<div *ngIf="!ventasDespuesCorte.length" class="mt-5">
-  <h3>No se han encontrado ventas aún</h3>
-</div>
-
 <section class="p-5">
     <h2>Ventas por corte</h2>
 
@@ -33,7 +29,7 @@
       </div>
     </div>
 
-    <app-ventas-productos *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
-    <app-ventas-general *ngIf="ventasDespuesCorte.length && ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte"></app-ventas-general>
+    <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
+    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte"></app-ventas-general>
 
 </section>

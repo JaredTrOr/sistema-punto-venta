@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema 
 
 const Corte = new Schema({
+    idVenta: String, 
+    sucursal: String,
+    fechaCorte: String,
+    horaCorte: String,
     tituloCorte: String,
     tiempoInicio: Date,
     tiempoFin: Date,

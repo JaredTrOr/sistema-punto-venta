@@ -18,7 +18,8 @@ export class EditarVentasComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.idVenta = Number(params['id']);
-      this.ventaSeleccionada = this.ventas.find(venta => venta.idVenta === this.idVenta); 
+      console.log(this.idVenta);
+      // this.ventaSeleccionada = this.ventas.find(venta => venta.idVenta === this.idVenta); 
     });
 
 

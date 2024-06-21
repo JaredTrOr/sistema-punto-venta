@@ -27,7 +27,7 @@ export class ProductosService {
 
   getNuevoProducto(): Producto {
     return  {
-      idProducto: 0,
+      idProducto: '',
       imagen: '',
       descripcion: '',
       categoria: '',

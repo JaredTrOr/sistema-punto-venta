@@ -5,6 +5,7 @@ import { ElectronService } from '../../../services/electron.service';
 import { Tiempo } from '../../../utils/tiempo';
 import Swal from 'sweetalert2';
 import { VentasPorProducto } from '../../../models/VentasPorProducto';
+import { generarId } from '../../../utils/generadorId';
 
 @Component({
   selector: 'app-ventas-admin',
@@ -92,7 +93,20 @@ export class VentasAdminComponent {
       if (result.isConfirmed) {
 
         const tituloCorte = `Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`
-        this.electronService.send('create-corte', tituloCorte);
+        const fechaCorte = this.tiempo.getDate();
+        const horaCorte = this.tiempo.getHora();
+
+        const data = {
+          idVenta: generarId(), 
+          tituloCorte,
+          fechaCorte,
+          horaCorte,
+        }
+
+        //Realizar corte de caja en la base de datos en la nube
+
+        // Realizar corte de caja en la base de datos local
+        this.electronService.send('create-corte', data);
         this.electronService.on('create-corte', (event, corte) => {
           if (corte.success) {
             this.getVentasDespuesCorte() //--> Refrescar componentes

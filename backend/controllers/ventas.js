@@ -12,7 +12,6 @@ async function getVentas(event, data) {
 }
 
 async function createVenta(event, data) {
-    data.fechaHora = new Date();
     try {
         await Venta.create(data)
         console.log({ success: true, message: 'Venta creada' })
