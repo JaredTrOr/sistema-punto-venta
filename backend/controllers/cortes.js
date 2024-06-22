@@ -30,16 +30,22 @@ async function createCorte (event, data) {
         //Obtener el último corte, si no hay cortes se toma la primera venta que se realizó
         //Esto solo es la primera vez que se realiza un corte
 
+        const corte = {
+            idVenta: data.idVenta,
+            sucursal: data.sucursal,
+            tituloCorte: data.tituloCorte,
+            fechaCorte: data.fechaCorte,
+            horaCorte: data.horaCorte,
+        }
+
         const cortes = await Corte.findOne()
 
         if (cortes) {
             const [ultimoCorte] = await Corte.find().sort({_id: -1}).limit(1)
             //Checar tiempo fin
             await Corte.create({
-                idVenta: data.idVenta,
-                tituloCorte: data.tituloCorte,
-                fechaCorte: data.fechaCorte,
-                horaCorte: data.horaCorte,
+                ...corte,
+                //Fecha y hora de inicio de corte
                 tiempoInicio: ultimoCorte.tiempoFin,
                 tiempoFin: new Date()
             })
@@ -52,7 +58,8 @@ async function createCorte (event, data) {
 
         if (primeraVenta) {
             await Corte.create({
-                tituloCorte: tituloCorte,
+                ...corte,
+                //Fecha y hora de inicio de corte
                 tiempoInicio: primeraVenta.timestamp,
                 tiempoFin: new Date()
             })

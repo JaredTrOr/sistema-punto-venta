@@ -6,6 +6,8 @@ import { Tiempo } from '../../../utils/tiempo';
 import Swal from 'sweetalert2';
 import { VentasPorProducto } from '../../../models/VentasPorProducto';
 import { generarId } from '../../../utils/generadorId';
+import { Corte } from '../../../models/Corte';
+import { CortesService } from '../../../services/cortes.service';
 
 @Component({
   selector: 'app-ventas-admin',
@@ -24,6 +26,7 @@ export class VentasAdminComponent {
 
   constructor(
     private ventasService: VentasService,
+    private cortesService: CortesService,
     private electronService: ElectronService,
     private changeDetectorRef: ChangeDetectorRef
   ) { 
@@ -54,15 +57,16 @@ export class VentasAdminComponent {
     this.electronService.on('get-venta-despues-corte', (event, ventas) => {
       this.ventasDespuesCorte = [];
       this.ventasDespuesCorte = JSON.parse(ventas);
-      this.changeDetectorRef.detectChanges();
 
       // Ordenar ventas por producto
       this.ordenarVentasPorProducto();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
   ordenarVentasPorProducto() {
     let ventasPorProductoAux: any[] = [];
+    this.ventasPorProducto = [];
 
     this.ventasDespuesCorte.forEach(venta => {
       ventasPorProductoAux = ventasPorProductoAux.concat(venta.productos);
@@ -89,32 +93,34 @@ export class VentasAdminComponent {
       showCancelButton: true,
       confirmButtonText: "Si, realizar",
       cancelButtonText: "Cancelar",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
 
         const tituloCorte = `Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`
         const fechaCorte = this.tiempo.getDate();
         const horaCorte = this.tiempo.getHora();
 
-        const data = {
+        const corte: Corte = {
           idVenta: generarId(), 
+          sucursal: 'Sucursal Testing',
           tituloCorte,
           fechaCorte,
           horaCorte,
         }
 
-        //Realizar corte de caja en la base de datos en la nube
-
         // Realizar corte de caja en la base de datos local
-        this.electronService.send('create-corte', data);
+        this.electronService.send('create-corte', corte);
         this.electronService.on('create-corte', (event, corte) => {
           if (corte.success) {
-            this.getVentasDespuesCorte() //--> Refrescar componentes
+            this.getVentasDespuesCorte(); //--> Refrescar componentes
 
             Swal.fire("El corte se ha realizado con éxito", "", "success");
             this.exportarPDF(`Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`);
           }
-        })
+        });
+
+        //Realizar corte de caja en la base de datos en la nube
+        this.cortesService.createCorte(corte); //--> Realizar corte de caja en firebase asincronamente
 
       }
     });
