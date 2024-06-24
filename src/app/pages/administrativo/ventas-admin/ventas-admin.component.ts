@@ -135,4 +135,5 @@ export class VentasAdminComponent {
     }
     this.electronService.send('exportar-pdf', data);
   }
+
 }

@@ -131,6 +131,7 @@ export class VentasComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
+        //Calcular total de cada producto
         this.carritoProductos.forEach(producto => {
           producto.total = producto.importe * producto.cantidad;
         })

@@ -8,6 +8,7 @@ import { VentasAdminComponent } from './pages/administrativo/ventas-admin/ventas
 import { EditarVentasComponent as AdminEditarVentasComponent } from './pages/administrativo/editar-ventas/editar-ventas.component';
 import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar-ventas.component';
 import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
+import { TestComponent } from './components/test/test.component';
 
 const routes: Routes = [
   {
@@ -41,9 +42,13 @@ const routes: Routes = [
     component: VentasFiltrosComponent
   },
   {
-    path: 'admin-editar-ventas/:id',
+    path: 'admin-editar-ventas',
     title: 'Editar ventas',
     component: AdminEditarVentasComponent
+  },
+  {
+    path: 'test',
+    component: TestComponent
   },
   {
     path: '**',

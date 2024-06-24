@@ -1,6 +1,7 @@
-<app-navbar-admin></app-navbar-admin>
+<app-navbar-empleados *ngIf="origen === 'empleado'"></app-navbar-empleados>
+<app-navbar-admin *ngIf="origen === 'admin'"></app-navbar-admin>
 
-<section class="p-5">
+<section class="p-5" *ngIf="ventaSeleccionada">
     <div class="row custom-row">
         <h2>EDITAR VENTAS</h2>
 
@@ -11,13 +12,13 @@
             <p>Hora: {{ ventaSeleccionada.hora }}</p>
         </div>
         <div class="col-lg-4 mt-5">
-            <p><span class="bold">Cantidad general:</span>  {{ ventaSeleccionada.cantidadGeneral }}</p>
-            <p><span class="bold">Total general:</span>  {{ ventaSeleccionada.totalGeneral }}</p>
+            <p><span class="bold">Cantidad general:</span>  {{ calcularCantidadGeneral() }}</p>
+            <p><span class="bold">Total general:</span>  {{ calcularTotalGeneral() }}</p>
         </div>
         <div class="col-lg-4 mt-5">
             <div class="d-flex gap-3">
-                <button class="btn btn-warning p-3">Editar</button>
-                <button class="btn btn-danger p-3">Eliminar</button>
+                <button (click)="editarVenta()" class="btn btn-warning p-3">Editar venta</button>
+                <button (click)="eliminarVenta()" class="btn btn-danger p-3">Eliminar venta</button>
             </div>
         </div>
     </div>
@@ -25,23 +26,23 @@
     <div class="row custom-row mt-5">
         <div class="productos-vendidos-container">
             <div class="producto-card" *ngFor="let producto of ventaSeleccionada.productos">
-                <h4 class="bold">{{ producto.nombre }}</h4>
+                <h4 class="bold">{{ producto.nombreProducto }}</h4>
 
                 <div class="producto-info">
                     <div>
                         <p><label for="cantidad">Cantidad:</label></p> 
-                        <input id="cantidad" type="number" class="input-text" placeholder="{{ producto.cantidad }}">
+                        <input [(ngModel)]="producto.cantidad" id="cantidad" type="number" class="input-text" min="1">
                     </div>
                     <div>
                         <p><label for="importe">Importe:</label></p> 
-                        <input id="importe" type="number" class="input-text" placeholder="{{ producto.importe }}">
+                        <input [(ngModel)]="producto.importe" id="importe" type="number" class="input-text" min="1">
                     </div>
                     <div>
                         <p><label for="total">Total:</label></p> 
-                        <input id="total" type="number" class="input-text" placeholder="{{ producto.total }}">
+                        <input id="total" type="number" class="input-text" value="{{ producto.cantidad * producto.importe }}" disabled>
                     </div>
                     <div class="card-controllers">
-                        <i class="bi bi-trash text-white"></i>
+                        <i (click)="eliminarProductoVenta(producto)" class="bi bi-trash text-white"></i>
                     </div>
                 </div>
             </div>

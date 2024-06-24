@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 .env
 /files
+/src/app/components/test
 /src/app/files
 /src/environments
 # Compiled output

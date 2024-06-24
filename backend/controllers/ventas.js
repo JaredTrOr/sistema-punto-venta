@@ -11,9 +11,20 @@ async function getVentas(event, data) {
     }
 }
 
+async function getVentaPorId(event, id) {
+    try {
+        const venta = await Venta.findOne({idVenta: id})
+        event.reply('get-venta-por-id', JSON.stringify(venta))
+        console.log({success: true, message: 'Venta obtenida por ID'})
+    } catch(err) {
+        console.log({success: false, message: err})
+    }
+}
+
 async function createVenta(event, data) {
     try {
         await Venta.create(data)
+        event.reply('create-venta', JSON.stringify({ success: true, message: 'Venta creada' }))
         console.log({ success: true, message: 'Venta creada' })
     } catch (err) {
         console.log({ success: false, message: err })
@@ -22,7 +33,8 @@ async function createVenta(event, data) {
 
 async function updateVentas(event, data) {
     try {
-        await Venta.findByIdAndUpdate(data.id, data)
+        await Venta.findOneAndUpdate({ idVenta: data.idVenta }, data)
+        event.reply('update-venta', JSON.stringify({ success: true, message: 'Venta actualizada' }))
         console.log({ success: true, message: 'Venta actualizada' })
     } catch (err) {
         console.log({ success: false, message: err })
@@ -31,7 +43,8 @@ async function updateVentas(event, data) {
 
 async function deleteVenta(event, id) {
     try {
-        await Venta.findByIdAndDelete(id)
+        await Venta.findOneAndDelete({ idVenta: id })
+        event.reply('delete-venta', JSON.stringify({ success: true, message: 'Venta eliminada' }))
         console.log({ success: true, message: 'Venta eliminada' })
     } catch (err) {
         console.log({ success: false, message: err })
@@ -229,5 +242,6 @@ module.exports = {
     createVenta,
     getVentasFiltradas,
     updateVentas,
-    deleteVenta
+    deleteVenta,
+    getVentaPorId
 }

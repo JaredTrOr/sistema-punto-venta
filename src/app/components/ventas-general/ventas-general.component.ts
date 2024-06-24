@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Venta } from '../../models/Ventas';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ventas-general',
@@ -9,5 +10,17 @@ import { Venta } from '../../models/Ventas';
 export class VentasGeneralComponent {
 
   @Input() ventas: Venta[] = [];
+
+  constructor(private router: Router) {}
+
+  irEditarVentas(idVenta: string) {
+    const queryParams = {
+      origen: 'empleado',
+      idVenta
+    }
+
+    this.router.navigate(['/admin-editar-ventas'],  { queryParams })
+
+  }
 
 }

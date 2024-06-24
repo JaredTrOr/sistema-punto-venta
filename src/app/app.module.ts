@@ -23,6 +23,7 @@ import { VentasGeneralComponent } from './components/ventas-general/ventas-gener
 import { VentasProductosComponent } from './components/ventas-productos/ventas-productos.component';
 import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar-ventas.component';
 import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
+import { TestComponent } from './components/test/test.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ve
     VentasGeneralComponent,
     VentasProductosComponent,
     MostrarVentasComponent,
-    VentasFiltrosComponent
+    VentasFiltrosComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

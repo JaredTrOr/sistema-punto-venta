@@ -7,6 +7,7 @@ const connectionMongoDB = require('./backend/connection');
 //Ventas controller
 const { 
     getVentas, 
+    getVentaPorId,
     createVenta, 
     getVentasFiltradas, 
     updateVentas, 
@@ -70,8 +71,9 @@ ipcMain.on('iniciar-sesion', iniciarSesion)
 //Ventas
 ipcMain.on('create-venta', createVenta)
 ipcMain.on('get-ventas', getVentas)
+ipcMain.on('get-venta-por-id', getVentaPorId)
 ipcMain.on('get-ventas-filtradas', getVentasFiltradas)
-ipcMain.on('update-ventas', updateVentas)
+ipcMain.on('update-venta', updateVentas)
 ipcMain.on('delete-venta', deleteVenta) 
 //Cortes
 ipcMain.on('get-venta-despues-corte', getVentasDespuesCorte)

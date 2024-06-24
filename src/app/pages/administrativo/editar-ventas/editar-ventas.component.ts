@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ventas } from '../../../utils/ventas'
+import { Venta } from '../../../models/Ventas';
+import { ElectronService } from '../../../services/electron.service';
+import { ProductoVenta } from '../../../models/ProductoVenta';
+import Swal from 'sweetalert2';
+import { VentasService } from '../../../services/ventas.service';
 
 @Component({
   selector: 'app-editar-ventas',
@@ -9,19 +14,150 @@ import { ventas } from '../../../utils/ventas'
 })
 export class EditarVentasComponent {
 
-  idVenta!: number;
-  ventas = ventas;
-  ventaSeleccionada: any;
+  origen!: string;
+  ventas: Venta[] = [];
+  ventaSeleccionada!: Venta;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private electronService: ElectronService,
+    private ventasService: VentasService,
+    private router: Router,
+    private ngZone: NgZone
+  ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.idVenta = Number(params['id']);
-      console.log(this.idVenta);
-      // this.ventaSeleccionada = this.ventas.find(venta => venta.idVenta === this.idVenta); 
+    this.route.queryParams.subscribe(params => {
+      this.origen = params['origen'];
+      const idVenta = params['idVenta'];
+      
+      this.electronService.send('get-venta-por-id', idVenta);
+      this.electronService.on('get-venta-por-id', (event, data) => {
+
+        this.ngZone.run(() => {
+          this.ventaSeleccionada = JSON.parse(data);
+        });
+      })
     });
 
-
   }
+
+  eliminarProductoVenta(producto: ProductoVenta) {
+    Swal.fire({
+      title: "¿Seguro que quiere borrar el producto de la venta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, realizar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const index = this.ventaSeleccionada.productos.indexOf(producto);
+        this.ventaSeleccionada.productos.splice(index, 1);
+        
+      } 
+    })
+  }
+
+  editarVenta() {
+    Swal.fire({
+      title: "¿Seguro que quiere editar la venta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, realizar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        //Actualizar venta de manera local
+        this.electronService.send('update-venta', this.ventaSeleccionada);
+        this.electronService.on('update-venta', (event, response) => {
+          response = JSON.parse(response);
+          if (response.success) {
+            this.ngZone.run(() => {
+              Swal.fire("La venta se ha editado con éxito", "", "success");
+
+              //Una vez realizada la edición redireccionar a la página de origen
+              this.router.navigateByUrl(this.seleccionarRedireccionamiento());
+            })
+          }
+          else {
+            Swal.fire("Ocurrió un error al editar la venta", "", "error");
+          }
+        });
+
+        //Actualizar venta en la base de datos de firebase
+        this.ventasService.updateVentaByIdVenta(this.ventaSeleccionada.idVenta!, this.ventaSeleccionada)
+        .subscribe(() => {
+          console.log('Actualización exitosa en firebase')
+        })
+
+      }
+    })
+
+    
+  }
+
+  eliminarVenta() {
+    Swal.fire({
+      title: "¿Seguro que quiere eliminar la venta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, realizar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        //Eliminar venta de la base de datos de firebase
+        this.electronService.send('delete-venta', this.ventaSeleccionada.idVenta);
+        this.electronService.on('delete-venta', (event, response) => {
+          response = JSON.parse(response);
+          if (response.success) {
+            this.ngZone.run(() => {
+              Swal.fire("La venta se ha eliminado con éxito", "", "success");
+    
+              //Una vez realizada la eliminación redireccionar a la página de origen
+              this.router.navigateByUrl(this.seleccionarRedireccionamiento());
+            })
+          }
+          else {
+            Swal.fire("Hubo un error al editar la venta", "", "success");
+          }
+        });
+
+        this.ventasService.deleteVentaByIdVenta(this.ventaSeleccionada.idVenta!)
+        .subscribe(() => {
+          console.log('Eliminacióne exitosa en firebase')
+        })
+      }
+    })
+  }
+
+  calcularTotalPorProducto() {
+    this.ventaSeleccionada.productos.forEach(producto => producto.total = producto.importe * producto.cantidad);
+  }
+
+  calcularCantidadGeneral() {
+    const cantidadGeneral = this.ventaSeleccionada.productos.reduce((acc, producto) => acc + producto.cantidad, 0);
+    this.ventaSeleccionada.cantidadGeneral = cantidadGeneral;
+
+    return cantidadGeneral;
+  }
+
+  calcularTotalGeneral() {
+    this.calcularTotalPorProducto();
+    return this.ventaSeleccionada.productos.reduce((totalGeneral, producto) => totalGeneral + producto.total, 0);
+  }
+
+  seleccionarRedireccionamiento() {
+    let ruta = '';
+
+    if (this.origen === 'empleado') {
+      ruta = '/admin-ventas';
+    } else if (this.origen === 'admin') {
+      ruta = '/admin-ventas-filtros';
+    }
+
+    return ruta
+  }
+
 }

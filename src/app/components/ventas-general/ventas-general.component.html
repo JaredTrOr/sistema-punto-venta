@@ -6,7 +6,7 @@
 
     <div *ngFor="let venta of ventas" class="venta-card">
         <div class="card-controllers">
-            <i routerLink="/admin-editar-ventas/{{ venta.idVenta }}" class="bi bi-pencil-square"></i>
+            <i (click)="irEditarVentas(venta.idVenta!)" class="bi bi-pencil-square"></i>
         </div>
         <h5>ID de venta: {{ venta.idVenta }}</h5>
         
@@ -32,7 +32,7 @@
 
         <div class="producto-info-footer mt-3">
             <p>Cantidad general: {{ venta.cantidadGeneral }}</p>
-            <p>Cantidad general: ${{ venta.totalGeneral }}</p>
+            <p>Total general: ${{ venta.totalGeneral }}</p>
         </div>
     </div>
 
