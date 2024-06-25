@@ -21,6 +21,7 @@ const {
 const { exportacionPDF } = require('./backend/controllers/exportacion');
 const { iniciarSesion } = require('./backend/controllers/empleados');
 const { getProductos } = require('./backend/controllers/productos');
+const { getCategorias } = require('./backend/controllers/categorias');
 
 let mainWindow
 
@@ -82,3 +83,5 @@ ipcMain.on('create-corte', createCorte)
 ipcMain.on('exportar-pdf', exportacionPDF)
 //Productos
 ipcMain.on('get-productos', getProductos)
+//Categorias
+ipcMain.on('get-categorias', getCategorias)
