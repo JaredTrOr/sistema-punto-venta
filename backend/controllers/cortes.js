@@ -31,7 +31,7 @@ async function createCorte (event, data) {
         //Esto solo es la primera vez que se realiza un corte
 
         const corte = {
-            idVenta: data.idVenta,
+            idCorte: data.idCorte,
             sucursal: data.sucursal,
             tituloCorte: data.tituloCorte,
             fechaCorte: data.fechaCorte,

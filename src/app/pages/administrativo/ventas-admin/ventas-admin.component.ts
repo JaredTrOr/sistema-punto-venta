@@ -108,6 +108,9 @@ export class VentasAdminComponent {
           horaCorte,
         }
 
+        //Realizar corte de caja en la base de datos en la nube
+        this.cortesService.createCorte(corte).then(() => console.log('Corte creado con firebase'));
+
         // Realizar corte de caja en la base de datos local
         this.electronService.send('create-corte', corte);
         this.electronService.on('create-corte', (event, corte) => {
@@ -118,9 +121,6 @@ export class VentasAdminComponent {
             this.exportarPDF(`Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`);
           }
         });
-
-        //Realizar corte de caja en la base de datos en la nube
-        this.cortesService.createCorte(corte); //--> Realizar corte de caja en firebase asincronamente
 
       }
     });

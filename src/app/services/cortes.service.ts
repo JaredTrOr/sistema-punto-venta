@@ -27,7 +27,9 @@ export class CortesService {
     const ventasCollection = this.firestore.collection<Venta>('ventas');
 
     // Obtener el último corte
-    const cortesSnapshot = await cortesCollection.ref.orderBy('_id', 'desc').limit(1).get();
+    const cortesSnapshot = await cortesCollection.ref.orderBy('idCorte', 'desc').limit(1).get();
+    console.log('Cortes snapshot')
+    console.log(cortesSnapshot)
     const ultimoCorte = cortesSnapshot.empty ? null : cortesSnapshot.docs[0].data() as Corte;
 
     console.log('Ultimo corte');

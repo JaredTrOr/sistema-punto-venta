@@ -22,7 +22,6 @@ function exportarPDF(data) {
             doc.pipe(writeStream);
 
             (async function () {
-                console.log(data.filtros)
                 doc.font("Helvetica-Bold").fontSize(14).text("PANADERIAS SAN CAYETANO");
                 doc.font("Helvetica").fontSize(12).text(data.filtros ? obtenerTituloPDF(data.filtros) : data.tituloPDF);
 

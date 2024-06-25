@@ -1,5 +1,5 @@
 export class Corte {
-    idVenta?: string;
+    idCorte?: string;
     sucursal!: string;
     fechaCorte!: string;
     horaCorte!: string;

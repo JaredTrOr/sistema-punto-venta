@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema 
 
 const Corte = new Schema({
-    idVenta: String, 
+    idCorte: String, 
     sucursal: String,
     fechaCorte: String,
     horaCorte: String,
