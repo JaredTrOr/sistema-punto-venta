@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Venta } from '../models/Ventas';
-import { from, map, switchMap, take } from 'rxjs';
+import { from, switchMap, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

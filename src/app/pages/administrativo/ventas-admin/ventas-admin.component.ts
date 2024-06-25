@@ -101,7 +101,7 @@ export class VentasAdminComponent {
         const horaCorte = this.tiempo.getHora();
 
         const corte: Corte = {
-          idVenta: generarId(), 
+          idCorte: generarId(), 
           sucursal: 'Sucursal Testing',
           tituloCorte,
           fechaCorte,

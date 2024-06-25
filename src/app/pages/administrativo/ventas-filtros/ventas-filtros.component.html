@@ -91,7 +91,7 @@
     </div>
 
     <div class="container-ventas mt-3">
-      <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas"></app-ventas-general>
+      <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas" [origen]="'admin'"></app-ventas-general>
       <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
     </div>
   </section>

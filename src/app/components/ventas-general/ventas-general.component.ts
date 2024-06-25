@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 export class VentasGeneralComponent {
 
   @Input() ventas: Venta[] = [];
+  @Input() origen!: string;
 
   constructor(private router: Router) {}
 
   irEditarVentas(idVenta: string) {
     const queryParams = {
-      origen: 'empleado',
+      origen: this.origen,
       idVenta
     }
 

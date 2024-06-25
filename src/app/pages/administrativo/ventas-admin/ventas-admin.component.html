@@ -29,7 +29,7 @@
       </div>
     </div>
 
+    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte" [origen]="'empleado'"></app-ventas-general>
     <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
-    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte"></app-ventas-general>
 
 </section>

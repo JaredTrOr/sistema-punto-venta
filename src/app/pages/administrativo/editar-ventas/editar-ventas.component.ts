@@ -132,10 +132,6 @@ export class EditarVentasComponent {
     })
   }
 
-  calcularTotalPorProducto() {
-    this.ventaSeleccionada.productos.forEach(producto => producto.total = producto.importe * producto.cantidad);
-  }
-
   calcularCantidadGeneral() {
     const cantidadGeneral = this.ventaSeleccionada.productos.reduce((acc, producto) => acc + producto.cantidad, 0);
     this.ventaSeleccionada.cantidadGeneral = cantidadGeneral;
@@ -144,15 +140,17 @@ export class EditarVentasComponent {
   }
 
   calcularTotalGeneral() {
-    this.calcularTotalPorProducto();
-    return this.ventaSeleccionada.productos.reduce((totalGeneral, producto) => totalGeneral + producto.total, 0);
+    this.ventaSeleccionada.productos.forEach(producto => producto.total = producto.importe * producto.cantidad);
+    const totalGeneral = this.ventaSeleccionada.productos.reduce((totalGeneral, producto) => totalGeneral + producto.total, 0);
+    this.ventaSeleccionada.totalGeneral = totalGeneral;
+    return totalGeneral;
   }
 
   seleccionarRedireccionamiento() {
     let ruta = '';
 
     if (this.origen === 'empleado') {
-      ruta = '/admin-ventas';
+      ruta = '/mostrar-ventas';
     } else if (this.origen === 'admin') {
       ruta = '/admin-ventas-filtros';
     }
