@@ -16,6 +16,7 @@
     --light-white-gray: #f8f8f8;
     --main-purple: #5259ff;
     --main-purple-hover: #3f46e5;
+    ---error-red: #ff5252;
 }
 
 @font-face {
@@ -76,3 +77,6 @@ a {
     width: 30rem;
 }
 
+.mensaje-error {
+    color: var(---error-red);
+}

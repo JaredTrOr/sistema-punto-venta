@@ -5,36 +5,36 @@
         <h2>PRODUCTOS</h2>
 
         <div class="form-container mt-5">
-            <div class="form-row">
-                <p class="bold"><label for="">Nombre del producto: </label></p>
-                <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
-            </div>
-
-            <div class="form-row mt-5">
-                <p class="bold"><label for="">Categoría: </label></p>
-                <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
-            </div>
-
-            <div class="form-row mt-5">
-                <p class="bold"><label for="">Precio: </label></p>
-                <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
-            </div>
-
-            <div class="form-row mt-5">
-                <p class="bold"><label for="">Precio promo: </label></p>
-                <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
-            </div>
-
-            <div class="form-row mt-5">
-                <p class="bold"><label for="">Precio min: </label></p>
-                <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
-            </div>
-
-            <div class="form-row mt-5">
-                <button class="btns btn-agregar-producto">Agregar</button>
-            </div>
-
-            
+            <form [formGroup]="productosForm" (ngSubmit)="agregarProducto()">
+                <div class="form-row">
+                    <p class="bold"><label for="">Nombre del producto: </label></p>
+                    <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+                </div>
+    
+                <div class="form-row mt-5">
+                    <p class="bold"><label for="">Categoría: </label></p>
+                    <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+                </div>
+    
+                <div class="form-row mt-5">
+                    <p class="bold"><label for="">Precio: </label></p>
+                    <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+                </div>
+    
+                <div class="form-row mt-5">
+                    <p class="bold"><label for="">Precio promo: </label></p>
+                    <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+                </div>
+    
+                <div class="form-row mt-5">
+                    <p class="bold"><label for="">Precio min: </label></p>
+                    <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+                </div>
+    
+                <div class="form-row mt-5">
+                    <button type="button" class="btns btn-agregar-producto">Agregar</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
 
         <select [(ngModel)]="categoriaSeleccionada" class="mt-5 filtro" name="" id="">
             <option value="todos">Todos</option>
-            <option *ngFor="let categoria of categorias" value="{{ categoria }}">{{ categoria }}</option>
+            <option *ngFor="let categoria of categorias" value="{{ categoria.descripcion }}">{{ categoria.descripcion }}</option>
         </select>
 
         <div class="table-container">

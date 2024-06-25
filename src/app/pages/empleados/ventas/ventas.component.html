@@ -52,7 +52,7 @@
 
         <select [(ngModel)]="categoriaSeleccionada" class="mt-3 filtro" name="" id="">
             <option value="todos">Todos</option>
-            <option *ngFor="let categoria of categorias" value="{{ categoria }}">{{ categoria }}</option>
+            <option *ngFor="let categoria of categorias" value="{{ categoria.descripcion }}">{{ categoria.descripcion }}</option>
         </select>
 
         <div class="mt-5">

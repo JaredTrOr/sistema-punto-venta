@@ -8,6 +8,7 @@ import  { Tiempo}   from '../../../utils/tiempo';
 import { VentasService } from '../../../services/ventas.service';
 import { ElectronService } from '../../../services/electron.service';
 import { generarId } from '../../../utils/generadorId';
+import { Categoria } from '../../../models/Categoria';
 
 @Component({
   selector: 'app-ventas',
@@ -17,9 +18,9 @@ import { generarId } from '../../../utils/generadorId';
 export class VentasComponent {
 
   productos: Producto[] = [];
+  categorias: Categoria[] = [];
 
   carritoProductos: ProductoVenta[] = [];
-  categorias: string[] = [];
   tiempo = new Tiempo();
 
   categoriaSeleccionada = 'todos';
@@ -44,25 +45,27 @@ export class VentasComponent {
               idFirebase: doc.payload.doc.id
           };
         });
-    
-        this.categorias = this.productos.map(producto => producto.categoria);
-        this.categorias = [...new Set(this.categorias)];
+        
         this.loadingData = false;
       },
+      
+      //Si hay un error al obtener los productos desde firebase, se obtienen desde el local
       error => {
         console.log(`Error al obtener los productos desde firebase: ${error}`)
 
-        //Obtener productos desde el local
         this.electronService.send('get-productos', null);
         this.electronService.on('get-productos', (event,productos) => {
           console.log('Productos obtenidos desde el local')
           this.productos = JSON.parse(productos);
-          this.categorias = this.productos.map(producto => producto.categoria);
-          this.categorias = [...new Set(this.categorias)];
-          this.loadingData = false;
         });
       }
     );
+
+    //Obtener categorias de manera local
+    this.electronService.send('get-categorias', null);
+    this.electronService.on('get-categorias', (event, categorias) => {
+      this.categorias = JSON.parse(categorias);
+    });
     
   }
 
