@@ -21,7 +21,13 @@ const {
 const { exportacionPDF } = require('./backend/controllers/exportacion');
 const { iniciarSesion } = require('./backend/controllers/empleados');
 const { getProductos } = require('./backend/controllers/productos');
-const { getCategorias } = require('./backend/controllers/categorias');
+const { 
+    getCategorias,
+    getCategoriaPorId,
+    createCategoria,
+    updateCategoria,
+    deleteCategoria
+} = require('./backend/controllers/categorias');
 
 let mainWindow
 
@@ -85,3 +91,7 @@ ipcMain.on('exportar-pdf', exportacionPDF)
 ipcMain.on('get-productos', getProductos)
 //Categorias
 ipcMain.on('get-categorias', getCategorias)
+ipcMain.on('get-categoria-por-id', getCategoriaPorId)
+ipcMain.on('create-categoria', createCategoria)
+ipcMain.on('update-categoria', updateCategoria)
+ipcMain.on('delete-categoria', deleteCategoria)
