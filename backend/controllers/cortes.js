@@ -1,6 +1,16 @@
 const Corte = require('../models/Corte')
 const Venta = require('../models/Venta')
 
+async function getCortes(event, data) {
+    try {
+        const cortes = await Corte.find()
+        event.reply('get-cortes', JSON.stringify(cortes))
+        console.log({success: true, message: 'Cortes obtenidos'})
+    } catch(err) {
+        console.log({success: false, message: err})
+    }
+}
+
 async function getVentasDespuesCorte (event, data) {
     try {
         const cortes = await Corte.findOne()
@@ -79,5 +89,6 @@ async function createCorte (event, data) {
 
 module.exports = {
     getVentasDespuesCorte,
+    getCortes,
     createCorte
 }

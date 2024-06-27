@@ -11,6 +11,21 @@ async function getVentas(event, data) {
     }
 }
 
+async function getVentasPorCorte(event, data) {
+    try {
+        const ventas = Venta.find({
+            timestamp: {
+                $gte: data.fechaInicio,
+                $lte: data.fechaFin
+            }
+        })
+
+        event.reply('get-ventas-por-corte', JSON.stringify(ventas))
+    } catch(err) {
+        console.log({success: false, message: err})
+    }
+}
+
 async function getVentaPorId(event, id) {
     try {
         const venta = await Venta.findOne({idVenta: id})

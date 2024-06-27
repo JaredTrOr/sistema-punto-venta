@@ -1,0 +1,16 @@
+.main-container {
+    display: grid;
+    grid-template-columns: 40rem 1fr;
+    height: 92vh;
+}
+
+.cortes-card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.corte-card {
+    border-radius: 5px;
+    border: 1px solid black;
+}

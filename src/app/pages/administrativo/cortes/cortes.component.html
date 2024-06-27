@@ -1,0 +1,22 @@
+<app-navbar-admin></app-navbar-admin>
+
+
+<div class="main-container">
+    <div class="cortes">
+        <h4>Filtrar cortes</h4>
+
+        <div class="cortes-card-container mt-3">
+            <div *ngFor="let corte of cortes" class="corte card">
+                <p class="bold">ID: {{ corte.idCorte }}</p>
+                <h5>Titulo corte: {{ corte.tituloCorte }}</h5>
+                <p>Fecha corte: {{ corte.fechaCorte }}</p>
+                <p>Hora de corte: {{ corte.horaCorte }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ventas-container">
+        <h4>Ventas realizadas</h4>
+    </div>
+</div>
+

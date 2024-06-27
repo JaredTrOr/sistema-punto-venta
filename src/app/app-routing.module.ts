@@ -10,6 +10,7 @@ import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar
 import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
 import { TestComponent } from './components/test/test.component';
 import { EditarProductosComponent } from './pages/administrativo/editar-productos/editar-productos.component';
+import { CortesComponent } from './pages/administrativo/cortes/cortes.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,11 @@ const routes: Routes = [
     path: 'admin-editar-ventas',
     title: 'Editar ventas',
     component: AdminEditarVentasComponent
+  },
+  {
+    path: 'cortes',
+    title: 'Cortes',
+    component: CortesComponent
   },
   {
     path: 'test',
