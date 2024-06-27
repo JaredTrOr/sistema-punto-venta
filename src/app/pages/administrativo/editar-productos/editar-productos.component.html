@@ -1,11 +1,12 @@
 <app-navbar-admin></app-navbar-admin>
 
 <div class="row p-5 custom-row">
-    <div class="col-lg-4">
-        <h2>PRODUCTOS</h2>
+    <div class="col-lg-10">
+        
+        <h2>EDITAR PRODUCTOS</h2>
 
         <div class="form-container mt-5">
-            <form [formGroup]="productosForm" (ngSubmit)="agregarProducto()">
+            <form [formGroup]="productosForm" (ngSubmit)="editarProducto()">
                 <div class="form-row">
                     <p class="bold"><label for="">Nombre del producto: </label></p>
                     <input class="input-text" type="text" placeholder="Ingrese el nombre del producto" formControlName="descripcion">
@@ -55,44 +56,9 @@
                 </div>
     
                 <div class="form-row mt-5">
-                    <button type="submit" class="btns btn-agregar-producto">Agregar</button>
+                    <button type="submit" class="btns btn-editar-producto">Editar</button>
                 </div>
             </form>
         </div>
-    </div>
-
-    <div class="col-lg-8">
-        <input [(ngModel)]="busquedaTexto" class="input-text" type="text" placeholder="Buscar por nombre">
-
-        <select [(ngModel)]="categoriaSeleccionada" class="mt-5 filtro" name="" id="">
-            <option value="todos">Todos</option>
-            <option *ngFor="let categoria of categorias" value="{{ categoria.descripcion }}">{{ categoria.descripcion }}</option>
-        </select>
-
-        <div class="table-container">
-            <table class="table mt-5">
-                <thead>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Precio</th>
-                    <th>Operaciones</th>
-                </thead>
-    
-                <tbody>
-                    <tr *ngFor="let producto of filtrarCategoria()">
-                        <td>{{ producto.idProducto }}</td>
-                        <td>{{ producto.descripcion }}</td>
-                        <td>{{ producto.categoria }}</td>
-                        <td>{{ producto.precio }}</td>
-                        <td class="d-flex gap-4">
-                            <button [routerLink]="['/editar-productos', producto.idProducto]" class="btn btn-warning">Editar</button>
-                            <button (click)="deleteProducto(producto.idProducto!)" class="btn btn-danger">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>        
-        
     </div>
 </div>

@@ -9,6 +9,7 @@ import { EditarVentasComponent as AdminEditarVentasComponent } from './pages/adm
 import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar-ventas.component';
 import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
 import { TestComponent } from './components/test/test.component';
+import { EditarProductosComponent } from './pages/administrativo/editar-productos/editar-productos.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
     path: 'admin-productos',
     title: 'Administrar productos',
     component: AdminProductosComponent
+  },
+  {
+    path: 'editar-productos/:id',
+    title: 'Editar productos',
+    component: EditarProductosComponent
   },
   {
     path: 'admin-ventas',
