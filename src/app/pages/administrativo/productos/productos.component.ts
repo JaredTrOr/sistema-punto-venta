@@ -4,6 +4,8 @@ import { Producto } from '../../../models/Producto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categoria } from '../../../models/Categoria';
 import { ElectronService } from '../../../services/electron.service';
+import { generarId } from '../../../utils/generadorId';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-productos',
@@ -15,6 +17,7 @@ export class ProductosComponent {
   busquedaTexto: string = '';
   categoriaSeleccionada: string = 'todos';
   categorias: Categoria[] = [];
+  enviado = false;
 
   nuevoProducto!: Producto;
   productosForm!: FormGroup;
@@ -31,9 +34,9 @@ export class ProductosComponent {
     this.productosForm = this.formBuilder.group({
       descripcion: ['', Validators.required],
       categoria: ['', Validators.required],
-      precio: ['', Validators.required],
-      precioPromo: [''],
-      precioMin: ['']
+      precio: ['', [Validators.required ,Validators.pattern('^[0-9]+')]],
+      precioPromo: ['', Validators.pattern('^[0-9]+')],
+      precioMin: ['', Validators.pattern('^[0-9]+')]
     });
   }
  
@@ -61,6 +64,7 @@ export class ProductosComponent {
 
   filtrarCategoria(): Producto[] {
     const productosFiltrados = this.productos.filter(producto => {
+      producto.descripcion.toUpperCase();
       return (
         (producto.descripcion.includes(this.busquedaTexto.toUpperCase())) &&
         (this.categoriaSeleccionada === 'todos' || producto.categoria === this.categoriaSeleccionada)
@@ -71,6 +75,42 @@ export class ProductosComponent {
   }
 
   agregarProducto() {
-    
+    this.enviado = true;
+    if (!this.productosForm.valid) return;
+
+    //Generar ID a la hora de crear producto
+    this.productosForm.value.idProducto = generarId();
+
+    //Craer producto en firebase
+    this.productosService.createProducto(this.productosForm.value)
+    .then(() => {
+      Swal.fire("Se ha agregado el producto exitosamente", "", "success");
+      this.productosForm.reset();
+      this.enviado = false;
+    })
+    .catch(err => {
+      console.log(err);
+      Swal.fire("Hubo un error al realizar al agregar el producto", "", "error");
+      this.enviado = false;
+    })
+  }
+
+  deleteProducto(idProducto: string) {
+    Swal.fire({
+      title: '¿Estás seguro de eliminar este producto?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productosService.deleteProductoByIdProducto(idProducto)
+        .subscribe(() => {
+          Swal.fire('Producto eliminado', '', 'success');
+        })
+      }
+    })
   }
 } 

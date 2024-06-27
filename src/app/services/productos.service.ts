@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Producto } from '../models/Producto';
+import { from, switchMap, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,38 @@ export class ProductosService {
 
   deleteProducto(id: string) {
     this.firestore.doc('productos/' + id).delete();
+  }
+
+  updateProductoByIdProducto (idProducto: string, updatedData: any) {
+    const ventasCollection = this.firestore.collection('productos', ref => ref.where('idProducto', '==', idProducto));
+    
+    return ventasCollection.snapshotChanges().pipe(
+      take(1),  // Take only one snapshot
+      switchMap(actions => {
+        const batch = this.firestore.firestore.batch();
+        actions.forEach(a => {
+          const doc = a.payload.doc;
+          batch.update(doc.ref, updatedData);
+        });
+        return from(batch.commit());
+      })
+    );
+  }
+
+  deleteProductoByIdProducto (idProducto: string) {
+    const productosCollection = this.firestore.collection('productos', ref => ref.where('idProducto', '==', idProducto));
+    
+    return productosCollection.snapshotChanges().pipe(
+      take(1),  // Take only one snapshot
+      switchMap(actions => {
+        const batch = this.firestore.firestore.batch();
+        actions.forEach(a => {
+          const doc = a.payload.doc;
+          batch.delete(doc.ref);
+        });
+        return from(batch.commit());
+      })
+    );
   }
 
   getNuevoProducto(): Producto {

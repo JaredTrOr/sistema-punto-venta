@@ -8,31 +8,54 @@
             <form [formGroup]="productosForm" (ngSubmit)="agregarProducto()">
                 <div class="form-row">
                     <p class="bold"><label for="">Nombre del producto: </label></p>
-                    <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+                    <input class="input-text" type="text" placeholder="Ingrese el nombre del producto" formControlName="descripcion">
+
+                    <div class="mensaje-error" *ngIf="enviado && myForm['descripcion'].errors?.['required']">
+                        La descripción es un campo obligatorio
+                    </div>
                 </div>
     
                 <div class="form-row mt-5">
                     <p class="bold"><label for="">Categoría: </label></p>
-                    <input class="input-text" type="text" placeholder="Ingrese el nombre del producto">
+                    <select name="" id="" formControlName="categoria" class="filtro">
+                        <option value="">Seleccione una categoria</option>
+                        <option *ngFor="let categoria of categorias" value="{{ categoria.descripcion }}">{{ categoria.descripcion }}</option>
+                    </select>
+                    <div class="mensaje-error" *ngIf="enviado && myForm['categoria'].errors?.['required']">
+                        La categoria es un campo obligatorio
+                    </div>
                 </div>
     
                 <div class="form-row mt-5">
                     <p class="bold"><label for="">Precio: </label></p>
-                    <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+                    <input class="input-text" type="number" min="1" placeholder="Ingrese el nombre del producto" formControlName="precio">
+                    <div class="mensaje-error" *ngIf="enviado && myForm['precio'].errors?.['required']">
+                        El precio es un campo obligatorio
+                    </div>
+
+                    <div class="mensaje-error" *ngIf="enviado && myForm['precio'].errors?.['pattern']">
+                        El precio no es válido
+                    </div>
                 </div>
     
                 <div class="form-row mt-5">
                     <p class="bold"><label for="">Precio promo: </label></p>
-                    <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+                    <input class="input-text" type="number" min="1" placeholder="Ingrese el nombre del producto" formControlName="precioPromo">
+                    <div class="mensaje-error" *ngIf="enviado && myForm['precio'].errors?.['pattern']">
+                        El precio promo no es válido
+                    </div>
                 </div>
     
                 <div class="form-row mt-5">
                     <p class="bold"><label for="">Precio min: </label></p>
-                    <input class="input-text" type="number" placeholder="Ingrese el nombre del producto">
+                    <input class="input-text" type="number" min="1" placeholder="Ingrese el nombre del producto" formControlName="precioMin">
+                    <div class="mensaje-error" *ngIf="enviado && myForm['precio'].errors?.['pattern']">
+                        El precio ,om no es válido
+                    </div>
                 </div>
     
                 <div class="form-row mt-5">
-                    <button type="button" class="btns btn-agregar-producto">Agregar</button>
+                    <button type="submit" class="btns btn-agregar-producto">Agregar</button>
                 </div>
             </form>
         </div>
@@ -64,7 +87,7 @@
                         <td>{{ producto.precio }}</td>
                         <td class="d-flex gap-4">
                             <button class="btn btn-warning">Editar</button>
-                            <button class="btn btn-danger">Eliminar</button>
+                            <button (click)="deleteProducto(producto.idProducto!)" class="btn btn-danger">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
