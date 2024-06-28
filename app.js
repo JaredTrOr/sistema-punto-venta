@@ -11,13 +11,15 @@ const {
     createVenta, 
     getVentasFiltradas, 
     updateVentas, 
-    deleteVenta 
+    deleteVenta, 
+    getVentasPorCorte
 } = require('./backend/controllers/ventas');
 //Cortes controller
 const {
     getVentasDespuesCorte, 
     getCortes,
-    createCorte
+    createCorte,
+    getCortePorFecha
 } = require('./backend/controllers/cortes');
 //Exportación controller
 const { exportacionPDF } = require('./backend/controllers/exportacion');
@@ -84,8 +86,10 @@ ipcMain.on('get-venta-por-id', getVentaPorId)
 ipcMain.on('get-ventas-filtradas', getVentasFiltradas)
 ipcMain.on('update-venta', updateVentas)
 ipcMain.on('delete-venta', deleteVenta) 
+ipcMain.on('get-ventas-por-corte', getVentasPorCorte)
 //Cortes
 ipcMain.on('get-venta-despues-corte', getVentasDespuesCorte)
+ipcMain.on('get-cortes-por-fecha', getCortePorFecha)
 ipcMain.on('get-cortes', getCortes)
 ipcMain.on('create-corte', createCorte)
 // Eventos de PDF

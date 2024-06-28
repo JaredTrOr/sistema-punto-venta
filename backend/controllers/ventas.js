@@ -12,14 +12,18 @@ async function getVentas(event, data) {
 }
 
 async function getVentasPorCorte(event, data) {
+
+    const parseData = JSON.parse(data)
+
     try {
-        const ventas = Venta.find({
+        const ventas = await Venta.find({
             timestamp: {
-                $gte: data.fechaInicio,
-                $lte: data.fechaFin
+                $gte: parseData.tiempoInicio,
+                $lte: parseData.tiempoFin
             }
         })
 
+        console.log({success: true, message: 'Ventas obtenidas por corte'})
         event.reply('get-ventas-por-corte', JSON.stringify(ventas))
     } catch(err) {
         console.log({success: false, message: err})
@@ -256,6 +260,7 @@ module.exports = {
     getVentas,
     createVenta,
     getVentasFiltradas,
+    getVentasPorCorte,
     updateVentas,
     deleteVenta,
     getVentaPorId

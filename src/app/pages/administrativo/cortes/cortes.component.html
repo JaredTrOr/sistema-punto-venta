@@ -5,18 +5,43 @@
     <div class="cortes">
         <h4>Filtrar cortes</h4>
 
-        <div class="cortes-card-container mt-3">
-            <div *ngFor="let corte of cortes" class="corte card">
-                <p class="bold">ID: {{ corte.idCorte }}</p>
-                <h5>Titulo corte: {{ corte.tituloCorte }}</h5>
-                <p>Fecha corte: {{ corte.fechaCorte }}</p>
-                <p>Hora de corte: {{ corte.horaCorte }}</p>
+        <div class="cortes-card-container mt-5">
+            <p class="bold">Filtrar por fecha de corte</p>
+
+            <!-- <input type="date" (change)="filtrarPorFecha($event)"> -->
+
+            <div class="card-container">
+                <div [ngClass]="{'selected': isCardSeleccionada(corte)}" *ngFor="let corte of cortes" class="corte-card mt-4" (click)="toggleCorteSeleccionado(corte)">
+                    <!-- <p class="bold">ID: {{ corte.idCorte }}</p> -->
+                    <h5>Titulo corte: {{ corte.tituloCorte }}</h5>
+    
+                    <div class="card-info mt-3">
+                        <p>Fecha corte: {{ corte.fechaCorte }}</p>
+                        <p>Hora de corte: {{ corte.horaCorte }}</p>
+                    </div>
+                </div>
             </div>
+            
         </div>
     </div>
 
     <div class="ventas-container">
         <h4>Ventas realizadas</h4>
+
+        <div class="mt-5 radio-buttons-container d-flex gap-4">
+            <div class="radio-button-row">
+              <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
+              <label for="radioVentasGeneral">  Ventas generales</label>
+            </div>
+      
+            <div class="radio-button-row">
+              <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
+              <label for="radioVentasProducto">  Ventas por producto</label>
+            </div>
+          </div>
+      
+          <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas" [origen]="'cortes'"></app-ventas-general>
+          <!-- <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventas"></app-ventas-productos> -->
     </div>
 </div>
 

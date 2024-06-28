@@ -3,9 +3,20 @@ const Venta = require('../models/Venta')
 
 async function getCortes(event, data) {
     try {
-        const cortes = await Corte.find()
+        const cortes = await Corte.find().sort({_id: -1})
         event.reply('get-cortes', JSON.stringify(cortes))
         console.log({success: true, message: 'Cortes obtenidos'})
+    } catch(err) {
+        console.log({success: false, message: err})
+    }
+}
+
+async function getCortePorFecha(event, fechaString) {
+
+    try {
+        const corte = await Corte.findOne({fechaCorte: fechaString})
+        event.reply('get-cortes-por-fecha', JSON.stringify(corte))
+        console.log({success: true, message: 'Cortes obtenidos por fecha'})
     } catch(err) {
         console.log({success: false, message: err})
     }
@@ -89,6 +100,7 @@ async function createCorte (event, data) {
 
 module.exports = {
     getVentasDespuesCorte,
+    getCortePorFecha,
     getCortes,
     createCorte
 }
