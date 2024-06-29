@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { ElectronService } from '../../../services/electron.service';
 import { Corte } from '../../../models/Corte';
 import { Venta } from '../../../models/Ventas';
+import { VentasPorProducto } from '../../../models/VentasPorProducto';
 
 @Component({
   selector: 'app-cortes',
@@ -11,8 +12,10 @@ import { Venta } from '../../../models/Ventas';
 export class CortesComponent {
 
   ventasProductos: string = 'ventasGeneral';
+  filtroFecha = '';
   cortes: Corte[] = [];
   ventas: Venta[] = [];
+  ventasPorProducto: VentasPorProducto[] = [];
 
   corteSeleccionado: any = null;
 
@@ -22,6 +25,10 @@ export class CortesComponent {
   ) { }
 
   ngOnInit() {
+    this.getCortesGeneral();
+  }
+
+  getCortesGeneral() {
     this.electronService.send('get-cortes', null);
     this.electronService.on('get-cortes', (event, data) => {
       this.ngZone.run(() => {
@@ -39,26 +46,54 @@ export class CortesComponent {
       this.electronService.on('get-ventas-por-corte', (event, data) => {
         this.ngZone.run(() => {
           this.ventas = JSON.parse(data);
+          this.ordenarVentasPorProducto();
         })
       });
     }
     else {
       console.log('No hay corte')
       this.ventas = [];
+      this.ventasPorProducto = [];
     }
   }
 
-  filtrarPorFecha(event: Event) {
-    const fecha = event.target as HTMLInputElement;
+  ordenarVentasPorProducto() {
+    let ventasPorProductoAux: any[] = [];
+    this.ventasPorProducto = [];
 
-    if (fecha.value) {
-      const [anio, mes, dia] = fecha.value.split('-');
+    this.ventas.forEach(venta => {
+      ventasPorProductoAux = ventasPorProductoAux.concat(venta.productos);
+    })
+
+    ventasPorProductoAux.forEach(producto => {
+      const productoEnArreglo = this.ventasPorProducto.find(p => p.nombreProducto === producto.nombreProducto);
+
+      if (productoEnArreglo) {
+        productoEnArreglo.cantidad += producto.cantidad;
+        productoEnArreglo.total = productoEnArreglo.cantidad * productoEnArreglo.importe;
+      }
+      else {
+        this.ventasPorProducto.push({ ...producto });
+      }
+    })
+  }
+
+  filtrarPorFecha() {
+
+
+    if (this.filtroFecha) {
+      const [anio, mes, dia] = this.filtroFecha.split('-');
       const fechaValue = `${dia}/${mes}/${anio}`;
+      console.log('Filtro fecha', fechaValue)
       this.electronService.send('get-cortes-por-fecha', fechaValue);
       this.electronService.on('get-cortes-por-fecha', (event, data) => {
-        console.log(data);
-        this.cortes = JSON.parse(data)
+        this.ngZone.run(() => {
+          this.cortes = JSON.parse(data);
+        });
       })
+    }
+    else {
+      this.getCortesGeneral();
     }
     
   }

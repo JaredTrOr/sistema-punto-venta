@@ -14,8 +14,8 @@ async function getCortes(event, data) {
 async function getCortePorFecha(event, fechaString) {
 
     try {
-        const corte = await Corte.findOne({fechaCorte: fechaString})
-        event.reply('get-cortes-por-fecha', JSON.stringify(corte))
+        const cortes = await Corte.find({fechaCorte: fechaString})
+        event.reply('get-cortes-por-fecha', JSON.stringify(cortes))
         console.log({success: true, message: 'Cortes obtenidos por fecha'})
     } catch(err) {
         console.log({success: false, message: err})

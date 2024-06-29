@@ -8,7 +8,9 @@
         <div class="cortes-card-container mt-5">
             <p class="bold">Filtrar por fecha de corte</p>
 
-            <!-- <input type="date" (change)="filtrarPorFecha($event)"> -->
+            <input type="date" class="fecha-filtro" [(ngModel)]="filtroFecha">
+            <br>
+            <button class="btn-aplicar-filtros mt-3" (click)="filtrarPorFecha()">Aplicar cambios</button>
 
             <div class="card-container">
                 <div [ngClass]="{'selected': isCardSeleccionada(corte)}" *ngFor="let corte of cortes" class="corte-card mt-4" (click)="toggleCorteSeleccionado(corte)">
@@ -41,7 +43,7 @@
           </div>
       
           <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas" [origen]="'cortes'"></app-ventas-general>
-          <!-- <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventas"></app-ventas-productos> -->
+          <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
     </div>
 </div>
 

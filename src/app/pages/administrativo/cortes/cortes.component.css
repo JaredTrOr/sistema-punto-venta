@@ -35,3 +35,19 @@
 /* .corte-card:hover {
     transform: scale(1.03);
 } */
+
+.fecha-filtro {
+    background-color: var(--dark);
+    color: var(--light);
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+}
+
+.btn-aplicar-filtros {
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    color: var(--light);
+    background-color: var(--main-purple);
+}
