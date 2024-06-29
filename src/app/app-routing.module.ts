@@ -11,6 +11,7 @@ import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ve
 import { TestComponent } from './components/test/test.component';
 import { EditarProductosComponent } from './pages/administrativo/editar-productos/editar-productos.component';
 import { CortesComponent } from './pages/administrativo/cortes/cortes.component';
+import { CategoriasComponent } from './pages/administrativo/categorias/categorias.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: 'test',
     component: TestComponent
+  },
+  {
+    path: 'categorias',
+    component: CategoriasComponent
   },
   {
     path: '**',

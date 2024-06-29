@@ -1,0 +1,47 @@
+<app-navbar-admin></app-navbar-admin>
+
+<div class="row p-5 custom-row">
+    <div class="col-lg-6">
+        <h2>Categorias</h2>
+
+        <div class="form-container mt-5">
+            <form [formGroup]="categoriasForm" (ngSubmit)="agregarCategoria()">
+                <div class="form-row">
+                    <p class="bold"><label for="">Nombre de la categoria: </label></p>
+                    <input class="input-text" type="text" placeholder="Ingrese el nombre de la categoria"
+                        formControlName="descripcion">
+
+                    <div class="mensaje-error" *ngIf="enviado && myForm['descripcion'].errors?.['required']">
+                        La descripción es un campo obligatorio
+                    </div>
+                </div>
+
+                <div class="form-row mt-5">
+                    <button type="submit" class="btns btn-agregar">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let categoria of categorias">
+                        <td>{{ categoria.descripcion }}</td>
+                        <td class="d-flex gap-3">
+                            <button class="btn btn-warning" (click)="editarCategoria()">Editar</button>
+                            <button class="btn btn-danger" (click)="eliminarCategoria(categoria.idCategoria!)">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

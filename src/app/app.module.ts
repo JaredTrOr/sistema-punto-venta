@@ -26,6 +26,7 @@ import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ve
 import { TestComponent } from './components/test/test.component';
 import { EditarProductosComponent } from './pages/administrativo/editar-productos/editar-productos.component';
 import { CortesComponent } from './pages/administrativo/cortes/cortes.component';
+import { CategoriasComponent } from './pages/administrativo/categorias/categorias.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CortesComponent } from './pages/administrativo/cortes/cortes.component'
     VentasFiltrosComponent,
     TestComponent,
     EditarProductosComponent,
-    CortesComponent
+    CortesComponent,
+    CategoriasComponent
   ],
   imports: [
     BrowserModule,

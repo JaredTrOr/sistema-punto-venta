@@ -44,9 +44,9 @@ async function updateCategoria(event,data) {
     }
 }
 
-async function deleteCategoria(event, data) {
+async function deleteCategoria(event, id) {
     try {
-        await Categoria.findOneAndDelete({idCategoria: data.idCategoria});
+        await Categoria.findOneAndDelete({idCategoria: id});
         console.log({success: true, message: 'Categoria eliminada'})
         event.reply('delete-categoria', {success: true, message: 'Categoria eliminada'})
     } catch(err) {

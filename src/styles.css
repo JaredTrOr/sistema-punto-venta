@@ -80,3 +80,8 @@ a {
 .mensaje-error {
     color: var(---error-red);
 }
+
+.btn-agregar {
+    background-color: var(--main-purple);
+    color: var(--light);
+}
