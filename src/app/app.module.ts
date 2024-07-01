@@ -25,6 +25,7 @@ import { MostrarVentasComponent } from './pages/empleados/mostrar-ventas/mostrar
 import { VentasFiltrosComponent } from './pages/administrativo/ventas-filtros/ventas-filtros.component';
 import { TestComponent } from './components/test/test.component';
 import { EditarProductosComponent } from './pages/administrativo/editar-productos/editar-productos.component';
+import { EditarCategoriasComponent } from './pages/administrativo/editar-categorias/editar-categorias.component';
 import { CortesComponent } from './pages/administrativo/cortes/cortes.component';
 import { CategoriasComponent } from './pages/administrativo/categorias/categorias.component';
 
@@ -45,7 +46,8 @@ import { CategoriasComponent } from './pages/administrativo/categorias/categoria
     TestComponent,
     EditarProductosComponent,
     CortesComponent,
-    CategoriasComponent
+    CategoriasComponent,
+    EditarCategoriasComponent
   ],
   imports: [
     BrowserModule,

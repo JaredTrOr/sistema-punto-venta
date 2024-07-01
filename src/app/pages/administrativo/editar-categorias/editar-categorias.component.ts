@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriasService } from '../../../services/categorias.service';
 import Swal from 'sweetalert2';
 
@@ -17,7 +17,9 @@ export class EditarCategoriasComponent {
   constructor(
     private formBuilder: FormBuilder,
     private activeRoute: ActivatedRoute,
-    private categoriaService: CategoriasService
+    private categoriaService: CategoriasService,
+    private ngZone: NgZone,
+    private router: Router
   ) { 
     this.setCategoriaForm();
   }
@@ -40,14 +42,29 @@ export class EditarCategoriasComponent {
   }
 
   editarCategoria() {
-    this.enviado = true;
+    Swal.fire({
+      title: '¿Estás seguro de editar esta categoria?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, editar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.enviado = true;
 
-    if (this.categoriasForm.invalid) return;
-
-    const id = this.activeRoute.snapshot.paramMap.get('id');
-    this.categoriaService.updateCategoriaByIdCategoria(id!, this.categoriasForm.value).subscribe(() => {
-      Swal.fire('Categoria actualizada', 'La categoria ha sido actualizada correctamente', 'success')
-      });
+        if (this.categoriasForm.invalid) return;
+    
+        const id = this.activeRoute.snapshot.paramMap.get('id');
+        this.categoriaService.updateCategoriaByIdCategoria(id!, this.categoriasForm.value).subscribe(() => {
+          this.ngZone.run(() => {
+            Swal.fire('Categoria actualizada', 'La categoria ha sido actualizada correctamente', 'success');
+            this.router.navigateByUrl('/categorias');
+          });
+        });
+      }
+    });
   }
 
 }

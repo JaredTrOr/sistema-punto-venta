@@ -36,7 +36,7 @@
                     <tr *ngFor="let categoria of categorias">
                         <td>{{ categoria.descripcion }}</td>
                         <td class="d-flex gap-3">
-                            <button class="btn btn-warning" (click)="editarCategoria()">Editar</button>
+                            <button class="btn btn-warning" (click)="editarCategoria(categoria.idCategoria!)">Editar</button>
                             <button class="btn btn-danger" (click)="eliminarCategoria(categoria.idCategoria!)">Eliminar</button>
                         </td>
                     </tr>

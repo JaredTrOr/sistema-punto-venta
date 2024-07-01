@@ -5,6 +5,7 @@ import { CategoriasService } from '../../../services/categorias.service';
 import { generarId } from '../../../utils/generadorId';
 import Swal from 'sweetalert2';
 import { ElectronService } from '../../../services/electron.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categorias',
@@ -20,7 +21,8 @@ export class CategoriasComponent {
   constructor(
     private formBuilder: FormBuilder,
     private categoriaService: CategoriasService,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private router: Router
   ) { 
     this.setCategoriasForm();
   }
@@ -76,14 +78,28 @@ export class CategoriasComponent {
     
   }
 
-  editarCategoria() {}
+  editarCategoria(idCategoria: string) {
+    this.router.navigate(['/editar-categorias', idCategoria])
+  }
 
   eliminarCategoria(idCategoria: string) {
-    this.categoriaService.deleteCategoriaByIdCategoria(idCategoria).subscribe(() => {
-      Swal.fire("Se ha eliminado la categoria exitosamente", "", "success");
-    }) 
-
-    //Eliminado local
-    this.electronService.send('delete-categoria', idCategoria);
+    Swal.fire({
+      title: '¿Estás seguro de eliminar esta categoria?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoriaService.deleteCategoriaByIdCategoria(idCategoria).subscribe(() => {
+          Swal.fire("Se ha eliminado la categoria exitosamente", "", "success");
+        }) 
+    
+        //Eliminado local
+        this.electronService.send('delete-categoria', idCategoria);
+      }
+    });
   }
 }

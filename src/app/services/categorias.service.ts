@@ -18,6 +18,11 @@ export class CategoriasService {
     return this.firestore.collection('categorias').add(Object.assign({}, categoria));
   }
 
+  getCategoriaById(idCategoria: string) {
+    const categoriasCollecton = this.firestore.collection<Categoria>('categorias', ref => ref.where('idCategoria', '==', idCategoria));
+    return categoriasCollecton.valueChanges();
+  }
+
   updateCategoriaByIdCategoria (idCategoria: string, updatedData: any) {
     const categoriaCollection = this.firestore.collection('categorias', ref => ref.where('idCategoria', '==', idCategoria));
     
