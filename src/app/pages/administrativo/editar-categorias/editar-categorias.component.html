@@ -1,0 +1,25 @@
+<app-navbar-admin></app-navbar-admin>
+
+<div class="row p-5 custom-row">
+
+    <div class="col-lg-10">
+        <div class="form-container mt-5">
+            <form [formGroup]="categoriasForm" (ngSubmit)="editarCategoria()">
+                <div class="form-row">
+                    <p class="bold"><label for="">Nombre de la categoria: </label></p>
+                    <input class="input-text" type="text" placeholder="Ingrese el nombre de la categoria"
+                        formControlName="descripcion">
+
+                    <div class="mensaje-error" *ngIf="enviado && myForm['descripcion'].errors?.['required']">
+                        La descripción es un campo obligatorio
+                    </div>
+                </div>
+
+                <div class="form-row mt-5">
+                    <button type="submit" class="btns btn-agregar">Editar categoria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
