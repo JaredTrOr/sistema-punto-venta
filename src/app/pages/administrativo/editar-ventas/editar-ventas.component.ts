@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ventas } from '../../../utils/ventas'
 import { Venta } from '../../../models/Ventas';
 import { ElectronService } from '../../../services/electron.service';
 import { ProductoVenta } from '../../../models/ProductoVenta';

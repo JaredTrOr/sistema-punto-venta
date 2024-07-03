@@ -9,6 +9,7 @@ import { VentasService } from '../../../services/ventas.service';
 import { ElectronService } from '../../../services/electron.service';
 import { generarId } from '../../../utils/generadorId';
 import { Categoria } from '../../../models/Categoria';
+import { CategoriasService } from '../../../services/categorias.service';
 
 @Component({
   selector: 'app-ventas',
@@ -31,7 +32,8 @@ export class VentasComponent {
   constructor(
     private productoService: ProductosService, 
     private ventaService: VentasService,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private categoriaService: CategoriasService
   ) {}
 
   ngOnInit() {
@@ -61,11 +63,20 @@ export class VentasComponent {
       }
     );
 
-    //Obtener categorias de manera local
-    this.electronService.send('get-categorias', null);
-    this.electronService.on('get-categorias', (event, categorias) => {
-      this.categorias = JSON.parse(categorias);
+    //Obtener las categorias por firebase
+    this.categoriaService.getCategorias().subscribe(data => {
+      this.categorias = data.map(doc => {
+        return {
+          ...doc.payload.doc.data() as Categoria
+        };
+      });
     });
+
+    //Obtener categorias de manera local
+    // this.electronService.send('get-categorias', null);
+    // this.electronService.on('get-categorias', (event, categorias) => {
+    //   this.categorias = JSON.parse(categorias);
+    // });
     
   }
 

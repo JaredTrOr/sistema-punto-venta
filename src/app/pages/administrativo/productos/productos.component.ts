@@ -6,6 +6,7 @@ import { Categoria } from '../../../models/Categoria';
 import { ElectronService } from '../../../services/electron.service';
 import { generarId } from '../../../utils/generadorId';
 import Swal from 'sweetalert2';
+import { CategoriasService } from '../../../services/categorias.service';
 
 @Component({
   selector: 'app-productos',
@@ -25,7 +26,8 @@ export class ProductosComponent {
   constructor(
     private productosService: ProductosService,
     private electronService: ElectronService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private categoriasService: CategoriasService
   ) {
     this.setProductosForm();
   }
@@ -55,11 +57,20 @@ export class ProductosComponent {
       });
     });
 
-    //Obtener las categorias de manera local
-    this.electronService.send('get-categorias', null);
-    this.electronService.on('get-categorias', (event, data) => {
-      this.categorias = JSON.parse(data);
+    //Obtener las categorias por firebase
+    this.categoriasService.getCategorias().subscribe(data => {
+      this.categorias = data.map(doc => {
+        return {
+          ...doc.payload.doc.data() as Categoria
+        }
+      });  
     });
+
+    //Obtener las categorias de manera local
+    // this.electronService.send('get-categorias', null);
+    // this.electronService.on('get-categorias', (event, data) => {
+    //   this.categorias = JSON.parse(data);
+    // });
   }
 
   filtrarCategoria(): Producto[] {
