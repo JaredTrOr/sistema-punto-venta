@@ -29,6 +29,8 @@ export class VentasComponent {
 
   loadingData: boolean = true;
 
+  isOnline = navigator.onLine;
+
   constructor(
     private productoService: ProductosService, 
     private ventaService: VentasService,
@@ -37,6 +39,21 @@ export class VentasComponent {
   ) {}
 
   ngOnInit() {
+
+    /*
+
+      trackChangesFirebase() {
+
+      }
+      observarCambios(cambios) { -->Observando
+        console.log(cambios)
+
+        cambios ??
+
+        this.electronService.send('actualizar-cambios-productos', cambios)
+        this.electronService.on('actualizar-cambios-productos', null)
+      }
+    */
 
     //Obtención de productos desde el firebase
     this.productoService.getProductos().subscribe(

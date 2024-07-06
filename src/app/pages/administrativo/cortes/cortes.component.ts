@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { ElectronService } from '../../../services/electron.service';
 import { Corte } from '../../../models/Corte';
 import { Venta } from '../../../models/Ventas';
 import { VentasPorProducto } from '../../../models/VentasPorProducto';
+import { Tiempo } from '../../../utils/tiempo';
 
 @Component({
   selector: 'app-cortes',
@@ -11,6 +12,7 @@ import { VentasPorProducto } from '../../../models/VentasPorProducto';
 })
 export class CortesComponent {
 
+  tiempo: Tiempo = new Tiempo();
   ventasProductos: string = 'ventasGeneral';
   filtroFecha = '';
   cortes: Corte[] = [];
@@ -32,14 +34,20 @@ export class CortesComponent {
     this.electronService.send('get-cortes', null);
     this.electronService.on('get-cortes', (event, data) => {
       this.ngZone.run(() => {
-        this.cortes = JSON.parse(data);
+
+        const cortesParse = JSON.parse(data);
+        
+        cortesParse.forEach((elemento: any) => {
+          elemento.tiempoInicio = new Date(elemento.tiempoInicio);
+          elemento.tiempoFin = new Date(elemento.tiempoFin);
+        })
+
+        this.cortes = cortesParse;
       })
     })
   }
 
   getVentasCorte(corte: Corte) {
-    console.log('Corte seleccionado', corte)
-
     if (corte) {
       console.log('Si hay corte')
       this.electronService.send('get-ventas-por-corte', JSON.stringify(corte));

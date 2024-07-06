@@ -1,6 +1,10 @@
 export class Tiempo {
     constructor() {}
 
+    private pad(n : number) {
+        return n.toString().padStart(2, '0');
+    }
+
     getHora(): string {
         const date = new Date();
         let hora = date.getHours();
@@ -28,6 +32,22 @@ export class Tiempo {
         mesString = mes < 10 ? '0' + mes : mes.toString();
     
         return `${diaString}/${mesString}/${anio}`;
+    }
+
+    getFormattedDate(date: Date): string {
+        const dia = this.pad(date.getDate());
+        const mes = this.pad(date.getMonth() + 1);
+        const anio = date.getFullYear();
+
+        return `${dia}/${mes}/${anio}`;
+    }
+
+    getFormattedHour(date: Date): string {
+
+        const horas = this.pad(date.getHours());
+        const minutos = this.pad(date.getMinutes());
+
+        return `${horas}:${minutos}`;
     }
 }
 

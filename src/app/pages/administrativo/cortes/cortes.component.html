@@ -5,7 +5,7 @@
     <div class="cortes">
         <h4>Filtrar cortes</h4>
 
-        <div class="cortes-card-container mt-5">
+        <div class="cortes-card-container mt-3">
             <p class="bold">Filtrar por fecha de corte</p>
 
             <input type="date" class="fecha-filtro" [(ngModel)]="filtroFecha">
@@ -13,13 +13,19 @@
             <button class="btn-aplicar-filtros mt-3" (click)="filtrarPorFecha()">Aplicar cambios</button>
 
             <div class="card-container">
-                <div [ngClass]="{'selected': isCardSeleccionada(corte)}" *ngFor="let corte of cortes" class="corte-card mt-4" (click)="toggleCorteSeleccionado(corte)">
+                <div [ngClass]="{'selected': isCardSeleccionada(corte)}" (click)="toggleCorteSeleccionado(corte)" *ngFor="let corte of cortes" class="corte-card mt-4">
                     <!-- <p class="bold">ID: {{ corte.idCorte }}</p> -->
                     <h5>Titulo corte: {{ corte.tituloCorte }}</h5>
     
                     <div class="card-info mt-3">
-                        <p>Fecha corte: {{ corte.fechaCorte }}</p>
-                        <p>Hora de corte: {{ corte.horaCorte }}</p>
+                        <p>
+                            Tiempo Inicio: {{ tiempo.getFormattedDate(corte.tiempoInicio!) }} a las 
+                            {{ tiempo.getFormattedHour(corte.tiempoInicio!) }}
+                        </p>
+                        <p>
+                            Tiempo Fin: {{ tiempo.getFormattedDate(corte.tiempoFin!) }} a las 
+                            {{ tiempo.getFormattedHour(corte.tiempoFin!) }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -30,7 +36,7 @@
     <div class="ventas-container">
         <h4>Ventas realizadas</h4>
 
-        <div class="mt-5 radio-buttons-container d-flex gap-4">
+        <div class="mt-3 radio-buttons-container d-flex gap-4">
             <div class="radio-button-row">
               <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
               <label for="radioVentasGeneral">  Ventas generales</label>
