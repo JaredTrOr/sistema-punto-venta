@@ -2,10 +2,13 @@
 
 <section class="main-container">
 
+    <!--Contenedor de ventas-->
     <div class="venta-container">
         <p class="venta-title">Venta</p>
 
         <div class="carrito-venta">
+
+            <!--Tabla de de productos, carrito de compra-->
             <table *ngIf="carritoProductos.length" class="table">
                 <thead>
                     <th>Producto</th>
@@ -16,11 +19,13 @@
 
                 <tbody>
                     <tr *ngFor="let producto of carritoProductos">
-                        <td>{{ producto.nombreProducto }}</td>
+                        <td class="cursor" (click)="abrirModal(producto)">{{ producto.nombreProducto }}</td>
                         <td class="d-flex gap-3 align-items-center">
+
                             <button (click)="restarProducto(producto)" class="control-buttons">-</button> 
-                                {{ producto.cantidad }} 
+                                <span> {{ producto.cantidad }} </span>
                             <button (click)="sumarProducto(producto)" class="control-buttons">+</button>
+
                         </td>
                         <td>${{ producto.importe }}</td>
                         <td>${{ producto.cantidad * producto.importe }}</td>
@@ -29,6 +34,7 @@
             </table>
         </div>
 
+        <!--Despliegue del total, botones de realizar compra y limpiar-->
         <div class="despliegue-total">
             <div class="cantidad-precio">
                 <p class="categoria">({{ getTotalProductos() }}) Total</p>
@@ -41,13 +47,17 @@
             </div>
         </div>
     </div>
-
+    
+    <!--Imágen para la carga de productos-->
     <div *ngIf="loadingData" class="text-center">
         <img src="./assets/images/loading_image.gif" alt="Imagen de cargar">
         <h2>Cargando productos...</h2>
     </div>
 
+    <!--Listado de productos-->
     <div *ngIf="!loadingData" class="productos-container">
+
+        <!--Input de busqueda de texto-->
         <input [(ngModel)]="busquedaTexto" type="text" class="input-text" placeholder="Buscar por nombre">
 
         <select [(ngModel)]="categoriaSeleccionada" class="mt-3 filtro" name="" id="">
@@ -68,6 +78,35 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+
+            <input 
+                [(ngModel)]="numerosDisplay" 
+                type="number" 
+                id="input-numbers-modal" 
+                placeholder="Ingrese la cantidad" 
+                class="input-numbers" 
+                disabled
+            >
+            </div>
+            <div class="modal-body numbers-grid">
+                <div *ngFor="let numero of numerosTecladoProductos" (click)="escribirNumeros(numero)">{{ numero }}</div>
+                <div class="cero" (click)="escribirNumeros(0)">0</div>
+                <div (click)="borrarNumeros()" class="borrar"><i class="bi bi-arrow-left"></i></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btns btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button (click)="guardarCambios()" data-bs-dismiss="modal" type="button" class="btns btn btn-success">Guardar cambios</button>
+            </div>
+        </div>
         </div>
     </div>
 

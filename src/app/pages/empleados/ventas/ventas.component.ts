@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ProductosService } from '../../../services/productos.service';
 import { Producto } from '../../../models/Producto';
@@ -10,6 +10,7 @@ import { ElectronService } from '../../../services/electron.service';
 import { generarId } from '../../../utils/generadorId';
 import { Categoria } from '../../../models/Categoria';
 import { CategoriasService } from '../../../services/categorias.service';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-ventas',
@@ -28,8 +29,12 @@ export class VentasComponent {
   busquedaTexto = '';
 
   loadingData: boolean = true;
-
   isOnline = navigator.onLine;
+
+  //Variables para el modal
+  numerosTecladoProductos: number[] = Array.from( { length: 9 }, (_, i) => i + 1);
+  productoSeleccionadoModal!: ProductoVenta;
+  numerosDisplay: string = '';
 
   constructor(
     private productoService: ProductosService, 
@@ -220,6 +225,34 @@ export class VentasComponent {
 
     return productosFiltrados;
   }
-  
+
+  /*Eventos de modal*/
+  abrirModal(productoSeleccionado: ProductoVenta): void {
+    this.productoSeleccionadoModal = productoSeleccionado;
+    const modalElement = document.getElementById('exampleModal');
+    if (modalElement) {
+      const modal = new Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  escribirNumeros(numero: number) {
+    this.numerosDisplay += numero;
+  }
+
+  borrarNumeros() {
+    this.numerosDisplay = this.numerosDisplay.slice(0, -1);
+  }
+
+  guardarCambios() {
+    if (this.numerosDisplay === '' || this.numerosDisplay === '0') {
+      this.numerosDisplay = '';
+      return;
+    }
+    
+    this.productoSeleccionadoModal.cantidad = Number.parseInt(this.numerosDisplay);
+    this.productoSeleccionadoModal = null as any;
+    this.numerosDisplay = '';
+  }
 
 }
