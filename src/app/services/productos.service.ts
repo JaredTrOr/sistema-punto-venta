@@ -19,6 +19,10 @@ export class ProductosService {
     return productosCollection.valueChanges();
   }
 
+  getCambiosProducto() {
+    return this.firestore.collection('productos').stateChanges();
+  }
+
   createProducto(producto: Producto) {
     producto.descripcion = producto.descripcion.toUpperCase();
     return this.firestore.collection('productos').add(Object.assign({}, producto));

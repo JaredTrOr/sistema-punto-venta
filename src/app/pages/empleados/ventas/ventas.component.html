@@ -80,34 +80,33 @@
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
 
-            <input 
-                [(ngModel)]="numerosDisplay" 
-                type="number" 
-                id="input-numbers-modal" 
-                placeholder="Ingrese la cantidad" 
-                class="input-numbers" 
-                disabled
-            >
-            </div>
-            <div class="modal-body numbers-grid">
-                <div *ngFor="let numero of numerosTecladoProductos" (click)="escribirNumeros(numero)">{{ numero }}</div>
-                <div class="cero" (click)="escribirNumeros(0)">0</div>
-                <div (click)="borrarNumeros()" class="borrar"><i class="bi bi-arrow-left"></i></div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btns btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button (click)="guardarCambios()" data-bs-dismiss="modal" type="button" class="btns btn btn-success">Guardar cambios</button>
-            </div>
+        <input 
+            [(ngModel)]="numerosDisplay" 
+            type="number" 
+            id="input-numbers-modal" 
+            placeholder="Ingrese la cantidad" 
+            class="input-numbers" 
+            disabled
+        >
         </div>
+        <div class="modal-body numbers-grid">
+            <div *ngFor="let numero of numerosTecladoProductos" (click)="escribirNumeros(numero)">{{ numero }}</div>
+            <div class="cero" (click)="escribirNumeros(0)">0</div>
+            <div (click)="borrarNumeros()" class="borrar"><i class="bi bi-arrow-left"></i></div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btns btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button (click)="guardarCambios()" data-bs-dismiss="modal" type="button" class="btns btn btn-success">Guardar cambios</button>
         </div>
     </div>
-
-</section>
+    </div>
+</div>

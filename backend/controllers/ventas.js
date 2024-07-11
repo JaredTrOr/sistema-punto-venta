@@ -263,5 +263,8 @@ module.exports = {
     getVentasPorCorte,
     updateVentas,
     deleteVenta,
-    getVentaPorId
+    getVentaPorId,
+
+    //Usar en exportar PDF
+    obtenerDiaSeleccion
 }

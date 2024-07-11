@@ -2,8 +2,10 @@ const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
 const { app, dialog } = require('electron');
 const path = require('path');
+const { obtenerDiaSeleccion } = require("../controllers/ventas");
+const { getFormattedDate } = require("./formateos");
 
-function exportarPDF(data) {
+async function exportarPDF(data) {
 
     const options = {
         title: 'Guardar PDF',
@@ -23,7 +25,7 @@ function exportarPDF(data) {
 
             (async function () {
                 doc.font("Helvetica-Bold").fontSize(14).text("PANADERIAS SAN CAYETANO");
-                doc.font("Helvetica").fontSize(12).text(data.filtros ? obtenerTituloPDF(data.filtros) : data.tituloPDF);
+                doc.font("Helvetica").fontSize(12).text(data.filtros ? await obtenerTituloPDF(data.filtros) : data.tituloPDF);
 
                 doc.moveDown(3);
 
@@ -74,7 +76,7 @@ function exportarPDF(data) {
     });
 }
 
-function obtenerTituloPDF(filtros) {
+async function obtenerTituloPDF(filtros) {
     let titulo = '';
 
     //Exportación de ventas de los días
@@ -83,10 +85,23 @@ function obtenerTituloPDF(filtros) {
     if (filtros.filtroPorDia === 'todas') {
         titulo = 'Exportación de todas las ventas';
     }
-    else if (filtros.filtroPorDia !== 'otro') titulo = `Exportación de ventas de ${filtros.filtroPorDia}`;
+
+    //Obtener una fecha mas legible en vez de poner "hoy, ayer, ultimos 7 días, ultimos 30 días, mes pasado, este año, año pasado"
+    else if (filtros.filtroPorDia !== 'otro') {
+        titulo = `Exportación de ventas de ${filtros.filtroPorDia}`;
+
+        const { fechaI, fechaF } = await obtenerDiaSeleccion(filtros.filtroPorDia);
+
+        if (filtros.filtroPorDia === 'hoy' || filtros.filtroPorDia === 'ayer') {
+            titulo += ` ,${getFormattedDate(fechaI)} `;
+        }
+        else {
+            titulo += ` ,del día ${getFormattedDate(fechaI)} al ${getFormattedDate(fechaF)} `;
+        }
+    }
 
     else {
-         //--> Por fecha específica
+        //--> Por fecha específica
         if (filtros.radioFiltroFecha === 'fecha-especifica') {
             const [anio, mes, dia] = filtros.filtroFechaEspecifica.split('-');
             const fechaString = `${dia}/${mes}/${anio}`;
@@ -108,7 +123,7 @@ function obtenerTituloPDF(filtros) {
 
     //Exportación de ventas de las horas
 
-    if (filtros.filtroHoraInicio !== 'x' && filtros.filtroHoraFin !== 'x') 
+    if (filtros.filtroHoraInicio !== 'x' && filtros.filtroHoraFin !== 'x') //--> Si tienen hora
         titulo += ` de las ${filtros.filtroHoraInicio} a las ${filtros.filtroHoraFin}`;
     else if (filtros.filtroHoraInicio !== 'x') 
         titulo += ` a las ${filtros.filtroHoraInicio}`;
