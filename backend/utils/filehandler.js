@@ -19,36 +19,20 @@ class FileHandler {
     async escribirArchivo(filepath, data) {     
         console.log('Escribiendo archivo en: ', filepath); 
 
-        //Si el archivo no existe, lo crea y escribe el registro
-        if (!await this.archivoDirExiste(filepath)) {
-            try {
-                await fs.writeFile(filepath, JSON.stringify([data]));
-                console.log('Se escribió el archivo correctamente');
-            } catch(e) {
-                console.log(`Error al escribir el archivo: ${e}`);
-            }
-        }
-
-        else {
-            const dataFile = await this.leerArchivo(filepath);
-            dataFile.push(data);
-
-            try {
-                await fs.writeFile(filepath, JSON.stringify(dataFile));
-                console.log('Se agregó el registro al archivo correctamente');
-            } catch(e) {
-                console.log(`Error al agregar registro al archivo: ${e}`);
-            }
+        try {
+            await fs.writeFile(filepath, JSON.stringify(data));
+            console.log('Se escribió el archivo correctamente');
+        } catch(e) {
+            console.log(`Error al escribir el archivo: ${e}`);
         }
 
     }
 
     async actualizarArchivo(filepath, data) {
-        const file = JSON.parse(await this.leerArchivo(filepath));
-        const index = file.findIndex((item) => item.id === data.id);
-        file[index] = data;
+        const file = await this.leerArchivo(filepath);
+        file.sucursalSeleccionada = data;
         
-        escribirArchivo(filepath, file);
+        await this.escribirArchivo(filepath, file);
         console.log('Se actualizó el archivo correctamente');
     }
 

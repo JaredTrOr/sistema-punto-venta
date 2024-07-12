@@ -8,6 +8,7 @@ import { VentasPorProducto } from '../../../models/VentasPorProducto';
 import { generarId } from '../../../utils/generadorId';
 import { Corte } from '../../../models/Corte';
 import { CortesService } from '../../../services/cortes.service';
+import { GlobalService } from '../../../services/global.service';
 
 @Component({
   selector: 'app-ventas-admin',
@@ -28,7 +29,8 @@ export class VentasAdminComponent {
     private ventasService: VentasService,
     private cortesService: CortesService,
     private electronService: ElectronService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private globalService: GlobalService
   ) { 
     
    }
@@ -102,7 +104,7 @@ export class VentasAdminComponent {
 
         const corte: Corte = {
           idCorte: generarId(), 
-          sucursal: 'Sucursal Testing',
+          sucursal: this.globalService.getSucursal(),
           tituloCorte,
           fechaCorte,
           horaCorte,

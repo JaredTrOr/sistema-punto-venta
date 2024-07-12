@@ -11,6 +11,7 @@ import { generarId } from '../../../utils/generadorId';
 import { Categoria } from '../../../models/Categoria';
 import { CategoriasService } from '../../../services/categorias.service';
 import { Modal } from 'bootstrap';
+import { GlobalService } from '../../../services/global.service';
 
 @Component({
   selector: 'app-ventas',
@@ -40,7 +41,8 @@ export class VentasComponent {
     private productoService: ProductosService, 
     private ventaService: VentasService,
     private electronService: ElectronService,
-    private categoriaService: CategoriasService
+    private categoriaService: CategoriasService,
+    private globalService: GlobalService
   ) {}
 
   ngOnInit() {
@@ -160,7 +162,7 @@ export class VentasComponent {
         //Realizar la compra 
         const venta: Venta = {
           idVenta: generarId(),
-          sucursal: "Sucursal Testing",
+          sucursal: this.globalService.getSucursal(),
           fecha: this.tiempo.getDate(),
           hora: this.tiempo.getHora(),
           timestamp: new Date(),

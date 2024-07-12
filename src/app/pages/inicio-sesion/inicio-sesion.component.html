@@ -31,4 +31,11 @@
     </div>
 </section>
 
+<div class="seleccion-sucursal d-flex gap-3">
+    <select [(ngModel)]="sucursalSeleccionada" name="" id="" class="seleccion">
+        <option *ngFor="let sucursal of sucursales" value="{{ sucursal.nombre }}">{{ sucursal.nombre }}</option>
+    </select>
+    <button (click)="cambiarSucursal()" class="btns cambiar">Cambiar sucursal</button>
+</div>
+
 <!-- <img class="logo-image" src="/assets/images/logo.svg" alt="Logo de la empresa"> -->

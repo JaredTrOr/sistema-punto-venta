@@ -32,6 +32,11 @@ const {
     updateCategoria,
     deleteCategoria
 } = require('./backend/controllers/categorias');
+//Sucursales controller
+const { 
+    getSucursales,
+    updateSucursalSeleccionada
+} = require('./backend/controllers/sucursales');
 
 let mainWindow
 
@@ -102,3 +107,6 @@ ipcMain.on('get-categoria-por-id', getCategoriaPorId)
 ipcMain.on('create-categoria', createCategoria)
 ipcMain.on('update-categoria', updateCategoria)
 ipcMain.on('delete-categoria', deleteCategoria)
+//Manejo de sucursales
+ipcMain.on('get-sucursales', getSucursales)
+ipcMain.on('update-sucursal-seleccionada', updateSucursalSeleccionada) 

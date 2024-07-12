@@ -29,6 +29,9 @@ import { EditarCategoriasComponent } from './pages/administrativo/editar-categor
 import { CortesComponent } from './pages/administrativo/cortes/cortes.component';
 import { CategoriasComponent } from './pages/administrativo/categorias/categorias.component';
 
+//Servicios
+import { GlobalService } from './services/global.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +61,7 @@ import { CategoriasComponent } from './pages/administrativo/categorias/categoria
     AngularFirestoreModule.enablePersistence(),
     AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
