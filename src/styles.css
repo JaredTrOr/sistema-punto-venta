@@ -84,3 +84,7 @@ a {
     background-color: var(--main-purple);
     color: var(--light);
 }
+
+.red {
+    color: red;
+}

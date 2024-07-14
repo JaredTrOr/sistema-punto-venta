@@ -7,7 +7,7 @@
         <div class="form-container mt-5">
             <form [formGroup]="categoriasForm" (ngSubmit)="agregarCategoria()">
                 <div class="form-row">
-                    <p class="bold"><label for="">Nombre de la categoria: </label></p>
+                    <p class="bold"><label for=""><span class="red">*</span> Nombre de la categoria: </label></p>
                     <input class="input-text" type="text" placeholder="Ingrese el nombre de la categoria"
                         formControlName="descripcion">
 

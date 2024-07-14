@@ -30,6 +30,9 @@
     </div>
 
     <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte" [origen]="'empleado'"></app-ventas-general>
-    <app-ventas-productos *ngIf="ventasProductos === 'ventasProducto'" [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
+
+    <div *ngIf="ventasProductos === 'ventasProducto'" class="ventas-producto-container">
+      <app-ventas-productos [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
+    </div>
 
 </section>

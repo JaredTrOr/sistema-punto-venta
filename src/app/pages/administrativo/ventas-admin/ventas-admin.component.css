@@ -7,3 +7,8 @@
 .no-ventas {
     margin-top: 5rem;
 }
+
+.ventas-producto-container {
+    height: 60vh;
+    overflow-y: scroll;
+}

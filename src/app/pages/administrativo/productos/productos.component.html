@@ -4,10 +4,10 @@
     <div class="col-lg-4">
         <h2>PRODUCTOS</h2>
 
-        <div class="form-container mt-5">
+        <div class="form-container mt-4">
             <form [formGroup]="productosForm" (ngSubmit)="agregarProducto()">
                 <div class="form-row">
-                    <p class="bold"><label for="">Nombre del producto: </label></p>
+                    <p class="bold"><label for=""><span class="red">*</span> Nombre del producto: </label></p>
                     <input class="input-text" type="text" placeholder="Ingrese el nombre del producto" formControlName="descripcion">
 
                     <div class="mensaje-error" *ngIf="enviado && myForm['descripcion'].errors?.['required']">
@@ -16,7 +16,7 @@
                 </div>
     
                 <div class="form-row mt-5">
-                    <p class="bold"><label for="">Categoría: </label></p>
+                    <p class="bold"><label for=""><span class="red">*</span> Categoría: </label></p>
                     <select name="" id="" formControlName="categoria" class="filtro">
                         <option value="">Seleccione una categoria</option>
                         <option *ngFor="let categoria of categorias" value="{{ categoria.descripcion }}">{{ categoria.descripcion }}</option>
@@ -27,7 +27,7 @@
                 </div>
     
                 <div class="form-row mt-5">
-                    <p class="bold"><label for="">Precio: </label></p>
+                    <p class="bold"><label for=""><span class="red">*</span> Precio: </label></p>
                     <input class="input-text" type="number" min="1" placeholder="Ingrese el nombre del producto" formControlName="precio">
                     <div class="mensaje-error" *ngIf="enviado && myForm['precio'].errors?.['required']">
                         El precio es un campo obligatorio

@@ -51,3 +51,8 @@
     color: var(--light);
     background-color: var(--main-purple);
 }
+
+.ventas-por-producto {
+    height: 75vh;
+    overflow-y: scroll;
+}
