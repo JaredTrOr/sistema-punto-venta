@@ -21,34 +21,12 @@ export class InicioSesionComponent {
     private router: Router,
     private electronService: ElectronService,
     private ngZone: NgZone,
-    private formBuilder: FormBuilder,
-    private globalService: GlobalService
+    private formBuilder: FormBuilder
   ) {
     this.setLoginForm();
   }
 
-  ngOnInit() {
-    //Cargar las sucursales y tomar la sucursal seleccionada
-    this.electronService.send('get-sucursales', null);
-    this.electronService.on('get-sucursales', (event, response) => {
-
-      this.ngZone.run(() => {
-        const dataSucursales = JSON.parse(response);
-        console.log(dataSucursales);
-
-        if (dataSucursales.success) {
-          this.sucursalSeleccionada = dataSucursales.sucursalSeleccionada;
-          this.sucursales = dataSucursales.sucursales;
-          this.globalService.setSucursal(this.sucursalSeleccionada);
-
-        }
-        else {
-          Swal.fire('Error', 'Hubo un error al obtener las categorias', 'error');
-        }
-      })
-
-    });
-  }
+  ngOnInit() { }
 
   setLoginForm() {
     this.loginForm = this.formBuilder.group({
@@ -78,20 +56,6 @@ export class InicioSesionComponent {
       }
       else {
         Swal.fire('Error', response.message, 'error');
-      }
-    });
-  }
-
-  cambiarSucursal() {
-    this.electronService.send('update-sucursal-seleccionada', this.sucursalSeleccionada);
-    this.electronService.on('update-sucursal-seleccionada', (event, response) => {
-      response = JSON.parse(response);
-      if (response.success) {
-        this.globalService.setSucursal(this.sucursalSeleccionada);
-        Swal.fire('Cambio de sucursal', 'Se ha realizado el cambio de sucursal exitosamente', 'success');
-      }
-      else {
-        Swal.fire('Error ', 'Hubo un error al realizar el cambio de la sucursal', 'error');
       }
     });
   }

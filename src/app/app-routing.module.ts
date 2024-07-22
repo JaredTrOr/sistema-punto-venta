@@ -13,6 +13,7 @@ import { EditarProductosComponent } from './pages/administrativo/editar-producto
 import { CortesComponent } from './pages/administrativo/cortes/cortes.component';
 import { CategoriasComponent } from './pages/administrativo/categorias/categorias.component';
 import { EditarCategoriasComponent } from './pages/administrativo/editar-categorias/editar-categorias.component';
+import { SeleccionarSucursalesComponent } from './pages/administrativo/seleccionar-sucursales/seleccionar-sucursales.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,11 @@ const routes: Routes = [
     path: 'editar-categorias/:id',
     title: 'Editar categorias',
     component: EditarCategoriasComponent
+  },
+  {
+    path: 'seleccionar-sucursal',
+    title: 'Seleccionar sucursal',
+    component: SeleccionarSucursalesComponent
   },
   {
     path: '**',

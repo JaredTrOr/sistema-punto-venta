@@ -13,46 +13,57 @@
             <button class="btn-aplicar-filtros mt-3" (click)="filtrarPorFecha()">Aplicar cambios</button>
 
             <div class="card-container">
-                <div [ngClass]="{'selected': isCardSeleccionada(corte)}" (click)="toggleCorteSeleccionado(corte)" *ngFor="let corte of cortes" class="corte-card mt-4">
+                <div [ngClass]="{'selected': isCardSeleccionada(corte)}" (click)="toggleCorteSeleccionado(corte)"
+                    *ngFor="let corte of cortes" class="corte-card mt-4">
                     <!-- <p class="bold">ID: {{ corte.idCorte }}</p> -->
                     <h5>Titulo corte: {{ corte.tituloCorte }}</h5>
-    
+
                     <div class="card-info mt-3">
                         <p>
-                            Tiempo Inicio: {{ tiempo.getFormattedDate(corte.tiempoInicio!) }} a las 
+                            Tiempo Inicio: {{ tiempo.getFormattedDate(corte.tiempoInicio!) }} a las
                             {{ tiempo.getFormattedHour(corte.tiempoInicio!) }}
                         </p>
                         <p>
-                            Tiempo Fin: {{ tiempo.getFormattedDate(corte.tiempoFin!) }} a las 
+                            Tiempo Fin: {{ tiempo.getFormattedDate(corte.tiempoFin!) }} a las
                             {{ tiempo.getFormattedHour(corte.tiempoFin!) }}
                         </p>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
     <div class="ventas-container">
         <h4>Ventas realizadas</h4>
 
-        <div class="mt-3 radio-buttons-container d-flex gap-4">
-            <div class="radio-button-row">
-              <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
-              <label for="radioVentasGeneral">  Ventas generales</label>
-            </div>
-      
-            <div class="radio-button-row">
-              <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
-              <label for="radioVentasProducto">  Ventas por producto</label>
-            </div>
-          </div>
-      
-          <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas" [origen]="'cortes'"></app-ventas-general>
+        <div class="mt-3 radio-buttons-container d-flex justify-content-between ">
+            <button
+                
+                *ngIf="ventas.length" class="btns btn-exportar">
+                Exportar
+            </button>
 
-          <div *ngIf="ventasProductos === 'ventasProducto'" class="ventas-por-producto">
-              <app-ventas-productos [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
-          </div>
+            <div class="radio-button-container">
+                <div class="radio-button-row">
+                    <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral"
+                        [(ngModel)]="ventasProductos">
+                    <label for="radioVentasGeneral"> Ventas generales</label>
+                </div>
+
+                <div class="radio-button-row">
+                    <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto"
+                        [(ngModel)]="ventasProductos">
+                    <label for="radioVentasProducto"> Ventas por producto</label>
+                </div>
+            </div>
+        </div>
+
+        <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas"
+            [origen]="'cortes'"></app-ventas-general>
+
+        <div *ngIf="ventasProductos === 'ventasProducto'" class="ventas-por-producto">
+            <app-ventas-productos [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
+        </div>
     </div>
 </div>
-

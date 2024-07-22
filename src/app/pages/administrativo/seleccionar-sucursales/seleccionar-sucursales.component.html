@@ -1,0 +1,12 @@
+<app-navbar-admin></app-navbar-admin>
+
+<div class="row p-5 custom-row">
+    <h2>Seleccionar sucursal</h2>
+
+    <div class="seleccion-sucursal d-flex gap-3 mt-4">
+        <select [(ngModel)]="sucursalSeleccionada" name="" id="" class="seleccion">
+            <option *ngFor="let sucursal of sucursales" value="{{ sucursal.nombre }}">{{ sucursal.nombre }}</option>
+        </select>
+        <button (click)="cambiarSucursal()" class="btns cambiar">Cambiar sucursal</button>
+    </div>
+</div>

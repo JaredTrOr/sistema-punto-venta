@@ -31,6 +31,7 @@ import { CategoriasComponent } from './pages/administrativo/categorias/categoria
 
 //Servicios
 import { GlobalService } from './services/global.service';
+import { SeleccionarSucursalesComponent } from './pages/administrativo/seleccionar-sucursales/seleccionar-sucursales.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { GlobalService } from './services/global.service';
     EditarProductosComponent,
     CortesComponent,
     CategoriasComponent,
-    EditarCategoriasComponent
+    EditarCategoriasComponent,
+    SeleccionarSucursalesComponent
   ],
   imports: [
     BrowserModule,
