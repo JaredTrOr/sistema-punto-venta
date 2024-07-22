@@ -3,7 +3,7 @@ const { formatearFecha } = require('../utils/formateos')
 
 function exportacionPDF (event, data) {
     data.fecha = formatearFecha(data.fecha);
-    exportarPDF(data)
+    exportarPDF(data);
 }
 
 module.exports = {
