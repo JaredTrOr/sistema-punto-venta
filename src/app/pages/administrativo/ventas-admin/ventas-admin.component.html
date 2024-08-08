@@ -3,11 +3,6 @@
     <h2>Ventas por corte</h2>
 
     <div class="d-flex gap-3 ">
-        <!-- <select class="filtro mt-4" name="" id="">
-            <option value="0">Hoy</option>
-            <option value="1">Ayer</option>
-            <option value="">Últimos 7 días</option>
-        </select> -->
 
         <button (click)="exportarPDF('Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())" 
         *ngIf="ventasDespuesCorte.length" class="btns btn-exportar">

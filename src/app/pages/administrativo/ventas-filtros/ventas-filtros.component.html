@@ -1,7 +1,7 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="ventas-filtro-container mt-3 p-4">
   <section>
-    <h2>Ventas generales</h2>
+    <h2>Ventas Generales</h2>
   
     <div class="filtros-container mt-5">
   
@@ -92,6 +92,7 @@
 
     <div class="container-ventas mt-3">
       <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventas" [origen]="'admin'"></app-ventas-general>
+
       <div *ngIf="ventasProductos === 'ventasProducto'" class="ventas-por-producto">
         <app-ventas-productos [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
       </div>
