@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class VentasGeneralComponent {
 
   @Input() ventas: Venta[] = [];
-  @Input() origen!: string;
+  @Input() origen!: string; // --> admin / empleado
 
   constructor(private router: Router) {}
 

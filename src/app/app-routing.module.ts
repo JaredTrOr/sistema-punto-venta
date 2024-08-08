@@ -16,11 +16,15 @@ import { EditarCategoriasComponent } from './pages/administrativo/editar-categor
 import { SeleccionarSucursalesComponent } from './pages/administrativo/seleccionar-sucursales/seleccionar-sucursales.component';
 
 const routes: Routes = [
+
+  //Pantalla accessible por todos 
   {
     path: 'inicio-sesion',
     title: 'Inicio de sesión',
     component: InicioSesionComponent
   },
+
+  //Pantallas de empleados 
   {
     path: 'ventas',
     title: 'Ventas',
@@ -31,6 +35,8 @@ const routes: Routes = [
     title: 'Mostrar ventas',
     component: MostrarVentasComponent
   },
+
+  //Pantalla administrador
   {
     path: 'admin-productos',
     title: 'Administrar productos',
@@ -62,10 +68,6 @@ const routes: Routes = [
     component: CortesComponent
   },
   {
-    path: 'test',
-    component: TestComponent
-  },
-  {
     path: 'categorias',
     title: 'Categorias',
     component: CategoriasComponent
@@ -80,6 +82,14 @@ const routes: Routes = [
     title: 'Seleccionar sucursal',
     component: SeleccionarSucursalesComponent
   },
+
+  //Pantalla de prueba
+  {
+    path: 'test',
+    component: TestComponent
+  },
+
+  //Redirección default
   {
     path: '**',
     redirectTo: '/inicio-sesion'
