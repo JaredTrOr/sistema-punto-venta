@@ -14,19 +14,31 @@ export class InicioSesionComponent {
 
   loginForm!: FormGroup;
   enviado = false;
-  sucursales!: any;
-  sucursalSeleccionada!: string;
 
   constructor(
     private router: Router,
     private electronService: ElectronService,
+    private globalService: GlobalService,
     private ngZone: NgZone,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.setLoginForm();
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.electronService.send('get-sucursales', null);
+    this.electronService.on('get-sucursales', (event, response) => {
+      response = JSON.parse(response)
+
+      if (response.success){ 
+        this.globalService.setSucursal(response.sucursalSeleccionada);
+      }
+      else {
+        console.log('Error al obtener la sucursal')
+      }
+
+    })
+  }
 
   setLoginForm() {
     this.loginForm = this.formBuilder.group({
