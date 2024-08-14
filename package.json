@@ -15,6 +15,9 @@
     "electron": "ng build --base-href ./ && electron .",
     "package": "electron-builder"
   },
+  "overrides": {
+    "usb": "^1.9.2"
+  },
   "build": {
     "appId": "com.electron.sistemaventa",
     "productName": "Sistema Punto de Venta",
@@ -23,7 +26,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "./assets/images/logo.svg"
+      "icon": "./src/assets/images/logo.svg"
     },
     "linux": {
       "target": "AppImage",
@@ -43,6 +46,8 @@
     "@angular/router": "^17.0.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "escpos": "^3.0.0-alpha.6",
+    "escpos-usb": "^3.0.0-alpha.4",
     "firebase": "^10.12.2",
     "moment": "^2.30.1",
     "mongoose": "^8.4.4",

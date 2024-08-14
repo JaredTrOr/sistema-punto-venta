@@ -4,6 +4,7 @@ const CategoriasRoutes = require('./routes/categorias');
 const SucursalesRoutes = require('./routes/sucursales');
 const ProductosRoutes = require('./routes/productos');
 const EmpleadosRoutes = require('./routes/empleados');
+const UtilsRoutes = require('./routes/utils');
 const connectionMongoDB = require('../connection');
 
 class Routes {
@@ -20,6 +21,7 @@ class Routes {
         SucursalesRoutes.inicializarRutas();
         ProductosRoutes.inicalizarRutas();
         EmpleadosRoutes.inicializarRutas();
+        UtilsRoutes.inicalizarRutas();
     }
 }
 

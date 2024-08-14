@@ -81,6 +81,11 @@ export class VentasComponent {
       });
     });
 
+    //Observar cambios
+    this.productoService.getCambiosProducto().subscribe(data => {
+
+    });
+
     //Obtener categorias de manera local
     // this.electronService.send('get-categorias', null);
     // this.electronService.on('get-categorias', (event, categorias) => {
@@ -171,11 +176,17 @@ export class VentasComponent {
           totalGeneral: this.getTotal()
         }
 
+        console.log('VENTA');
+        console.log(venta);
+
         //Guardar la venta en firebase
-        this.ventaService.createVenta(venta);
+        this.ventaService.createVenta(venta); 
 
         //Guardar venta en local
         this.electronService.send('create-venta', venta);
+
+        //Realizar ticket
+        this.electronService.send('imprimir-ticket', venta);
 
         this.carritoProductos = [];
         Swal.fire("Las compra se ha realizado con éxito", "", "success");
