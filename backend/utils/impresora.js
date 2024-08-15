@@ -27,14 +27,14 @@ class Impresora {
             console.log(venta);
 
             const device = new escpos.USB(this.impresora.vendorId, this.impresora.productId);
-            const options = { encoding: 'ISO-8859-1' };
+            const options = { encoding: 'CP437' };
             const printerInstance = new escpos.Printer(device, options);
 
             device.open(() => {
                 printerInstance.align('CT');
                 printerInstance.style('B');
                 printerInstance.text('PANADERIA SAN CAYETANO');
-                printerInstance.text('SAN JUAN DEL RÍO, QRO.');
+                printerInstance.text('SAN JUAN DEL RIO, QRO.');
                 printerInstance.text('TEL: 2640233');
 
                 printerInstance.text('');
@@ -56,11 +56,12 @@ class Impresora {
                 printerInstance.text('------------------------');
                 printerInstance.size(1);
                 printerInstance.table(['Producto', 'Cantidad', 'Precio', 'Total'])
+                printerInstance.table(['', '', '', ''])
 
                 for (let producto of venta.productos) {
                     printerInstance.table(
                         [
-                            `${producto.nombreProducto}`, 
+                            `${producto.nombreProducto}`.substring(0,11), 
                             `${producto.cantidad}`, 
                             `$${producto.importe}`, 
                             `$${producto.total}`
