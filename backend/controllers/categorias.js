@@ -55,10 +55,28 @@ async function deleteCategoria(event, id) {
     }
 }
 
+async function loadCategorias(event, data) {
+    try {
+
+        //Borrar colección de categorias
+        await Categoria.collection.drop();
+
+        //Cargar categorias
+        await Categoria.insertMany(data);
+
+        console.log('Categorias cargadas');
+        event.reply('load-categorias', JSON.stringify({success: true, msg: 'Categorias cargadas'}));
+    } catch(err) {
+        console.log({success: false, message: err});
+        event.reply('load-categorias', JSON.stringify({ success: false, message: err }))
+    }
+}
+
 module.exports = {
     getCategorias,
     getCategoriaPorId,
     createCategoria,
     updateCategoria,
-    deleteCategoria
+    deleteCategoria,
+    loadCategorias
 }

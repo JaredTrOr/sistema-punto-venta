@@ -4,7 +4,8 @@ const {
     getCategoriaPorId,
     createCategoria,
     updateCategoria,
-    deleteCategoria
+    deleteCategoria,
+    loadCategorias
 } = require('../../controllers/categorias');
 
 class CategoriasRoutes {
@@ -14,6 +15,7 @@ class CategoriasRoutes {
         ipcMain.on('create-categoria', createCategoria);
         ipcMain.on('update-categoria', updateCategoria);
         ipcMain.on('delete-categoria', deleteCategoria);
+        ipcMain.on('load-categorias', loadCategorias)
     }
 }
 

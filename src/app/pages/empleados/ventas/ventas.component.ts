@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ProductosService } from '../../../services/productos.service';
 import { Producto } from '../../../models/Producto';
@@ -18,12 +18,14 @@ import { GlobalService } from '../../../services/global.service';
   templateUrl: './ventas.component.html',
   styleUrl: './ventas.component.css'
 })
-export class VentasComponent {
+export class VentasComponent implements OnInit{
 
   productos: Producto[] = [];
   categorias: Categoria[] = [];
 
   carritoProductos: ProductoVenta[] = [];
+
+  //Clase de formato de Time
   tiempo = new Tiempo();
 
   categoriaSeleccionada = 'todos';
@@ -38,60 +40,34 @@ export class VentasComponent {
   numerosDisplay: string = '';
 
   constructor(
-    private productoService: ProductosService, 
     private ventaService: VentasService,
     private electronService: ElectronService,
-    private categoriaService: CategoriasService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private ngZone: NgZone
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.getProductosLocal();
+    this.getCategoriasLocal();
+    this.loadingData = false;
+  }
 
-    //Obtención de productos desde el firebase
-    this.productoService.getProductos().subscribe(
-      data => {
-        this.productos = data.map(doc => {
-          return {
-            ...doc.payload.doc.data() as Producto,
-              idFirebase: doc.payload.doc.id
-          };
-        });
-        
-        this.loadingData = false;
-      },
-      
-      //Si hay un error al obtener los productos desde firebase, se obtienen desde el local
-      error => {
-        console.log(`Error al obtener los productos desde firebase: ${error}`)
-
-        this.electronService.send('get-productos', null);
-        this.electronService.on('get-productos', (event,productos) => {
-          console.log('Productos obtenidos desde el local')
-          this.productos = JSON.parse(productos);
-        });
-      }
-    );
-
-    //Obtener las categorias por firebase
-    this.categoriaService.getCategorias().subscribe(data => {
-      this.categorias = data.map(doc => {
-        return {
-          ...doc.payload.doc.data() as Categoria
-        };
+  getProductosLocal() {
+    this.electronService.send('get-productos', null);
+    this.electronService.on('get-productos', (event, productos) => {
+      this.ngZone.run(() => {
+        this.productos = JSON.parse(productos);
       });
     });
+  }
 
-    //Observar cambios
-    this.productoService.getCambiosProducto().subscribe(data => {
-
+  getCategoriasLocal() {
+    this.electronService.send('get-categorias', null);
+    this.electronService.on('get-categorias', (event, categorias) => {
+      this.ngZone.run(() => {
+        this.categorias = JSON.parse(categorias);
+      });
     });
-
-    //Obtener categorias de manera local
-    // this.electronService.send('get-categorias', null);
-    // this.electronService.on('get-categorias', (event, categorias) => {
-    //   this.categorias = JSON.parse(categorias);
-    // });
-    
   }
 
   agregarProducto(producto: Producto) {
