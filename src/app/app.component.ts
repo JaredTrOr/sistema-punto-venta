@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         };
       });
 
-      //Insertar los registros de los productos a base de datos local
+      // Insertar los registros de los productos a base de datos local
       this.electronService.send('load-productos', this.productos);
     });
   }

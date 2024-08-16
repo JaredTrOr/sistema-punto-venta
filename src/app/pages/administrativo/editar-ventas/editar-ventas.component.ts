@@ -31,11 +31,20 @@ export class EditarVentasComponent {
       const idVenta = params['idVenta'];
       
       this.electronService.send('get-venta-por-id', idVenta);
-      this.electronService.on('get-venta-por-id', (event, data) => {
+      this.electronService.on('get-venta-por-id', (event, response) => {
 
-        this.ngZone.run(() => {
-          this.ventaSeleccionada = JSON.parse(data);
-        });
+        response = JSON.parse(response);
+
+        if (response.success) {
+          this.ngZone.run(() => {
+            this.ventaSeleccionada = response.venta;
+          });
+        }
+
+        else {
+          Swal.fire('Hubo un error al obtener la venta por ID', '', 'error');
+        }
+
       })
     });
 
@@ -119,13 +128,13 @@ export class EditarVentasComponent {
             })
           }
           else {
-            Swal.fire("Hubo un error al editar la venta", "", "success");
+            Swal.fire("Hubo un error al eliminar la venta", "", "success");
           }
         });
 
         this.ventasService.deleteVentaByIdVenta(this.ventaSeleccionada.idVenta!)
         .subscribe(() => {
-          console.log('Eliminacióne exitosa en firebase')
+          console.log('Eliminación exitosa en firebase')
         })
       }
     })

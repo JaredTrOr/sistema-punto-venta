@@ -4,6 +4,7 @@ import { ElectronService } from '../../../services/electron.service';
 import { Venta } from '../../../models/Ventas';
 import { VentasPorProducto } from '../../../models/VentasPorProducto';
 import { VentasService } from '../../../services/ventas.service';
+import Swal from 'sweetalert2';
 
 interface Hora { value: string; viewValue: string; }
 
@@ -80,11 +81,23 @@ export class VentasFiltrosComponent {
 
   getVentasGeneral() {
     this.electronService.send('get-ventas', null);
-    this.electronService.on('get-ventas', (event, ventas) => {
-      this.ventas = JSON.parse(ventas);
-      this.changeDetectorRef.detectChanges();
+    this.electronService.on('get-ventas', (event, response) => {
 
-      this.ordenarVentasPorProducto();
+      response = JSON.parse(response);
+
+      if (response.success) {
+        this.ventas = response.ventas;
+        this.changeDetectorRef.detectChanges();
+
+        this.ordenarVentasPorProducto();
+
+        return;
+      }
+
+      //Error al obtener las ventas
+      Swal.fire("Hubo un error al obtener las ventas", "", "error");
+
+
     });
   }
 
@@ -149,12 +162,19 @@ export class VentasFiltrosComponent {
     };
 
     this.electronService.send('get-ventas-filtradas', filtros);
-    this.electronService.on('get-ventas-filtradas', (event, ventas) => {
+    this.electronService.on('get-ventas-filtradas', (event, response) => {
 
-      this.ventas = JSON.parse(ventas);
-      this.changeDetectorRef.detectChanges();
-      this.ordenarVentasPorProducto();
+      response = JSON.parse(response)
 
+      if (response.success) {
+        this.ventas = response.ventasFiltradas;
+        this.changeDetectorRef.detectChanges();
+        this.ordenarVentasPorProducto();
+
+        return; 
+      }
+
+      Swal.fire('Hubo un error al obtener las ventas filtradas', '', 'error');
     })
 
   }

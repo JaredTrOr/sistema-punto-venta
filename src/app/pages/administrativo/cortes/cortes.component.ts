@@ -4,6 +4,7 @@ import { Corte } from '../../../models/Corte';
 import { Venta } from '../../../models/Ventas';
 import { VentasPorProducto } from '../../../models/VentasPorProducto';
 import { Tiempo } from '../../../utils/tiempo';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cortes',
@@ -51,10 +52,19 @@ export class CortesComponent {
     if (corte) {
       console.log('Si hay corte')
       this.electronService.send('get-ventas-por-corte', JSON.stringify(corte));
-      this.electronService.on('get-ventas-por-corte', (event, data) => {
+      this.electronService.on('get-ventas-por-corte', (event, response) => {
         this.ngZone.run(() => {
-          this.ventas = JSON.parse(data);
-          this.ordenarVentasPorProducto();
+
+          response = JSON.parse(response);
+
+          if (response.success) {
+            this.ventas = response.ventas;
+            this.ordenarVentasPorProducto();
+            return;
+          }
+          
+          Swal.fire("Hubo un error al obtener las ventas por corte", "", "error");
+          
         })
       });
     }

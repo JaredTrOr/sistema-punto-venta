@@ -3,17 +3,17 @@ const moment = require('moment')
 
 async function getVentas(event, data) {
     try {
-        const ventas = await Venta.find()
-        event.reply('get-ventas', JSON.stringify(ventas))
-        console.log({ success: true, message: 'Ventas obtenidas' })
+        const ventas = await Venta.find();
+        event.reply('get-ventas', JSON.stringify({ success: true, ventas }));
+        console.log({ success: true, message: 'getVentas: Ventas obtenidas' });
     } catch (err) {
-        console.log({ success: false, message: err })
+        console.log({ success: false, message: 'getVentas: '+err });
+        event.reply('get-ventas', JSON.stringify({ success: false, message: 'getVentas: '+err }));
     }
 }
 
 async function getVentasPorCorte(event, data) {
-
-    const parseData = JSON.parse(data)
+    const parseData = JSON.parse(data);
 
     try {
         const ventas = await Venta.find({
@@ -21,52 +21,57 @@ async function getVentasPorCorte(event, data) {
                 $gte: parseData.tiempoInicio,
                 $lte: parseData.tiempoFin
             }
-        })
+        });
 
-        console.log({success: true, message: 'Ventas obtenidas por corte'})
-        event.reply('get-ventas-por-corte', JSON.stringify(ventas))
+        console.log({success: true, message: 'getVentasPorCorte: Ventas obtenidas por corte'});
+        event.reply('get-ventas-por-corte', JSON.stringify({ success: true, ventas }));
     } catch(err) {
-        console.log({success: false, message: err})
+        console.log({success: false, message: 'getVentasPorCorte: '+err});
+        event.reply('get-ventas-por-corte', JSON.stringify({ success: false, message: 'getVentasPorCorte: '+err }));
     }
 }
 
 async function getVentaPorId(event, id) {
     try {
-        const venta = await Venta.findOne({idVenta: id})
-        event.reply('get-venta-por-id', JSON.stringify(venta))
-        console.log({success: true, message: 'Venta obtenida por ID'})
+        const venta = await Venta.findOne({idVenta: id});
+        console.log({success: true, message: 'getVentasPorId: Venta obtenida por ID'});
+        event.reply('get-venta-por-id', JSON.stringify({ success: true, venta }));
     } catch(err) {
-        console.log({success: false, message: err})
+        console.log({success: false, message: 'getVentasPorId: '+ err});
+        event.reply('get-venta-por-id', JSON.stringify({ success: false, message: 'getVentasPorId: '+err }));
     }
 }
 
 async function createVenta(event, data) {
     try {
-        await Venta.create(data)
-        event.reply('create-venta', JSON.stringify({ success: true, message: 'Venta creada' }))
-        console.log({ success: true, message: 'Venta creada' })
+        await Venta.create(data);
+        console.log({ success: true, message: 'createVenta: Venta creada' });
+        event.reply('create-venta', JSON.stringify({ success: true, message: 'createVenta: Venta creada' }));
     } catch (err) {
-        console.log({ success: false, message: err })
+        console.log({ success: false, message: 'createVenta: '+err });
+        event.reply('create-venta', JSON.stringify({ success: false, message: 'createVenta: '+err }));
     }
 }
 
 async function updateVentas(event, data) {
     try {
-        await Venta.findOneAndUpdate({ idVenta: data.idVenta }, data)
-        event.reply('update-venta', JSON.stringify({ success: true, message: 'Venta actualizada' }))
-        console.log({ success: true, message: 'Venta actualizada' })
+        await Venta.findOneAndUpdate({ idVenta: data.idVenta }, data);
+        event.reply('update-venta', JSON.stringify({ success: true, message: 'updateVentas: Venta actualizada' }));
+        console.log({ success: true, message: 'updateVentas: Venta actualizada' });
     } catch (err) {
-        console.log({ success: false, message: err })
+        event.reply('update-venta', JSON.stringify({ success: false, message: 'updateVentas: '+err }));
+        console.log({ success: false, message: 'updateVentas '+err });
     }
 }
 
 async function deleteVenta(event, id) {
     try {
-        await Venta.findOneAndDelete({ idVenta: id })
-        event.reply('delete-venta', JSON.stringify({ success: true, message: 'Venta eliminada' }))
-        console.log({ success: true, message: 'Venta eliminada' })
+        await Venta.findOneAndDelete({ idVenta: id });
+        event.reply('delete-venta', JSON.stringify({ success: true, message: 'deleteVenta: Venta eliminada' }));
+        console.log({ success: true, message: 'deleteVenta: Venta eliminada' });
     } catch (err) {
-        console.log({ success: false, message: err })
+        event.reply('delete-venta', JSON.stringify({ success: false, message: 'deleteVenta: '+err }));
+        console.log({ success: false, message: 'deleteVenta: '+err });
     }
 }
 
@@ -103,8 +108,6 @@ async function getVentasFiltradas(event, filtro) {
 
     let fechaInicio = new Date();
     let fechaFin = new Date();
-
-    console.log(filtro)
 
     //Obtener el día por selección
     if (filtro.filtroPorDia !== 'otro') {
@@ -188,10 +191,11 @@ async function getVentasFiltradas(event, filtro) {
     try {
         const ventasFiltradas = await Venta.find(consulta);
 
-        event.reply('get-ventas-filtradas', JSON.stringify(ventasFiltradas))
-        console.log({success: true, message: 'Ventas filtradas obtenidas'})
+        event.reply('get-ventas-filtradas', JSON.stringify({ success: true, ventasFiltradas }));
+        console.log({success: true, message: 'getVentasFiltradas: Ventas filtradas obtenidas'});
     } catch(err) {
-        console.log({success: false, message: err})
+        event.reply('get-ventas-filtradas', JSON.stringify({ success: false, message: 'getVentasFiltradas: '+err }));
+        console.log({success: false, message: 'getVentasFiltradas: '+err})
     }
 
 }
