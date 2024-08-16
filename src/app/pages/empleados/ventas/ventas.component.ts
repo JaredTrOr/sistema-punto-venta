@@ -63,10 +63,20 @@ export class VentasComponent implements OnInit{
 
   getCategoriasLocal() {
     this.electronService.send('get-categorias', null);
-    this.electronService.on('get-categorias', (event, categorias) => {
-      this.ngZone.run(() => {
-        this.categorias = JSON.parse(categorias);
-      });
+    this.electronService.on('get-categorias', (event, response) => {
+
+      response = JSON.parse(response);
+
+      if (response.success) {
+        this.ngZone.run(() => {
+          this.categorias = response.categorias;
+        });
+
+        return;
+      }
+
+      Swal.fire('Hubo un error al obtener las categorias locales', '', 'error');
+
     });
   }
 

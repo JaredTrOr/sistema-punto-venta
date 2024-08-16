@@ -72,9 +72,6 @@ export class CategoriasComponent {
       this.enviado = false;
       console.error('Error al crear la categoria: ', error);
     });
-
-    //Guardado local
-    this.electronService.send('create-categoria', categoria);
     
   }
 
@@ -96,9 +93,6 @@ export class CategoriasComponent {
         this.categoriaService.deleteCategoriaByIdCategoria(idCategoria).subscribe(() => {
           Swal.fire("Se ha eliminado la categoria exitosamente", "", "success");
         }) 
-    
-        //Eliminado local
-        this.electronService.send('delete-categoria', idCategoria);
       }
     });
   }
