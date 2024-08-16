@@ -33,18 +33,28 @@ export class CortesComponent {
 
   getCortesGeneral() {
     this.electronService.send('get-cortes', null);
-    this.electronService.on('get-cortes', (event, data) => {
-      this.ngZone.run(() => {
+    this.electronService.on('get-cortes', (event, response) => {
 
-        const cortesParse = JSON.parse(data);
-        
-        cortesParse.forEach((elemento: any) => {
-          elemento.tiempoInicio = new Date(elemento.tiempoInicio);
-          elemento.tiempoFin = new Date(elemento.tiempoFin);
-        })
+      response = JSON.parse(response);
 
-        this.cortes = cortesParse;
-      })
+      if (response.success) {
+        this.ngZone.run(() => {
+
+          const cortes = response.cortes
+          
+          cortes.forEach((elemento: any) => {
+            elemento.tiempoInicio = new Date(elemento.tiempoInicio);
+            elemento.tiempoFin = new Date(elemento.tiempoFin);
+          })
+  
+          this.cortes = cortes;
+        });
+
+        return;
+      }
+
+      Swal.fire('Hubo un error al cargar los cortes', '', 'error');
+
     })
   }
 
@@ -104,10 +114,20 @@ export class CortesComponent {
       const fechaValue = `${dia}/${mes}/${anio}`;
       console.log('Filtro fecha', fechaValue)
       this.electronService.send('get-cortes-por-fecha', fechaValue);
-      this.electronService.on('get-cortes-por-fecha', (event, data) => {
-        this.ngZone.run(() => {
-          this.cortes = JSON.parse(data);
-        });
+      this.electronService.on('get-cortes-por-fecha', (event, response) => {
+
+        response = JSON.parse(response);
+
+        if (response.success) {
+          this.ngZone.run(() => {
+            this.cortes = response.cortes;
+          });
+
+          return;
+        }
+
+        Swal.fire('Hubo un error al obtener los cortes por fecha', '', 'error');
+
       })
     }
     else {

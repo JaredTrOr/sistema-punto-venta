@@ -4,10 +4,11 @@ const Venta = require('../models/Venta')
 async function getCortes(event, data) {
     try {
         const cortes = await Corte.find().sort({_id: -1});
-        event.reply('get-cortes', JSON.stringify(cortes));
-        console.log({success: true, message: 'Cortes obtenidos'});
+        event.reply('get-cortes', JSON.stringify({ success: true, cortes }));
+        console.log({success: true, message: 'getCortes: Cortes obtenidos'});
     } catch(err) {
-        console.log({success: false, message: err});
+        event.reply('get-cortes', JSON.stringify({ success: false, message: 'getCortes: '+err }));
+        console.log({success: false, message: 'getCortes: '+err});
     }
 }
 
@@ -15,10 +16,11 @@ async function getCortePorFecha(event, fechaString) {
 
     try {
         const cortes = await Corte.find({fechaCorte: fechaString});
-        event.reply('get-cortes-por-fecha', JSON.stringify(cortes));
-        console.log({success: true, message: 'Cortes obtenidos por fecha'});
+        event.reply('get-cortes-por-fecha', JSON.stringify({ success: true, cortes }));
+        console.log({success: true, message: 'getCortesPorFecha: Cortes obtenidos por fecha'});
     } catch(err) {
-        console.log({success: false, message: err});
+        event.reply('get-cortes-por-fecha', JSON.stringify({ success: false, message: 'getCortesPorFecha'+err }));
+        console.log({ success: false, message: 'getCortesPorFecha: '+err });
     }
 }
 
@@ -30,17 +32,17 @@ async function getVentasDespuesCorte (event, data) {
             //Obtener ventas después de la fecha del corte
             const [ultimoCorte] = await Corte.find().sort({_id: -1}).limit(1);
             const ventas = await Venta.find({timestamp: {$gt: ultimoCorte.tiempoFin}});
-            event.reply('get-venta-despues-corte', JSON.stringify(ventas));
-            console.log({success: true, message: 'Ventas desde el último corte obtenidas'});
+            event.reply('get-venta-despues-corte', JSON.stringify({ success: true, ventas }));
+            console.log({success: true, message: 'getVentasDespuesCorte: Ventas desde el último corte obtenidas'});
             return;
         }
 
         //Si no hay cortes, obtener todas las ventas
         const ventas = await Venta.find();
-        event.reply('get-venta-despues-corte', JSON.stringify(ventas));
+        event.reply('get-venta-despues-corte', JSON.stringify({ success: true, ventas }));
     } catch(err) {
-        console.log('No se pudieron obtener las ventas despues del corte');
-        console.log({success: false, message: err});
+        console.log({success: false, message: 'getVentasDespuesCorte: '+err});
+        event.reply('get-venta-despues-corte', JSON.stringify({ success: false, message: 'getVentasDespuesCorte: '+err }));
     }
 }
 

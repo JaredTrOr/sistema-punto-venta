@@ -56,13 +56,23 @@ export class VentasAdminComponent {
 
   getVentasDespuesCorte() {
     this.electronService.send('get-venta-despues-corte', null);
-    this.electronService.on('get-venta-despues-corte', (event, ventas) => {
-      this.ventasDespuesCorte = [];
-      this.ventasDespuesCorte = JSON.parse(ventas);
+    this.electronService.on('get-venta-despues-corte', (event, response) => {
 
-      // Ordenar ventas por producto
-      this.ordenarVentasPorProducto();
-      this.changeDetectorRef.detectChanges();
+      response = JSON.parse(response);
+
+      if (response.success) {
+        this.ventasDespuesCorte = [];
+        this.ventasDespuesCorte = response.ventas;
+
+        // Ordenar ventas por producto
+        this.ordenarVentasPorProducto();
+        this.changeDetectorRef.detectChanges();
+
+        return;
+      }
+
+      Swal.fire('Hubo un error al obtener las ventas después del corte', '', 'error');
+
     });
   }
 
