@@ -5,7 +5,7 @@ const { exportacionPDF, imprimirTicket } = require('../../controllers/exportacio
 class UtilsRoutes {
     static inicalizarRutas () {
         ipcMain.on('exportar-pdf', exportacionPDF);
-        ipcMain.on('imprimir-ticket', imprimirTicket)
+        ipcMain.on('imprimir-ticket', imprimirTicket);
     } 
 }
 

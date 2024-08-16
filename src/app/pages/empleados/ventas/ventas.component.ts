@@ -54,9 +54,18 @@ export class VentasComponent implements OnInit{
 
   getProductosLocal() {
     this.electronService.send('get-productos', null);
-    this.electronService.on('get-productos', (event, productos) => {
+    this.electronService.on('get-productos', (event, response) => {
       this.ngZone.run(() => {
-        this.productos = JSON.parse(productos);
+
+        response = JSON.parse(response);
+
+        if (response.success) {
+          this.productos = response.productos;
+          return;
+        }
+
+        Swal.fire('Hubo un error al obtener los productos locales', '', 'error');
+
       });
     });
   }
