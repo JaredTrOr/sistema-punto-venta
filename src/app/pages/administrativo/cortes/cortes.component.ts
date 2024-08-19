@@ -28,7 +28,16 @@ export class CortesComponent {
   ) { }
 
   ngOnInit() {
+    // this.getCortesPaginacion();
     this.getCortesGeneral();
+  }
+
+  getCortesPaginacion() {
+    const data = { page: 1 };
+    this.electronService.send('get-cortes-paginacion', data);
+    this.electronService.on('get-cortes-paginacion', (event, response) => {
+      console.log(response);
+    });
   }
 
   getCortesGeneral() {

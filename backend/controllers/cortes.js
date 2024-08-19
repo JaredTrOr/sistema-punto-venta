@@ -1,11 +1,22 @@
 const Corte = require('../models/Corte')
 const Venta = require('../models/Venta')
+const pagination = require('../middleware/pagination');
 
 async function getCortes(event, data) {
     try {
         const cortes = await Corte.find().sort({_id: -1});
         event.reply('get-cortes', JSON.stringify({ success: true, cortes }));
         console.log({success: true, message: 'getCortes: Cortes obtenidos'});
+    } catch(err) {
+        event.reply('get-cortes', JSON.stringify({ success: false, message: 'getCortes: '+err }));
+        console.log({success: false, message: 'getCortes: '+err});
+    }
+}
+
+async function getCortesPaginacion(event, data) {
+    try {
+        const result = await pagination(Corte, data.page);
+        event.reply('get-cortes-paginacion', JSON.stringify(result));
     } catch(err) {
         event.reply('get-cortes', JSON.stringify({ success: false, message: 'getCortes: '+err }));
         console.log({success: false, message: 'getCortes: '+err});
@@ -104,5 +115,6 @@ module.exports = {
     getVentasDespuesCorte,
     getCortePorFecha,
     getCortes,
-    createCorte
+    createCorte,
+    getCortesPaginacion
 }

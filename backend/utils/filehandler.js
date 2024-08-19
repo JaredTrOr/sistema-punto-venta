@@ -3,7 +3,7 @@ const path = require('node:path');
 
 class FileHandler {
 
-    constructor () {}
+    constructor () { }
 
     async leerArchivo(filepath) {
         try {
