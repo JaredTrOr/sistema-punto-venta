@@ -21,7 +21,7 @@ export class VentasFiltrosComponent {
   ventasProductos: string = 'ventasGeneral';
 
   //Filtros
-  filtroPorDia = 'todas';
+  filtroPorDia = 'hoy';
   radioFiltroFecha = 'fecha-especifica';
 
   filtroFechaEspecifica = '';
@@ -69,14 +69,7 @@ export class VentasFiltrosComponent {
   }
 
   ngOnInit() {
-
-    //Obtener todas las ventas por día
-    // Estas ventas se despliegan en la sección de ventas generales
-    this.getVentasGeneral();
-
-    //Obtener las ventas despues de corte
-    // Estas ventas se despliegan en la sección de ventas por producto ya que aqui muestra la tabla de productos vendidos
-    // this.getVentasDespuesCorte();
+    this.aplicarCambios();
   }
 
   getVentasGeneral() {

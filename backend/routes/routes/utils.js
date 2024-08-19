@@ -9,4 +9,4 @@ class UtilsRoutes {
     } 
 }
 
-module.exports = UtilsRoutes
+module.exports = UtilsRoutes;
