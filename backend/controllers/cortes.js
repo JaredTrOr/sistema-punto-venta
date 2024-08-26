@@ -13,9 +13,9 @@ async function getCortes(event, data) {
     }
 }
 
-async function getCortesPaginacion(event, data) {
+async function getCortesPaginacion(event, page) {
     try {
-        const result = await pagination(Corte, data.page);
+        const result = await pagination(Corte, page);
         event.reply('get-cortes-paginacion', JSON.stringify(result));
     } catch(err) {
         event.reply('get-cortes', JSON.stringify({ success: false, message: 'getCortes: '+err }));

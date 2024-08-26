@@ -20,6 +20,19 @@ class Impresora {
         }));
     }
 
+    getImpresoras() {
+        let devices = escpos.USB.findPrinter();
+        devices = devices.map(device => ({
+            manufacturer: device.deviceDescriptor.iManufacturer,
+            product: device.deviceDescriptor.iProduct,
+            serialNumber: device.deviceDescriptor.iSerialNumber,
+            vendorId: device.deviceDescriptor.idVendor,
+            productId: device.deviceDescriptor.idProduct
+        }));
+
+        return { success: true, impresoras: devices };
+    }
+
     printTicket(venta) {
 
         if (this.impresora) {

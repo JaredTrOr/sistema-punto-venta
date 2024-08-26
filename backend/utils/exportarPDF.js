@@ -1,7 +1,6 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
-const { app, dialog } = require('electron');
-const path = require('path');
+const { dialog } = require('electron');
 const { obtenerDiaSeleccion } = require("../controllers/ventas");
 const { getFormattedDate } = require("./formateos");
 

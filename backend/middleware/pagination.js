@@ -1,6 +1,6 @@
 async function pagination(model, page) {
 
-    const ELEMENT_LIMIT = 15;
+    const ELEMENT_LIMIT = 5;
 
     const startIndex = (page - 1) * ELEMENT_LIMIT;
     const endIndex = page * ELEMENT_LIMIT;
@@ -23,7 +23,8 @@ async function pagination(model, page) {
 
     try {
         results.data = await model.find().sort({_id: -1}).limit(ELEMENT_LIMIT).skip(startIndex);
-        return { sucess: true, results };
+        results.success = true;
+        return results;
     } catch(err) {
         return { success: false, message: 'paginacion: '+err }
     }

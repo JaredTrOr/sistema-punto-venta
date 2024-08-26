@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { ElectronService } from '../../../services/electron.service';
 import { Corte } from '../../../models/Corte';
 import { Venta } from '../../../models/Ventas';
@@ -21,6 +21,7 @@ export class CortesComponent {
   ventasPorProducto: VentasPorProducto[] = [];
 
   corteSeleccionado: any = null;
+  nextPage: number = 1;
 
   constructor(
     private electronService: ElectronService,
@@ -28,16 +29,44 @@ export class CortesComponent {
   ) { }
 
   ngOnInit() {
+
+    //Registrar el listener solo una vez
+    // this.electronService.on('get-cortes-paginacion', (event, response) => {
+    //   this.handleCortesPaginacion(response);
+    // });
+
+    // // Inicia la primer llamada a la paginación
     // this.getCortesPaginacion();
+
     this.getCortesGeneral();
   }
 
   getCortesPaginacion() {
-    const data = { page: 1 };
-    this.electronService.send('get-cortes-paginacion', data);
-    this.electronService.on('get-cortes-paginacion', (event, response) => {
-      console.log(response);
-    });
+    this.electronService.send('get-cortes-paginacion', this.nextPage);
+  }
+
+  handleCortesPaginacion(response: any) {
+    response = JSON.parse(response);
+    console.log(response);
+
+    if (response.success) {
+      const cortes = response.data;
+
+      // Ordenar las fechas en formato DATE
+      cortes.forEach((elemento: any) => {
+        elemento.tiempoInicio = new Date(elemento.tiempoInicio);
+        elemento.tiempoFin = new Date(elemento.tiempoFin);
+      });
+
+      this.ngZone.run(() => {
+        this.cortes = this.cortes.concat(cortes);
+        this.nextPage = response.next ? response.next.page : null;
+      });
+
+      return;
+    }
+
+    Swal.fire('Hubo un error al cargar los cortes', '', 'error');
   }
 
   getCortesGeneral() {
@@ -69,28 +98,63 @@ export class CortesComponent {
 
   getVentasCorte(corte: Corte) {
     if (corte) {
-      console.log('Si hay corte')
       this.electronService.send('get-ventas-por-corte', JSON.stringify(corte));
       this.electronService.on('get-ventas-por-corte', (event, response) => {
+
+        response = JSON.parse(response);
+
         this.ngZone.run(() => {
-
-          response = JSON.parse(response);
-
           if (response.success) {
             this.ventas = response.ventas;
             this.ordenarVentasPorProducto();
             return;
           }
-          
+
           Swal.fire("Hubo un error al obtener las ventas por corte", "", "error");
-          
+
         })
       });
     }
     else {
-      console.log('No hay corte')
       this.ventas = [];
       this.ventasPorProducto = [];
+    }
+  }
+
+  filtrarPorFecha() {
+
+    if (this.filtroFecha) {
+
+      const [anio, mes, dia] = this.filtroFecha.split('-');
+      const fechaValue = `${dia}/${mes}/${anio}`;
+      console.log('Filtro fecha', fechaValue)
+      this.electronService.send('get-cortes-por-fecha', fechaValue);
+      this.electronService.on('get-cortes-por-fecha', (event, response) => {
+
+        response = JSON.parse(response);
+
+        if (response.success) {
+          this.ngZone.run(() => {
+
+            const cortes = response.cortes;
+
+            cortes.forEach((elemento: any) => {
+              elemento.tiempoInicio = new Date(elemento.tiempoInicio);
+              elemento.tiempoFin = new Date(elemento.tiempoFin);
+            });
+
+            this.cortes = response.cortes;
+          });
+
+          return;
+        }
+
+        Swal.fire('Hubo un error al obtener los cortes por fecha', '', 'error');
+
+      })
+    }
+    else {
+      this.getCortesGeneral();
     }
   }
 
@@ -115,34 +179,9 @@ export class CortesComponent {
     })
   }
 
-  filtrarPorFecha() {
-
-
-    if (this.filtroFecha) {
-      const [anio, mes, dia] = this.filtroFecha.split('-');
-      const fechaValue = `${dia}/${mes}/${anio}`;
-      console.log('Filtro fecha', fechaValue)
-      this.electronService.send('get-cortes-por-fecha', fechaValue);
-      this.electronService.on('get-cortes-por-fecha', (event, response) => {
-
-        response = JSON.parse(response);
-
-        if (response.success) {
-          this.ngZone.run(() => {
-            this.cortes = response.cortes;
-          });
-
-          return;
-        }
-
-        Swal.fire('Hubo un error al obtener los cortes por fecha', '', 'error');
-
-      })
-    }
-    else {
-      this.getCortesGeneral();
-    }
-    
+  resetPagination() {
+    this.cortes = [];
+    this.nextPage = 1;
   }
 
   toggleCorteSeleccionado(corte: any) {
@@ -154,5 +193,12 @@ export class CortesComponent {
     return corte === this.corteSeleccionado;
   }
 
+  onScroll() {
+    console.log('Evento de scroll');
+    console.log(this.nextPage);
 
+    if (this.nextPage) {
+      this.getCortesPaginacion();
+    }
+  }
 }

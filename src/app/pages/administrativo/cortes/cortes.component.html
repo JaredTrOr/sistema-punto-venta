@@ -5,14 +5,22 @@
     <div class="cortes">
         <h2>Cortes</h2>
 
-        <div class="cortes-card-container mt-3">
+        <div class="cortes-card-container mt-3"> 
             <p class="bold">Filtrar por fecha de corte</p>
 
             <input type="date" class="fecha-filtro" [(ngModel)]="filtroFecha">
             <br>
             <button class="btn-aplicar-filtros mt-3" (click)="filtrarPorFecha()">Aplicar cambios</button>
 
-            <div class="card-container">
+            <div 
+                infinite-scroll 
+                [infiniteScrollDistance]="1" 
+                [infiniteScrollUpDistance]="1"
+                [infiniteScrollThrottle]="50"
+                (scrolled)="onScroll()"
+                [scrollWindow]="true"
+                class="card-container"
+            >
                 <div [ngClass]="{'selected': isCardSeleccionada(corte)}" (click)="toggleCorteSeleccionado(corte)"
                     *ngFor="let corte of cortes" class="corte-card mt-4">
                     <!-- <p class="bold">ID: {{ corte.idCorte }}</p> -->
