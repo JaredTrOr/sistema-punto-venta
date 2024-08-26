@@ -6,10 +6,12 @@ const { getFormattedDate } = require("./formateos");
 
 async function exportarPDF(data) {
 
+    const hora = data.hora.replace(':', '.')
+
     const options = {
         title: 'Guardar PDF',
         name: 'corte.pdf',
-        defaultPath: `exportacion_${data.fecha}_${data.hora}.pdf`,
+        defaultPath: `exportacion_${data.fecha}_${hora}.pdf`,
         filters: [
             { name: 'PDF Files', extensions: ['pdf'] },
         ]

@@ -46,6 +46,7 @@ class Impresora {
             device.open(() => {
                 printerInstance.align('CT');
                 printerInstance.style('B');
+                printerInstance.size(1,1)
                 printerInstance.text('PANADERIA SAN CAYETANO');
                 printerInstance.text('SAN JUAN DEL RIO, QRO.');
                 printerInstance.text('TEL: 2640233');
