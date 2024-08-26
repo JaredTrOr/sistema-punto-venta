@@ -128,7 +128,7 @@ export class EditarVentasComponent {
             })
           }
           else {
-            Swal.fire("Hubo un error al eliminar la venta", "", "success");
+            Swal.fire("Hubo un error al eliminar la venta", "", "error");
           }
         });
 
@@ -136,6 +136,23 @@ export class EditarVentasComponent {
         .subscribe(() => {
           console.log('Eliminación exitosa en firebase')
         })
+      }
+    })
+  }
+
+  imprimirTicket() {
+    Swal.fire({
+      title: "¿Seguro que quiere imprimir ticket de esta venta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, realizar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        //Imprimir ticket de venta
+        this.electronService.send('imprimir-ticket', this.ventaSeleccionada);
+
       }
     })
   }
