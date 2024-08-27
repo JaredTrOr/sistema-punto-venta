@@ -13,6 +13,17 @@ async function getCortes(event, data) {
     }
 }
 
+async function getUltimoCorte(event, data) {
+    try {
+        const [ultimoCorte] = await Corte.find().sort({_id: -1}).limit(1);
+        event.reply('get-ultimo-corte', JSON.stringify({ success: true, ultimoCorte }));
+        console.log({success: true, message: 'getUltimoCorte: Último corte obtenido'});
+    } catch(err) {
+        event.reply('get-ultimo-corte', JSON.stringify({ success: false, message: 'getUltimoCorte: '+err }));
+        console.log({success: false, message: 'getCortes: '+err});
+    }
+}
+
 async function getCortesPaginacion(event, page) {
     try {
         const result = await pagination(Corte, page);
@@ -116,5 +127,6 @@ module.exports = {
     getCortePorFecha,
     getCortes,
     createCorte,
-    getCortesPaginacion
+    getCortesPaginacion,
+    getUltimoCorte
 }

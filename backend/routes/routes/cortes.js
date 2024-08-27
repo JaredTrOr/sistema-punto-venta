@@ -4,7 +4,8 @@ const {
     getCortes,
     createCorte,
     getCortePorFecha,
-    getCortesPaginacion
+    getCortesPaginacion,
+    getUltimoCorte
 } = require('../../controllers/cortes');
 
 class CortesRoutes {
@@ -13,6 +14,7 @@ class CortesRoutes {
         ipcMain.on('get-cortes-por-fecha', getCortePorFecha);
         ipcMain.on('get-cortes', getCortes);
         ipcMain.on('get-cortes-paginacion', getCortesPaginacion);
+        ipcMain.on('get-ultimo-corte', getUltimoCorte);
         ipcMain.on('create-corte', createCorte);
     }
 }

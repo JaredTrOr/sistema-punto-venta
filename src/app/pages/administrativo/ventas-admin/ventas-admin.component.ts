@@ -31,10 +31,10 @@ export class VentasAdminComponent {
     private electronService: ElectronService,
     private changeDetectorRef: ChangeDetectorRef,
     private globalService: GlobalService
-  ) { 
-    
-   }
-    
+  ) {
+
+  }
+
   ngOnInit() {
 
     //Obtener todas las ventas por día
@@ -45,7 +45,7 @@ export class VentasAdminComponent {
     // Estas ventas se despliegan en la sección de ventas por producto ya que aqui muestra la tabla de productos vendidos
     this.getVentasDespuesCorte();
   }
- 
+
   getVentasGeneral() {
     this.electronService.send('get-ventas', null);
     this.electronService.on('get-ventas', (event, ventas) => {
@@ -84,17 +84,17 @@ export class VentasAdminComponent {
       ventasPorProductoAux = ventasPorProductoAux.concat(venta.productos);
     })
 
-   ventasPorProductoAux.forEach(producto => {
-    const productoEnArreglo = this.ventasPorProducto.find(p => p.nombreProducto === producto.nombreProducto);
+    ventasPorProductoAux.forEach(producto => {
+      const productoEnArreglo = this.ventasPorProducto.find(p => p.nombreProducto === producto.nombreProducto);
 
-    if (productoEnArreglo) {
-      productoEnArreglo.cantidad += producto.cantidad;
-      productoEnArreglo.total = productoEnArreglo.cantidad * productoEnArreglo.importe;
-    }
-    else {
-      this.ventasPorProducto.push({...producto});
-    }
-   })
+      if (productoEnArreglo) {
+        productoEnArreglo.cantidad += producto.cantidad;
+        productoEnArreglo.total = productoEnArreglo.cantidad * productoEnArreglo.importe;
+      }
+      else {
+        this.ventasPorProducto.push({ ...producto });
+      }
+    })
   }
 
   realizarCorte() {
@@ -113,7 +113,7 @@ export class VentasAdminComponent {
         const horaCorte = this.tiempo.getHora();
 
         const corte: Corte = {
-          idCorte: generarId(), 
+          idCorte: generarId(),
           sucursal: this.globalService.getSucursal(),
           tituloCorte,
           fechaCorte,
@@ -126,18 +126,49 @@ export class VentasAdminComponent {
         // Realizar corte de caja en la base de datos local
         this.electronService.send('create-corte', corte);
         this.electronService.on('create-corte', (event, corte) => {
-          if (corte.success) {
-            this.getVentasDespuesCorte(); //--> Refrescar componentes
 
-            Swal.fire("El corte se ha realizado con éxito", "", "success");
-            this.exportarPDF(`Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`);
+          if (corte.success) {
+            
+            // Realizar la impresión de ticket de corte de venta
+            this.electronService.send('get-ultimo-corte', null);
+            this.electronService.on('get-ultimo-corte', (event, data) => {
+
+              data = JSON.parse(data);
+              console.log(data);
+
+              if (data.success) {
+
+                const corte = data.ultimoCorte;
+
+                const dataImpresionTicket = {
+                  fechaCorte,
+                  horaCorte,
+                  horaInicio: this.tiempo.getFormattedHour(new Date(corte.tiempoInicio)),
+                  horaFin: this.tiempo.getFormattedHour(new Date(corte.tiempoFin)),
+                  productos: this.ventasPorProducto
+                };
+
+                //Creación de ticket
+                this.electronService.send('imprimir-ticket-corte', dataImpresionTicket)
+
+                //Creación de pdf
+                this.exportarPDF(`Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`);
+
+                this.getVentasDespuesCorte(); //--> Refrescar componentes
+                Swal.fire("El corte se ha realizado con éxito", "", "success");
+              }
+
+
+            });
           }
         });
+
+
 
       }
     });
   }
-  
+
   exportarPDF(tituloPDF: string) {
     const data = {
       tituloPDF,
