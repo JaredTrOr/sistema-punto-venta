@@ -57,6 +57,8 @@
     "sweetalert2": "^11.11.0",
     "tslib": "^2.3.0",
     "uuid": "^10.0.0",
+    "winston": "^3.14.2",
+    "winston-mongodb": "^5.1.1",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
@@ -66,6 +68,7 @@
     "@types/bootstrap": "^5.2.10",
     "@types/jasmine": "~5.1.0",
     "@types/uuid": "^9.0.8",
+    "dotenv": "^16.4.5",
     "electron": "^31.1.0",
     "electron-builder": "^24.13.3",
     "jasmine-core": "~5.1.0",
