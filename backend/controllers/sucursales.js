@@ -1,5 +1,5 @@
 const FileHandler = require('../utils/filehandler');
-
+const SucursalGlobalPromise = require('../models/SucursalGlobal');
 const fileHandler = new FileHandler();
 
 async function getSucursales(event, data) {
@@ -17,7 +17,20 @@ async function getSucursales(event, data) {
         console.log({success: false, message: err});
         event.reply('get-sucursales', JSON.stringify({success: false, message: err}));
     }
+}
 
+async function getSucursalSeleccionada() {
+
+    let sucursalSeleccionada = '';
+
+    try {
+        const data = await fileHandler.leerArchivo('./config.json');
+        sucursalSeleccionada = data.sucursalSeleccionada
+    } catch(err) {
+        console.log({ success: false , message: 'Hubo un fallo al obtener la sucursal seleccionada'});
+    }
+
+    return sucursalSeleccionada;
 }
 
 async function updateSucursalSeleccionada(event, data) {
@@ -29,6 +42,11 @@ async function updateSucursalSeleccionada(event, data) {
         success: true, 
         message: 'Se ha actualizado la sucursal correctamente'
        }));
+
+       // Actualizar estado global de backend
+       const sucursalSeleccionada  = await getSucursalSeleccionada();
+       await SucursalGlobalPromise.setSucursal(sucursalSeleccionada);
+
     } catch(err) {
         console.log({success: false, message: err});
         event.reply('update-sucursal-seleccionada', JSON.stringify({success: false, message: err}));
@@ -37,5 +55,6 @@ async function updateSucursalSeleccionada(event, data) {
 
 module.exports = {
     getSucursales,
-    updateSucursalSeleccionada
+    updateSucursalSeleccionada,
+    getSucursalSeleccionada
 }
