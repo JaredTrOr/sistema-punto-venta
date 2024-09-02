@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ElectronService } from '../../services/electron.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-inicio-sesion',

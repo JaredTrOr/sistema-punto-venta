@@ -1,6 +1,5 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { ProductosService } from '../../../services/productos.service';
 import { Producto } from '../../../models/Producto';
 import { ProductoVenta } from '../../../models/ProductoVenta';
 import { Venta } from '../../../models/Ventas';
@@ -9,7 +8,6 @@ import { VentasService } from '../../../services/ventas.service';
 import { ElectronService } from '../../../services/electron.service';
 import { generarId } from '../../../utils/generadorId';
 import { Categoria } from '../../../models/Categoria';
-import { CategoriasService } from '../../../services/categorias.service';
 import { Modal } from 'bootstrap';
 import { GlobalService } from '../../../services/global.service';
 
@@ -171,11 +169,14 @@ export class VentasComponent implements OnInit{
           totalGeneral: this.getTotal()
         }
 
-        console.log('VENTA');
-        console.log(venta);
-
         //Guardar la venta en firebase
-        this.ventaService.createVenta(venta); 
+        this.ventaService.createVenta(venta).
+        then(() => {
+          this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, realizarCompra, Se ha realizado la compra exitosamente en firebase`);
+        })  
+        .catch(err => {
+          this.electronService.send('log-error', `${this.globalService.getSucursal}, Frontend, realizarCompra, Hubo un error al insertar la compra en firebase ${err}`);
+        }); 
 
         //Guardar venta en local
         this.electronService.send('create-venta', venta);

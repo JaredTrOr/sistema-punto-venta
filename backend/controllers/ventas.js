@@ -1,5 +1,7 @@
-const Venta = require('../models/Venta')
-const moment = require('moment')
+const { logger } = require('../logger/logger');
+const sucursalGlobal = require('../models/SucursalGlobal');
+const Venta = require('../models/Venta');
+const moment = require('moment');
 
 async function getVentas(event, data) {
     try {
@@ -45,10 +47,9 @@ async function getVentaPorId(event, id) {
 async function createVenta(event, data) {
     try {
         await Venta.create(data);
-        console.log({ success: true, message: 'createVenta: Venta creada' });
         event.reply('create-venta', JSON.stringify({ success: true, message: 'createVenta: Venta creada' }));
     } catch (err) {
-        console.log({ success: false, message: 'createVenta: '+err });
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, createVenta, Hubo un error al realizar la venta ${err}`);
         event.reply('create-venta', JSON.stringify({ success: false, message: 'createVenta: '+err }));
     }
 }
