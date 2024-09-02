@@ -20,9 +20,9 @@ async function loadProductos(event, data) {
         await Producto.insertMany(data);
         
         console.log('Productos cargados');
-        event.reply('load-productos', JSON.stringify({success: true, msg: 'Productos cargados'}));
+        event.reply('load-productos', JSON.stringify({success: true, message: 'Productos cargados'}));
     } catch(err) {
-        console.log({success: false, message: err});
+        event.reply('load-productos', JSON.stringify({success: true, message: err}))
     }
 }
 

@@ -6,10 +6,15 @@ const ProductosRoutes = require('./routes/productos');
 const EmpleadosRoutes = require('./routes/empleados');
 const UtilsRoutes = require('./routes/utils');
 const connectionMongoDB = require('../connection');
+const sucursalGlobal = require('../models/SucursalGlobal');
+const { getSucursalSeleccionada } = require('../controllers/sucursales')
 
 class Routes {
 
-    static inicializarRutas() {
+    static async inicializarRutas() {
+
+        //Inicialización de provider global
+        sucursalGlobal.setSucursal(await getSucursalSeleccionada());
 
         //Conexión con base de datos local
         connectionMongoDB();

@@ -43,10 +43,6 @@ async function updateSucursalSeleccionada(event, data) {
         message: 'Se ha actualizado la sucursal correctamente'
        }));
 
-       // Actualizar estado global de backend
-       const sucursalSeleccionada  = await getSucursalSeleccionada();
-       await SucursalGlobalPromise.setSucursal(sucursalSeleccionada);
-
     } catch(err) {
         console.log({success: false, message: err});
         event.reply('update-sucursal-seleccionada', JSON.stringify({success: false, message: err}));

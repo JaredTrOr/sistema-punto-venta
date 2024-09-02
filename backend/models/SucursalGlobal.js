@@ -1,9 +1,7 @@
 const { getSucursalSeleccionada } = require('../controllers/sucursales');
 
 class SucursalGlobal {
-    constructor(sucursal) {
-        this.sucursal = sucursal;
-    }
+    constructor() { }
 
     get getSucursal() {
         return this.sucursal;
@@ -14,9 +12,6 @@ class SucursalGlobal {
     }
 }
 
-async function createSucursalGlobal() {
-    const sucursalSeleccionada = await getSucursalSeleccionada();
-    return new SucursalGlobal(sucursalSeleccionada);
-}
+const sucursalGlobal = new SucursalGlobal()
 
-module.exports = createSucursalGlobal();
+module.exports = sucursalGlobal;

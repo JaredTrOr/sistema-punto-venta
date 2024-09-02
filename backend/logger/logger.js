@@ -66,4 +66,8 @@ const logger = createLogger({
     ]
 });
 
-module.exports = logger;
+function formatoMensajeError (sucursal, tipo, funcion, mensaje) {
+    return `${sucursal}, ${tipo}, ${funcion}, ${mensaje}`
+}
+
+module.exports = {logger, formatoMensajeError};

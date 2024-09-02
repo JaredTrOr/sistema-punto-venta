@@ -3,6 +3,8 @@ const { app, BrowserWindow } = require('electron');
 const url = require("url");
 const path = require("path");
 const Routes = require('./backend/routes/router');
+const { logger } = require('./backend/logger/logger');
+const sucursalGlobal = require('./backend/models/SucursalGlobal');
 
 let mainWindow;
 
@@ -46,4 +48,6 @@ app.on('activate', function () {
 })
 
 // Rutas y conexión con base de datos
-Routes.inicializarRutas();
+Routes.inicializarRutas().then(() => {
+    logger.info(`${sucursalGlobal.getSucursal}, Las rutas se han inicializado con exitosamente`);
+});
