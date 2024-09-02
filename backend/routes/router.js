@@ -5,6 +5,7 @@ const SucursalesRoutes = require('./routes/sucursales');
 const ProductosRoutes = require('./routes/productos');
 const EmpleadosRoutes = require('./routes/empleados');
 const UtilsRoutes = require('./routes/utils');
+const LoggerRoutes = require('./routes/logger');
 const connectionMongoDB = require('../connection');
 const sucursalGlobal = require('../models/SucursalGlobal');
 const { getSucursalSeleccionada } = require('../controllers/sucursales')
@@ -27,6 +28,7 @@ class Routes {
         ProductosRoutes.inicalizarRutas();
         EmpleadosRoutes.inicializarRutas();
         UtilsRoutes.inicalizarRutas();
+        LoggerRoutes.inicializarRutas();
     }
 }
 
