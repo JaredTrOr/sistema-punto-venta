@@ -1,4 +1,6 @@
-const Producto = require('../models/Producto')
+const Producto = require('../models/Producto');
+const { logger } = require('../logger/logger');
+const sucursalGlobal = require('../models/SucursalGlobal');
 
 async function getProductos(event, data) {
     try {
@@ -19,9 +21,9 @@ async function loadProductos(event, data) {
         //Cargar productos obtenidos desde firebase
         await Producto.insertMany(data);
         
-        console.log('Productos cargados');
         event.reply('load-productos', JSON.stringify({success: true, message: 'Productos cargados'}));
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, loadProductos, Hubo un error al cargar los productos de firebase a local: ${err}`)
         event.reply('load-productos', JSON.stringify({success: true, message: err}))
     }
 }

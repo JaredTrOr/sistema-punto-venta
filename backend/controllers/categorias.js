@@ -1,4 +1,6 @@
 const Categoria = require('../models/Categoria');
+const { logger } = require('../logger/logger');
+const sucursalGlobal = require('../models/SucursalGlobal');
 
 async function getCategorias(event, data) {
     try {
@@ -64,10 +66,9 @@ async function loadCategorias(event, data) {
         //Cargar categorias
         await Categoria.insertMany(data);
 
-        console.log('Categorias cargadas');
         event.reply('load-categorias', JSON.stringify({success: true, msg: 'Categorias cargadas'}));
     } catch(err) {
-        console.log({success: false, message: err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, loadCategorias, Hubo un error al cargar las categorias de firebase a local: ${err}`)
         event.reply('load-categorias', JSON.stringify({ success: false, message: err }))
     }
 }
