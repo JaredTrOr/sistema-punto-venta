@@ -4,6 +4,7 @@ import { Producto } from './models/Producto';
 import { ElectronService } from './services/electron.service';
 import { CategoriasService } from './services/categorias.service';
 import { Categoria } from './models/Categoria';
+import { GlobalService } from './services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +20,14 @@ export class AppComponent implements OnInit {
   constructor(
     private productoService: ProductosService,
     private categoriaService: CategoriasService,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private globalService: GlobalService
   ) { }
 
   ngOnInit(): void {
+
+    //Cargar sucursales 
+    this.cargarSucursales();
 
     // Checar si hay internet antes de obtener los datos
     if (navigator.onLine) {
@@ -34,6 +39,22 @@ export class AppComponent implements OnInit {
       // No hay conexión a internet
       console.log('No se cargaron los datos de firebase');
     }
+
+  }
+
+  cargarSucursales(): void {
+    this.electronService.send('get-sucursales', null);
+    this.electronService.on('get-sucursales', (event, response) => {
+      response = JSON.parse(response)
+
+      if (response.success){ 
+        this.globalService.setSucursal(response.sucursalSeleccionada);
+      }
+      else {
+        console.log('Error al obtener la sucursal')
+      }
+
+    })
   }
 
   fetchFirebaseProductosToLocal(): void {
