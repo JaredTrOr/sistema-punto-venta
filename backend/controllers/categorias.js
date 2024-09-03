@@ -5,7 +5,6 @@ const sucursalGlobal = require('../models/SucursalGlobal');
 async function getCategorias(event, data) {
     try {
         const categorias = await Categoria.find();
-        console.log({success: true, message: 'getCategorias: Categorias obtenidas'});
         event.reply('get-categorias', JSON.stringify({ success: true, categorias }));
     } catch(err) {
         console.log({success: false, message: 'getCategorias: '+err});

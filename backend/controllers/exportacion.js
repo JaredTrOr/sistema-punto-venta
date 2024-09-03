@@ -1,6 +1,6 @@
 const exportarPDF = require('../utils/exportarPDF');
 const Impresora = require('../utils/impresora');
-const logger = require('../logger/logger');
+const { logger } = require('../logger/logger');
 const { formatearFecha } = require('../utils/formateos');
 
 const impresora = new Impresora();

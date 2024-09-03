@@ -26,7 +26,6 @@ export class VentasAdminComponent {
   ventasPorProducto: VentasPorProducto[] = [];
 
   constructor(
-    private ventasService: VentasService,
     private cortesService: CortesService,
     private electronService: ElectronService,
     private changeDetectorRef: ChangeDetectorRef,
@@ -39,14 +38,6 @@ export class VentasAdminComponent {
     //Obtener las ventas despues de corte
     // Estas ventas se despliegan en la sección de ventas por producto ya que aqui muestra la tabla de productos vendidos
     this.getVentasDespuesCorte();
-  }
-
-  getVentasGeneral() {
-    this.electronService.send('get-ventas', null);
-    this.electronService.on('get-ventas', (event, ventas) => {
-      this.ventas = JSON.parse(ventas);
-      this.changeDetectorRef.detectChanges();
-    });
   }
 
   getVentasDespuesCorte() {
@@ -116,7 +107,12 @@ export class VentasAdminComponent {
         }
 
         //Realizar corte de caja en la base de datos en la nube
-        this.cortesService.createCorte(corte).then(() => console.log('Corte creado con firebase'));
+        this.cortesService.createCorte(corte).then(() => {
+          this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, realizarCorte, Se registro el corte en firebase`);
+        })
+        .catch(err => {
+          this.electronService.send('log-error', `${this.globalService.getSucursal}, Frontend, realizarCorte, Hubo un error al registrar el corte en firebase ${err}`);
+        });
 
         // Realizar corte de caja en la base de datos local
         this.electronService.send('create-corte', corte);
@@ -125,11 +121,12 @@ export class VentasAdminComponent {
           if (corte.success) {
             
             // Realizar la impresión de ticket de corte de venta
+            // Se obtiene el último corte el cual siempre sera el corte que se insertó anteriormente para 
+            // obtener las horas exactas de inicio y de fin
             this.electronService.send('get-ultimo-corte', null);
             this.electronService.on('get-ultimo-corte', (event, data) => {
 
               data = JSON.parse(data);
-              console.log(data);
 
               if (data.success) {
 
@@ -144,7 +141,7 @@ export class VentasAdminComponent {
                 };
 
                 //Creación de ticket
-                this.electronService.send('imprimir-ticket-corte', dataImpresionTicket)
+                this.electronService.send('imprimir-ticket-corte', dataImpresionTicket);
 
                 //Creación de pdf
                 this.exportarPDF(`Corte de caja del día ${this.tiempo.getDate()} a las ${this.tiempo.getHora()}`);
@@ -156,10 +153,10 @@ export class VentasAdminComponent {
 
             });
           }
+          else {
+            this.electronService.send('log-error', `${this.globalService.getSucursal}, Frontend, realizarCorte, Hubo un error al realizar el corte de manera local`);
+          }
         });
-
-
-
       }
     });
   }

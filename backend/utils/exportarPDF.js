@@ -3,10 +3,12 @@ const PDFDocument = require("pdfkit-table");
 const { dialog } = require('electron');
 const { obtenerDiaSeleccion } = require("../controllers/ventas");
 const { getFormattedDate } = require("./formateos");
+const { logger } = require("../logger/logger");
+const sucursalGlobal = require('../models/SucursalGlobal');
 
 async function exportarPDF(data) {
 
-    const hora = data.hora.replace(':', '.')
+    const hora = data.hora.replace(':', '.');
 
     const options = {
         title: 'Guardar PDF',
@@ -73,7 +75,7 @@ async function exportarPDF(data) {
             })();
         }
     }).catch(err => {
-        console.log('Save dialog error:', err);
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, exportarPDF, Hubo un error al crear el PDF ${err}`);
     });
 }
 

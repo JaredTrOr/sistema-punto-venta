@@ -1,5 +1,3 @@
-const { getSucursalSeleccionada } = require('../controllers/sucursales');
-
 class SucursalGlobal {
     constructor() { }
 

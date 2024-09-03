@@ -27,36 +27,32 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     //Cargar sucursales 
-    this.cargarSucursales();
-
-    // Checar si hay internet antes de obtener los datos
-    if (navigator.onLine) {
-      this.fetchFirebaseProductosToLocal();
-      this.fetchFirebaseCategoriasToLocal();
-      this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, ngOnInitAppComponent, Si hay internet se cargaron los datos de firebase a local`)
-    }
-
-    else {
-      // No hay conexión a internet
-      this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, ngOnInitAppComponent, No hay internet no se cargaron los datos de firebase a local `)
-    }
-
-  }
-
-  cargarSucursales(): void {
     this.electronService.send('get-sucursales', null);
     this.electronService.on('get-sucursales', (event, response) => {
       response = JSON.parse(response)
 
       if (response.success){ 
         this.globalService.setSucursal(response.sucursalSeleccionada);
-        this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, cargarSucursalesAppComponent, Se cargo la sucursal seleccionada exitosamente`)
+        this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, cargarSucursalesAppComponent, Se cargo la sucursal seleccionada exitosamente`);
+
+        // Checar si hay internet antes de obtener los datos
+        if (navigator.onLine) {
+          this.fetchFirebaseProductosToLocal();
+          this.fetchFirebaseCategoriasToLocal();
+          this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, ngOnInitAppComponent, Si hay internet se cargaron los datos de firebase a local`);
+        }
+
+        else {
+          // No hay conexión a internet
+          this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, ngOnInitAppComponent, No hay internet no se cargaron los datos de firebase a local `);
+        }
       }
       else {
-        this.electronService.send('log-error', `sucursalNoSeleccionada, Frontend, cargarSucursalesAppComponent, No se cargo la sucursal seleccionada`)
+        this.electronService.send('log-error', `sucursalNoSeleccionada, Frontend, cargarSucursalesAppComponent, No se cargo la sucursal seleccionada`);
       }
 
-    })
+    });
+
   }
 
   fetchFirebaseProductosToLocal(): void {

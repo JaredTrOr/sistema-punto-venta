@@ -1,5 +1,5 @@
 const FileHandler = require('../utils/filehandler');
-const SucursalGlobalPromise = require('../models/SucursalGlobal');
+const sucursalGlobal = require('../models/SucursalGlobal');
 const fileHandler = new FileHandler();
 
 async function getSucursales(event, data) {
@@ -34,14 +34,15 @@ async function getSucursalSeleccionada() {
 }
 
 async function updateSucursalSeleccionada(event, data) {
-    console.log('DATA')
-    console.log(data);
     try {
        await fileHandler.actualizarArchivo('./config.json', data);
        event.reply('update-sucursal-seleccionada', JSON.stringify({
         success: true, 
         message: 'Se ha actualizado la sucursal correctamente'
        }));
+
+       //Cambiar variable global en caso que se actualice la sucursal seleccionada
+       sucursalGlobal.setSucursal(await getSucursalSeleccionada());
 
     } catch(err) {
         console.log({success: false, message: err});
