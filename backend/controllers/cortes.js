@@ -1,6 +1,8 @@
 const Corte = require('../models/Corte')
 const Venta = require('../models/Venta')
 const pagination = require('../middleware/pagination');
+const sucursalGlobal = require('../models/SucursalGlobal');
+const logger = require('../logger/logger');
 
 async function getCortes(event, data) {
     try {
@@ -8,8 +10,8 @@ async function getCortes(event, data) {
         event.reply('get-cortes', JSON.stringify({ success: true, cortes }));
         console.log({success: true, message: 'getCortes: Cortes obtenidos'});
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCortes, Hubo un error al obtener los cortes ${err}`);
         event.reply('get-cortes', JSON.stringify({ success: false, message: 'getCortes: '+err }));
-        console.log({success: false, message: 'getCortes: '+err});
     }
 }
 
@@ -19,8 +21,8 @@ async function getUltimoCorte(event, data) {
         event.reply('get-ultimo-corte', JSON.stringify({ success: true, ultimoCorte }));
         console.log({success: true, message: 'getUltimoCorte: Último corte obtenido'});
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getUltimoCorte, Hubo un error al obtener el ultimo corte ${err}`);
         event.reply('get-ultimo-corte', JSON.stringify({ success: false, message: 'getUltimoCorte: '+err }));
-        console.log({success: false, message: 'getCortes: '+err});
     }
 }
 
@@ -29,8 +31,8 @@ async function getCortesPaginacion(event, page) {
         const result = await pagination(Corte, page);
         event.reply('get-cortes-paginacion', JSON.stringify(result));
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCortesPaginacion, Hubo un error al obtener los cortes por paginación ${err}`);
         event.reply('get-cortes', JSON.stringify({ success: false, message: 'getCortes: '+err }));
-        console.log({success: false, message: 'getCortes: '+err});
     }
 }
 
@@ -41,8 +43,8 @@ async function getCortePorFecha(event, fechaString) {
         event.reply('get-cortes-por-fecha', JSON.stringify({ success: true, cortes }));
         console.log({success: true, message: 'getCortesPorFecha: Cortes obtenidos por fecha'});
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCortesPorFecha, Hubo un error al obtener los cortes por fecha ${err}`);
         event.reply('get-cortes-por-fecha', JSON.stringify({ success: false, message: 'getCortesPorFecha'+err }));
-        console.log({ success: false, message: 'getCortesPorFecha: '+err });
     }
 }
 
@@ -63,7 +65,7 @@ async function getVentasDespuesCorte (event, data) {
         const ventas = await Venta.find();
         event.reply('get-venta-despues-corte', JSON.stringify({ success: true, ventas }));
     } catch(err) {
-        console.log({success: false, message: 'getVentasDespuesCorte: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getVentasDespuesCorte, Hubo un error al obtener las ventas después del corte ${err}`);
         event.reply('get-venta-despues-corte', JSON.stringify({ success: false, message: 'getVentasDespuesCorte: '+err }));
     }
 }
@@ -118,6 +120,7 @@ async function createCorte (event, data) {
 
 
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, createCorte, Hubo un error al realizar el corte ${err}`);
         console.log({success: false, message: err});
     }
 }
