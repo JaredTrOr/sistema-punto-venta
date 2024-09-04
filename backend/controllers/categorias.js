@@ -7,7 +7,7 @@ async function getCategorias(event, data) {
         const categorias = await Categoria.find();
         event.reply('get-categorias', JSON.stringify({ success: true, categorias }));
     } catch(err) {
-        console.log({success: false, message: 'getCategorias: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCateogiras, Hubo un error al obtener las categorias ${err}`);
         event.reply('get-categorias', JSON.stringify({success: false, message: 'getCategorias: '+err}));
     }
 }
@@ -18,7 +18,7 @@ async function getCategoriaPorId(event, data) {
         console.log({success: true, message: 'getCategoriaPorId: Categoria obtenida'});
         event.reply('get-categoria-por-id', JSON.stringify({success: true, categoria}));
     } catch(err) {
-        console.log({success: false, message: 'getCategoriaPorId: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCategoriaPorId, Hubo un error al obtener la categoria por ID ${err}`);
         event.reply('get-categoria-por-id', JSON.stringify({success: false, message: 'getCategoriaPorId: '+err}));
     }
 }
@@ -29,7 +29,7 @@ async function createCategoria(event, data) {
         console.log({success: true, message: 'createCategoria: Categoria creada'});
         event.reply('create-categoria', {success: true, message: 'createCategoria: Categoria creada'});
     } catch(err) {
-        console.log({success: false, message: 'createCategoria: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, createCategoria, Hubo un error al crear la categoria ${err}`);
         event.reply('create-categoria', {success: false, message: 'createCategoria: '+err});
     }
 }
@@ -40,7 +40,7 @@ async function updateCategoria(event,data) {
         console.log({success: true, message: 'updateCategoria: Categoria actualizada'});
         event.reply('update-categoria', {success: true, message: 'updateCategoria: Categoria actualizada'});
     } catch(err) {
-        console.log({success: false, message: 'updateCategoria: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, updateCategoria, Hubo un error al actualizar la categoria ${err}`);
         event.reply('update-categoria', {success: false, message: 'updateCategoria: '+err});
     }
 }
@@ -51,7 +51,7 @@ async function deleteCategoria(event, id) {
         console.log({success: true, message: 'deleteCategoria: Categoria eliminada'});
         event.reply('delete-categoria', {success: true, message: 'deleteCategoria: Categoria eliminada'});
     } catch(err) {
-        console.log({success: false, message: 'deleteCategoria: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, deleteCategoria, Hubo un error al eliminar la categoria ${err}`);
         event.reply('delete-categoria', {success: false, message: 'deleteCategoria: '+err});
     }
 }
@@ -67,7 +67,7 @@ async function loadCategorias(event, data) {
 
         event.reply('load-categorias', JSON.stringify({success: true, msg: 'Categorias cargadas'}));
     } catch(err) {
-        logger.error(`${sucursalGlobal.getSucursal}, Backend, loadCategorias, Hubo un error al cargar las categorias de firebase a local: ${err}`)
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, loadCategorias, Hubo un error al cargar las categorias de firebase a local ${err}`);
         event.reply('load-categorias', JSON.stringify({ success: false, message: err }))
     }
 }

@@ -2,7 +2,7 @@ const { logger } = require('../logger/logger');
 const sucursalGlobal = require('../models/SucursalGlobal');
 const Venta = require('../models/Venta');
 const moment = require('moment');
-const logger = require('../logger/logger');
+const { logger } = require('../logger/logger');
 
 async function getVentas(event, data) {
     try {

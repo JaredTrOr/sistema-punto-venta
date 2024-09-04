@@ -2,7 +2,7 @@ const Corte = require('../models/Corte')
 const Venta = require('../models/Venta')
 const pagination = require('../middleware/pagination');
 const sucursalGlobal = require('../models/SucursalGlobal');
-const logger = require('../logger/logger');
+const { logger } = require('../logger/logger');
 
 async function getCortes(event, data) {
     try {
