@@ -33,18 +33,17 @@ export class AppComponent implements OnInit {
 
       if (response.success){ 
         this.globalService.setSucursal(response.sucursalSeleccionada);
-        this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, cargarSucursalesAppComponent, Se cargo la sucursal seleccionada exitosamente`);
 
         // Checar si hay internet antes de obtener los datos
         if (navigator.onLine) {
           this.fetchFirebaseProductosToLocal();
           this.fetchFirebaseCategoriasToLocal();
-          this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, ngOnInitAppComponent, Si hay internet se cargaron los datos de firebase a local`);
+          this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, ngOnInitAppComponent, Se cargaron los datos de firebase a local`);
         }
 
         else {
           // No hay conexión a internet
-          this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, ngOnInitAppComponent, No hay internet no se cargaron los datos de firebase a local `);
+          this.electronService.send('log-info', `${this.globalService.getSucursal()}, Frontend, ngOnInitAppComponent, Se cargaron los datos desde la BD local`);
         }
       }
       else {

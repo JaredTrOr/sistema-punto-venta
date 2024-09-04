@@ -1,6 +1,9 @@
 require('winston-mongodb')
+const path = require('path');
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf, colorize, json } = format;
+
+const loggerFilesPath = path.join(__dirname, '../../logs');
 
 const logFormat = printf(({ level, message, timestamp }) => {
     return `${timestamp} [${level}]: ${message}`;
@@ -31,7 +34,7 @@ const logger = createLogger({
 
         // Transporte para mensajes de info
         new transports.File({
-            filename: './logs/info.log',
+            filename: `${loggerFilesPath}/info.log`,
             level: 'info',
             format: combine(
                 infoFilter(),
@@ -42,7 +45,7 @@ const logger = createLogger({
 
         // Transporte para mensajes de error
         new transports.File({
-            filename: './logs/error.log',
+            filename: `${loggerFilesPath}/errors.log`,
             level: 'error',
             format: combine(
                 errorFilter(),

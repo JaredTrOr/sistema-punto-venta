@@ -1,11 +1,14 @@
 const FileHandler = require('../utils/filehandler');
 const sucursalGlobal = require('../models/SucursalGlobal');
+const path = require('path');
 const fileHandler = new FileHandler();
+
+const configFilePath = path.join(__dirname, '../../config.json');
 
 async function getSucursales(event, data) {
 
     try {
-        const data = await fileHandler.leerArchivo('./config.json');
+        const data = await fileHandler.leerArchivo(configFilePath);
         event.reply('get-sucursales', JSON.stringify({
             success: true, 
             message: 'Se ha leido el archivo on éxito', 
@@ -24,7 +27,7 @@ async function getSucursalSeleccionada() {
     let sucursalSeleccionada = '';
 
     try {
-        const data = await fileHandler.leerArchivo('./config.json');
+        const data = await fileHandler.leerArchivo(configFilePath);
         sucursalSeleccionada = data.sucursalSeleccionada
     } catch(err) {
         console.log({ success: false , message: 'Hubo un fallo al obtener la sucursal seleccionada'});
@@ -35,7 +38,7 @@ async function getSucursalSeleccionada() {
 
 async function updateSucursalSeleccionada(event, data) {
     try {
-       await fileHandler.actualizarArchivo('./config.json', data);
+       await fileHandler.actualizarArchivo(configFilePath, data);
        event.reply('update-sucursal-seleccionada', JSON.stringify({
         success: true, 
         message: 'Se ha actualizado la sucursal correctamente'
