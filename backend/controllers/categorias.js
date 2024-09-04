@@ -7,7 +7,7 @@ async function getCategorias(event, data) {
         const categorias = await Categoria.find();
         event.reply('get-categorias', JSON.stringify({ success: true, categorias }));
     } catch(err) {
-        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCateogiras, Hubo un error al obtener las categorias ${err}`);
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getCategorias, Hubo un error al obtener las categorias ${err}`);
         event.reply('get-categorias', JSON.stringify({success: false, message: 'getCategorias: '+err}));
     }
 }

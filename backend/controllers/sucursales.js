@@ -17,7 +17,7 @@ async function getSucursales(event, data) {
         }));
 
     } catch(err) {
-        console.log({success: false, message: err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getSucursales, Hubo un error al obtener las sucursales ${err}`);
         event.reply('get-sucursales', JSON.stringify({success: false, message: err}));
     }
 }
@@ -30,7 +30,7 @@ async function getSucursalSeleccionada() {
         const data = await fileHandler.leerArchivo(configFilePath);
         sucursalSeleccionada = data.sucursalSeleccionada
     } catch(err) {
-        console.log({ success: false , message: 'Hubo un fallo al obtener la sucursal seleccionada'});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getSucursalSeleccionada, Hubo un error al obtener la sucursal seleccionada ${err}`);
     }
 
     return sucursalSeleccionada;
@@ -48,7 +48,7 @@ async function updateSucursalSeleccionada(event, data) {
        sucursalGlobal.setSucursal(await getSucursalSeleccionada());
 
     } catch(err) {
-        console.log({success: false, message: err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, updateSucursalSeleccionada, Hubo un error al obtener la sucursal seleccionada ${err}`);
         event.reply('update-sucursal-seleccionada', JSON.stringify({success: false, message: err}));
     }
 }
