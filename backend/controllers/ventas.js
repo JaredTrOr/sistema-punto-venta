@@ -2,6 +2,7 @@ const { logger } = require('../logger/logger');
 const sucursalGlobal = require('../models/SucursalGlobal');
 const Venta = require('../models/Venta');
 const moment = require('moment');
+const logger = require('../logger/logger');
 
 async function getVentas(event, data) {
     try {
@@ -9,7 +10,7 @@ async function getVentas(event, data) {
         event.reply('get-ventas', JSON.stringify({ success: true, ventas }));
         console.log({ success: true, message: 'getVentas: Ventas obtenidas' });
     } catch (err) {
-        console.log({ success: false, message: 'getVentas: '+err });
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getVentasGeneral, Hubo un error al obtener las venta ${err}`);
         event.reply('get-ventas', JSON.stringify({ success: false, message: 'getVentas: '+err }));
     }
 }
@@ -28,7 +29,7 @@ async function getVentasPorCorte(event, data) {
         console.log({success: true, message: 'getVentasPorCorte: Ventas obtenidas por corte'});
         event.reply('get-ventas-por-corte', JSON.stringify({ success: true, ventas }));
     } catch(err) {
-        console.log({success: false, message: 'getVentasPorCorte: '+err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getVentasPorCorte, Hubo un error al obtener las ventas por corte ${err}`);
         event.reply('get-ventas-por-corte', JSON.stringify({ success: false, message: 'getVentasPorCorte: '+err }));
     }
 }
@@ -39,7 +40,7 @@ async function getVentaPorId(event, id) {
         console.log({success: true, message: 'getVentasPorId: Venta obtenida por ID'});
         event.reply('get-venta-por-id', JSON.stringify({ success: true, venta }));
     } catch(err) {
-        console.log({success: false, message: 'getVentasPorId: '+ err});
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getVentaPorId, Hubo un error al obtener la venta por ID ${err}`);
         event.reply('get-venta-por-id', JSON.stringify({ success: false, message: 'getVentasPorId: '+err }));
     }
 }
@@ -60,8 +61,8 @@ async function updateVentas(event, data) {
         event.reply('update-venta', JSON.stringify({ success: true, message: 'updateVentas: Venta actualizada' }));
         console.log({ success: true, message: 'updateVentas: Venta actualizada' });
     } catch (err) {
-        event.reply('update-venta', JSON.stringify({ success: false, message: 'updateVentas: '+err }));
-        console.log({ success: false, message: 'updateVentas '+err });
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, updateVentas, Hubo un error al actualizar las ventas ${err}`);
+        event.reply('update-venta', JSON.stringify({ success: false, message: 'update-venta: '+err }));
     }
 }
 
@@ -71,8 +72,8 @@ async function deleteVenta(event, id) {
         event.reply('delete-venta', JSON.stringify({ success: true, message: 'deleteVenta: Venta eliminada' }));
         console.log({ success: true, message: 'deleteVenta: Venta eliminada' });
     } catch (err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, deleteVenta, Hubo un error al eliminar la venta ${err}`);
         event.reply('delete-venta', JSON.stringify({ success: false, message: 'deleteVenta: '+err }));
-        console.log({ success: false, message: 'deleteVenta: '+err });
     }
 }
 
@@ -195,8 +196,8 @@ async function getVentasFiltradas(event, filtro) {
         event.reply('get-ventas-filtradas', JSON.stringify({ success: true, ventasFiltradas }));
         console.log({success: true, message: 'getVentasFiltradas: Ventas filtradas obtenidas'});
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getVentasFiltradas, Hubo un error al obtener las ventas ${err}`);
         event.reply('get-ventas-filtradas', JSON.stringify({ success: false, message: 'getVentasFiltradas: '+err }));
-        console.log({success: false, message: 'getVentasFiltradas: '+err})
     }
 
 }
@@ -212,7 +213,7 @@ async function obtenerDiaSeleccion(filtro) {
                 fechaInicio = primeraVenta.timestamp;
                 fechaFin = moment().endOf('day').toDate();
             } catch (err) {
-                console.log(err);
+                logger.error(`${sucursalGlobal.getSucursal}, Backend, obtenerDiaSeleccion, Hubo un error al obtener el dia de seleccion ${err}`);
             }
             break;
         case 'hoy':
