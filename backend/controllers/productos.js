@@ -7,8 +7,8 @@ async function getProductos(event, data) {
         const productos = await Producto.find();
         event.reply('get-productos', JSON.stringify({ success: true, productos }));
     } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, getProductos, Hubo un error al obtener los productos ${err}`);
         event.reply('get-productos', JSON.stringify({ success: false, message: 'getProductos: '+err }));
-        console.log({success: false, message: err});
     }
 }
 

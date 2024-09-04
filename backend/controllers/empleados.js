@@ -15,7 +15,7 @@ async function iniciarSesion(event, data) {
             event.reply('iniciar-sesion', JSON.stringify({ success: false, message: 'Usuario o contraseña incorrectos' }));
         }
     } catch(err) {
-        console.log({ success: false, message: err });
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, iniciarSesion, Hubo un error al iniciar sesion ${err}`);
     }
 }
 
