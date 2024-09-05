@@ -3,6 +3,13 @@ const mongoose = require('mongoose');
 const sucursalGlobal = require('../backend/models/SucursalGlobal');
 const { logger, formatoMensajeError } = require('../backend/logger/logger');
 
+// Requerimientos para cargar la base de datos la primera vez
+const Producto = require('./models/Producto');
+const Empleado = require('./models/Empleado');
+const Categoria = require('./models/Categoria');
+const FileHandler = require('./utils/filehandler');
+const fileHandler = new FileHandler();
+
 function connectionMongoDB() {
     mongoose.connect('mongodb://127.0.0.1:27017/POS')
     .then(param => {
@@ -20,4 +27,30 @@ function connectionMongoDB() {
     })
 }
 
-module.exports = connectionMongoDB;
+async function checkToLoadMongoDBDatabase() {
+
+    const configFilePath = path.join(__dirname, '../config.json');
+    const dbPath = path.join(__dirname, '../db');
+
+    try {
+        const configFile = await fileHandler.leerArchivo(configFilePath);
+        if (configFile.firstRun) {
+
+            //Cargar las colecciones de la base de datos por primera vez
+            const productosData = await fileHandler.leerArchivo(`${dbPath}/productos.json`);
+            const categoriasData = await fileHandler.leerArchivo(`${dbPath}/categorias.json`);
+            const empleadosData = await fileHandler.leerArchivo(`${dbPath}/empleados.json`);
+
+            await Producto.insertMany(productosData);
+            await Categoria.insertMany(categoriasData);
+            await Empleado.insertMany(empleadosData);
+
+            //Cambiar archivo json para cambiar la bandera de primera vez
+            await fileHandler.actualizarFirstTimeFalse();
+        }
+    } catch(err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, checkToLoadMongoDBDatabase, Hubo un error al leer o insertar los archivos json ${err}`);
+    }
+}
+
+module.exports = { connectionMongoDB, checkToLoadMongoDBDatabase };

@@ -35,6 +35,13 @@ class FileHandler {
         console.log('Se actualizó el archivo correctamente');
     }
 
+    async actualizarFirstTimeFalse(filepath) {
+        const file = await this.leerArchivo(filepath);
+        file.firstRun = false;
+
+        await this.escribirArchivo(filepath, file);
+    }
+
     async borrarRegistro(filepath, data) {
         filepath = path.join(__dirname, '../files', filepath);
         

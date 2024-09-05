@@ -6,8 +6,8 @@ const ProductosRoutes = require('./routes/productos');
 const EmpleadosRoutes = require('./routes/empleados');
 const UtilsRoutes = require('./routes/utils');
 const LoggerRoutes = require('./routes/logger');
-const connectionMongoDB = require('../connection');
 const sucursalGlobal = require('../models/SucursalGlobal');
+const { connectionMongoDB, checkToLoadMongoDBDatabase } = require('../connection');
 const { getSucursalSeleccionada } = require('../controllers/sucursales')
 
 class Routes {
@@ -19,6 +19,9 @@ class Routes {
 
         //Conexión con base de datos local
         connectionMongoDB();
+
+        //Observar si es la primera vez que la aplicación carga para cargar la base de datos
+        await checkToLoadMongoDBDatabase();
 
         //Inincialización de rutas
         VentasRoutes.inicializarRutas();

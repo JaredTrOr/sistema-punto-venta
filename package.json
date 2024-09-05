@@ -4,7 +4,7 @@
     "name": "Jared Alexander Trujillo Ortiz",
     "email": "trujillojaredalexander@gmail.com"
   },
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "app.js",
   "scripts": {
     "ng": "ng",
