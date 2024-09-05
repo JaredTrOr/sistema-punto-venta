@@ -9,6 +9,7 @@ const Empleado = require('./models/Empleado');
 const Categoria = require('./models/Categoria');
 const FileHandler = require('./utils/filehandler');
 const fileHandler = new FileHandler();
+const path = require('path');
 
 function connectionMongoDB() {
     mongoose.connect('mongodb://127.0.0.1:27017/POS')
@@ -47,6 +48,8 @@ async function checkToLoadMongoDBDatabase() {
 
             //Cambiar archivo json para cambiar la bandera de primera vez
             await fileHandler.actualizarFirstTimeFalse();
+
+            logger.info(`${sucursalGlobal.getSucursal}, Se cargó la base de datos por primera vez`);
         }
     } catch(err) {
         logger.error(`${sucursalGlobal.getSucursal}, Backend, checkToLoadMongoDBDatabase, Hubo un error al leer o insertar los archivos json ${err}`);
