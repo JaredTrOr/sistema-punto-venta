@@ -106,12 +106,14 @@ export class VentasAdminComponent {
           horaCorte,
         }
 
+        const sucursal = this.globalService.getSucursal();
+
         //Realizar corte de caja en la base de datos en la nube
         this.cortesService.createCorte(corte).then(() => {
-          this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, realizarCorte, Se registro el corte en firebase`);
+          this.electronService.send('log-info', `${sucursal}, Frontend, realizarCorte, Se registro el corte en firebase`);
         })
         .catch(err => {
-          this.electronService.send('log-error', `${this.globalService.getSucursal}, Frontend, realizarCorte, Hubo un error al registrar el corte en firebase ${err}`);
+          this.electronService.send('log-error', `${sucursal}, Frontend, realizarCorte, Hubo un error al registrar el corte en firebase ${err}`);
         });
 
         // Realizar corte de caja en la base de datos local

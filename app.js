@@ -15,7 +15,8 @@ function createWindow() {
         webPreferences: {
             preload: path.join(__dirname, 'backend', 'utils', 'preload.js'),
             nodeIntegration: true
-        }
+        },
+        icon: path.join(__dirname, 'assets/logo.ico')
     });
 
     mainWindow.loadURL(
@@ -27,7 +28,7 @@ function createWindow() {
     );
     
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', function () {
         mainWindow = null;

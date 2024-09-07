@@ -1,7 +1,7 @@
 //Conexión con la BD
 const mongoose = require('mongoose');
-const sucursalGlobal = require('../backend/models/SucursalGlobal');
-const { logger, formatoMensajeError } = require('../backend/logger/logger');
+const sucursalGlobal = require('./models/SucursalGlobal');
+const { logger, formatoMensajeError } = require('./logger/logger');
 
 // Requerimientos para cargar la base de datos la primera vez
 const Producto = require('./models/Producto');
@@ -47,7 +47,7 @@ async function checkToLoadMongoDBDatabase() {
             await Empleado.insertMany(empleadosData);
 
             //Cambiar archivo json para cambiar la bandera de primera vez
-            await fileHandler.actualizarFirstTimeFalse();
+            await fileHandler.actualizarFirstTimeFalse(configFilePath);
 
             logger.info(`${sucursalGlobal.getSucursal}, Se cargó la base de datos por primera vez`);
         }

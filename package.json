@@ -12,24 +12,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "electron": "ng build --base-href ./ && electron .",
-    "package": "electron-builder"
+    "electron": "ng build --base-href ./ && electron ."
   },
   "overrides": {
     "usb": "^1.9.2"
-  },
-  "build": {
-    "appId": "com.electron.sistemaventa",
-    "productName": "Sistema Punto de Venta",
-    "directories": {
-      "output": "build"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": "AppImage"
-    }
   },
   "private": true,
   "dependencies": {
@@ -68,7 +54,6 @@
     "@types/uuid": "^9.0.8",
     "dotenv": "^16.4.5",
     "electron": "^31.1.0",
-    "electron-builder": "^24.13.3",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

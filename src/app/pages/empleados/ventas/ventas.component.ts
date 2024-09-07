@@ -169,13 +169,15 @@ export class VentasComponent implements OnInit{
           totalGeneral: this.getTotal()
         }
 
+        const sucursal = this.globalService.getSucursal();
+
         //Guardar la venta en firebase
         this.ventaService.createVenta(venta).
         then(() => {
-          this.electronService.send('log-info', `${this.globalService.getSucursal}, Frontend, realizarCompra, Se ha realizado la compra exitosamente en firebase`);
+          this.electronService.send('log-info', `${sucursal}, Frontend, realizarCompra, Se ha realizado la compra exitosamente en firebase`);
         })  
         .catch(err => {
-          this.electronService.send('log-error', `${this.globalService.getSucursal}, Frontend, realizarCompra, Hubo un error al insertar la compra en firebase ${err}`);
+          this.electronService.send('log-error', `${sucursal}, Frontend, realizarCompra, Hubo un error al insertar la compra en firebase ${err}`);
         }); 
 
         //Guardar venta en local
