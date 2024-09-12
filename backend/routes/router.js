@@ -8,7 +8,7 @@ const UtilsRoutes = require('./routes/utils');
 const LoggerRoutes = require('./routes/logger');
 const sucursalGlobal = require('../models/SucursalGlobal');
 const { connectionMongoDB, checkToLoadMongoDBDatabase } = require('../connection');
-const { getSucursalSeleccionada } = require('../controllers/sucursales')
+const { getSucursalSeleccionada } = require('../controllers/sucursales');
 
 class Routes {
 

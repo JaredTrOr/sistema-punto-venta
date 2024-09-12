@@ -29,7 +29,8 @@ export class AppComponent implements OnInit {
     //Cargar sucursales 
     this.electronService.send('get-sucursales', null);
     this.electronService.on('get-sucursales', (event, response) => {
-      response = JSON.parse(response)
+      
+      response = JSON.parse(response);
 
       if (response.success){ 
         this.globalService.setSucursal(response.sucursalSeleccionada);

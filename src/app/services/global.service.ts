@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalService {
 
   private sucursal!: string;
+  
   constructor() { }
 
   setSucursal(sucursal: string) {

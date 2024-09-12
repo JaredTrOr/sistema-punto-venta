@@ -18,7 +18,7 @@ export class InicioSesionComponent {
     private router: Router,
     private electronService: ElectronService,
     private ngZone: NgZone,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {
     this.setLoginForm();
   }
