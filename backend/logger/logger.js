@@ -1,9 +1,12 @@
 require('winston-mongodb')
 const path = require('path');
+const sucursalGlobal = require('../models/SucursalGlobal');
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf, colorize, json } = format;
 
-const loggerFilesPath = path.join(__dirname, '../../logs');
+const loggerFilesPath = sucursalGlobal.isDev 
+    ? path.join(__dirname, '../../logs')
+    : path.join(process.resourcesPath, 'logs');
 
 const logFormat = printf(({ level, message, timestamp }) => {
     return `${timestamp} [${level}]: ${message}`;

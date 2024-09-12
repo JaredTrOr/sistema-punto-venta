@@ -1,6 +1,13 @@
 class SucursalGlobal {
+
+    isDev = false;
+
     constructor() { }
 
+    get isDev() {
+        return this.isDev;
+    }
+    
     get getSucursal() {
         return this.sucursal;
     }

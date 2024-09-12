@@ -12,7 +12,7 @@ const fileHandler = new FileHandler();
 const path = require('path');
 
 function connectionMongoDB() {
-    mongoose.connect('mongodb://127.0.0.1:27017/POS')
+    mongoose.connect(process.env.MONGO_LOCAL_URI)
     .then(param => {
         logger.info(`${sucursalGlobal.getSucursal}, Conectado a la base de datos de MongoDB "${param.connections[0].name}"`);
     })
@@ -25,13 +25,18 @@ function connectionMongoDB() {
                 `Ocurrio un error al conectar con mongoDB ${err}`
             )
         );
-    })
+    });
 }
 
 async function checkToLoadMongoDBDatabase() {
 
-    const configFilePath = path.join(__dirname, '../config.json');
-    const dbPath = path.join(__dirname, '../db');
+    const configFilePath = sucursalGlobal.isDev 
+        ? path.join(__dirname, '../config.json')
+        : path.join(process.resourcesPath, 'config.json');
+
+    const dbPath = sucursalGlobal.isDev  
+        ? path.join(__dirname, '../db')
+        : path.join(process.resourcesPath, 'db');
 
     try {
         const configFile = await fileHandler.leerArchivo(configFilePath);

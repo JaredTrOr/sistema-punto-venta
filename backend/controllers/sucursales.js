@@ -3,7 +3,9 @@ const sucursalGlobal = require('../models/SucursalGlobal');
 const path = require('path');
 const fileHandler = new FileHandler();
 
-const configFilePath = path.join(__dirname, '../../config.json');
+const configFilePath = sucursalGlobal.isDev
+    ? path.join(__dirname, '../../config.json')
+    : path.join(process.resourcesPath, 'config.json');
 
 async function getSucursales(event, data) {
 
@@ -13,7 +15,8 @@ async function getSucursales(event, data) {
             success: true, 
             message: 'Se ha leido el archivo on éxito', 
             sucursales: data.sucursales, 
-            sucursalSeleccionada: data.sucursalSeleccionada
+            sucursalSeleccionada: data.sucursalSeleccionada,
+            path: configFilePath
         }));
 
     } catch(err) {
