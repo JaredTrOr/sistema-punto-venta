@@ -1,6 +1,6 @@
 class SucursalGlobal {
 
-    isDev = false;
+    isDev = true;
 
     constructor() { }
 

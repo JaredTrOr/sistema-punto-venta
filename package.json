@@ -9,10 +9,76 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "electron-builder",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "electron": "ng build --base-href ./ && electron ."
+    "electron": "ng build --base-href ./ && electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "build": {
+    "appId": "com.punto.venta.app",
+    "productName": "Punto Venta Panaderia",
+    "asarUnpack": [
+      "config.json",
+      "db/**"
+    ],
+    "files": [
+      "dist/**/*",
+      "backend/**/*",
+      "logs/**/*",
+      "db/**/*",
+      "app.js",
+      "config.json",
+      ".env",
+      "node_modules/dotenv/**/*",
+      "app.manifest"
+    ],
+    "extraResources": [
+      {
+        "from": "config.json",
+        "to": "config.json"
+      },
+      {
+        "from": "./db",
+        "to": "db",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "./logs",
+        "to": "logs",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": ".env",
+        "to": "../.env"
+      },
+      {
+        "from": "app.manifest",
+        "to": "app.manifest"
+      }
+    ],
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "./assets/logo.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "./assets/logo.ico",
+      "uninstallerIcon": "./assets/logo.ico",
+      "uninstallDisplayName": "Punto Venta Panaderia Uninstaller",
+      "license": "license.md",
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "overrides": {
     "usb": "^1.9.2"
@@ -30,6 +96,7 @@
     "@angular/router": "^17.0.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "dotenv": "^16.4.5",
     "escpos": "^3.0.0-alpha.6",
     "escpos-usb": "^3.0.0-alpha.4",
     "firebase": "^10.12.2",
@@ -52,8 +119,8 @@
     "@types/bootstrap": "^5.2.10",
     "@types/jasmine": "~5.1.0",
     "@types/uuid": "^9.0.8",
-    "dotenv": "^16.4.5",
-    "electron": "^31.1.0",
+    "electron": "^31.5.0",
+    "electron-builder": "^25.0.5",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

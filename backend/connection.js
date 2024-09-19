@@ -28,6 +28,18 @@ function connectionMongoDB() {
     });
 }
 
+async function databaseExists() {
+    try {
+        const admin = mongoose.connection.db.admin();
+        const databases = await admin.listDatabases();
+        const dbNames = databases.databases.map(db => db.name);
+        return dbNames.includes('POS'); 
+    } catch (err) {
+        logger.error(`${sucursalGlobal.getSucursal}, Backend, databaseExists, Hubo un error al verificar la existencia de la base de datos ${err}`);
+        return false;
+    }
+}
+
 async function checkToLoadMongoDBDatabase() {
 
     const configFilePath = sucursalGlobal.isDev 
@@ -41,6 +53,12 @@ async function checkToLoadMongoDBDatabase() {
     try {
         const configFile = await fileHandler.leerArchivo(configFilePath);
         if (configFile.firstRun) {
+
+            if (await databaseExists()) {
+                await fileHandler.actualizarFirstTimeFalse(configFilePath);
+                logger.info(`${sucursalGlobal.getSucursal}, La base de datos ya existe, por lo tanto no se tiene que cargar denuevo ni modificar la BD existente`);
+                return;
+            }
 
             //Cargar las colecciones de la base de datos por primera vez
             const productosData = await fileHandler.leerArchivo(`${dbPath}/productos.json`);
