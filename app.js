@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, screen } = require('electron');
 const url = require("url");
 const path = require("path");
 const Routes = require('./backend/routes/router');
@@ -9,6 +9,9 @@ const sucursalGlobal = require('./backend/models/SucursalGlobal');
 let mainWindow;
 
 function createWindow() {
+    const primaryDisplay = screen.getPrimaryDisplay();
+    const { width, height } = primaryDisplay.size;
+
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -26,16 +29,18 @@ function createWindow() {
             slashes: true
         })
     );
-    
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', function () {
         mainWindow = null;
     });
 
     mainWindow.maximize();
-    mainWindow.removeMenu();
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.send('set-zoom', { width, height }); 
+    });
+    
+    //mainWindow.removeMenu();
+    // mainWindow.webContents.openDevTools();
 }
 
 app.on('ready', createWindow);
