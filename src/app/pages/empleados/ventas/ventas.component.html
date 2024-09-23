@@ -42,7 +42,7 @@
             </div>
 
             <div class="botones-total">
-                <button (click)="realizarCompra()" class="btns btn-pagar">Pagar <i class="bi bi-bag"></i></button>
+                <button (click)="onClickCompra()" class="btns btn-pagar">Pagar <i class="bi bi-bag"></i></button>
                 <button (click)="limpiarCarrito()" class="btns btn-limpiar">Limpiar</button>
             </div>
         </div>
@@ -106,6 +106,46 @@
         <div class="modal-footer">
             <button type="button" class="btns btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             <button (click)="guardarCambios()" data-bs-dismiss="modal" type="button" class="btns btn btn-success">Guardar cambios</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+ <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+        <div class="modal-body p-5">
+            <div>
+                <h3>Total:</h3>
+            
+                <input 
+                    type="number" 
+                    id="input-numbers-modal" 
+                    placeholder="{{ getTotal() }}" 
+                    class="input-numbers" 
+                    disabled
+                >
+            </div>
+            <br>
+            <div>
+                <h3>Recibido:</h3>
+                <input 
+                    [(ngModel)]="recibido" 
+                    type="number" 
+                    id="input-numbers-modal" 
+                    placeholder="Escriba la cantidad" 
+                    class="input-numbers" 
+                >
+            </div>
+            <br>
+            <h3>Cambio: $ {{ calcularCambio() }} </h3>
+            
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btns btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button (click)="realizarCompra()" data-bs-dismiss="modal" type="button" class="btns btn btn-success">Realizar cambios</button>
         </div>
     </div>
     </div>
