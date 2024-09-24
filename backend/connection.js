@@ -11,29 +11,36 @@ const FileHandler = require('./utils/filehandler');
 const fileHandler = new FileHandler();
 const path = require('path');
 
-function connectionMongoDB() {
-    mongoose.connect(process.env.MONGO_LOCAL_URI)
-    .then(param => {
+async function connectionMongoDB() {
+    try {
+        const param = await mongoose.connect(process.env.MONGO_LOCAL_URI);
         logger.info(`${sucursalGlobal.getSucursal}, Conectado a la base de datos de MongoDB "${param.connections[0].name}"`);
-    })
-    .catch(err => {
+    } catch (err) {
         logger.error(
             formatoMensajeError(
                 sucursalGlobal.getSucursal, 
                 'Backend', 
                 'connectionMongoDB', 
-                `Ocurrio un error al conectar con mongoDB ${err}`
+                `Ocurrió un error al conectar con MongoDB: ${err}`
             )
         );
-    });
+    }
 }
 
 async function databaseExists() {
     try {
-        const admin = mongoose.connection.db.admin();
+        const db = mongoose.connection.db;
+        
+        if (!db) {
+            logger.error(`${sucursalGlobal.getSucursal}, Backend, databaseExists, La base de datos no esta establecida aún`);
+            return;
+        }
+
+        const admin = db.admin();
         const databases = await admin.listDatabases();
         const dbNames = databases.databases.map(db => db.name);
-        return dbNames.includes('POS'); 
+
+        return dbNames.includes('POS');
     } catch (err) {
         logger.error(`${sucursalGlobal.getSucursal}, Backend, databaseExists, Hubo un error al verificar la existencia de la base de datos ${err}`);
         return false;

@@ -18,7 +18,7 @@ class Routes {
         sucursalGlobal.setSucursal(await getSucursalSeleccionada());
 
         //Conexión con base de datos local
-        connectionMongoDB();
+        await connectionMongoDB();
 
         //Observar si es la primera vez que la aplicación carga para cargar la base de datos
         await checkToLoadMongoDBDatabase();
