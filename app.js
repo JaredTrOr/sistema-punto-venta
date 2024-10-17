@@ -39,7 +39,7 @@ function createWindow() {
         mainWindow.webContents.send('set-zoom', { width, height }); 
     });
     
-    //mainWindow.removeMenu();
+    mainWindow.removeMenu();
     // mainWindow.webContents.openDevTools();
 }
 

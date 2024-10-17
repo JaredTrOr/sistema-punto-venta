@@ -3,25 +3,27 @@ body {
 }
 
 .main-container {
-    margin: 4rem auto; 
-    padding: 2rem;
-    max-width: 50rem;
+    display: grid;
+    grid-template-columns: 60% 1fr;
 }
 
-.login-form-container { margin-top: 7rem; }
+.image-container {
+    height: 100vh;
+    background-image: url('../../../assets/images/banner.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+}
 
 .btn-ingresar {
     padding: 1rem;
     width: 15rem;
     border: none;
-    border-radius: 5px;
-    background-color: var(--main-purple);
+    border-radius: 20px;
+    background-color: var(--btn-limpiar);
     color: var(--light);
     margin-top: 4rem;
-}
-
-.btn-ingresar:hover {
-    background-color: var(--main-purple-hover);
+    font-size: 2rem;
 }
 
 .logo-image {
@@ -31,4 +33,12 @@ body {
     position: absolute;
     bottom: 0;
     right: 10%;
+}
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh; 
+    padding: 3.5rem;
 }
