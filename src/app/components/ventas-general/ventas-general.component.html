@@ -20,12 +20,12 @@
 
         <div class="productos-vendidos-container">
             <div *ngFor="let producto of venta.productos">
-                <p class="bold">{{ producto.nombreProducto }}</p>
+                <p class="bold white">{{ producto.nombreProducto }}</p>
 
                 <div class="producto-info">
-                    <p>Cantidad: {{ producto.cantidad }}</p>
-                    <p>Importe: ${{ producto.importe }}</p>
-                    <p>Total: ${{ producto.total }}</p>
+                    <p class="white">Cantidad: {{ producto.cantidad }}</p>
+                    <p class="white">Importe: ${{ producto.importe }}</p>
+                    <p class="white">Total: ${{ producto.total }}</p>
                 </div>
             </div>
         </div>

@@ -1,0 +1,12 @@
+.total-ventas {
+    padding-block: 2rem;
+}
+
+.table-columns-productos td{
+    padding-block: 1rem;
+}
+
+tr h3 {
+    padding: none;
+    margin: none;
+}

@@ -31,15 +31,15 @@
 .productos-vendidos-container {
     height: 8.3rem;
     overflow: scroll;
-
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     gap: 1rem;
+    color: var(--light);
 }
 
 .productos-vendidos-container > *{
     padding: 10px;
-    background-color: var(--main-purple);
+    background-color: var(--btn-primary);
     border-radius: 5px;
     color: var(--light);
 }

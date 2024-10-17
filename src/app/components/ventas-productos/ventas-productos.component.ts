@@ -19,4 +19,8 @@ export class VentasProductosComponent {
   getTotalVentas() {
     return this.ventasPorProducto.reduce((acc, producto) => acc + producto.total, 0);
   }
+
+  getTotalCantidad() {
+    return this.ventasPorProducto.reduce((acc, producto) => acc + producto.cantidad, 0);
+  }
 }

@@ -2,16 +2,16 @@
     <h3>No se han encontrado ventas aún</h3>
 </div>
 
-<table class="table mt-5">
+<table class="table table-striped mt-5">
     <thead>
         <th>Nombre</th>
-        <th>Cantidad</th>
+        <th>Cantidad Vendida</th>
         <th>Importe</th>
         <th>Total</th>
     </thead>
 
     <tbody>
-        <tr *ngFor="let producto of ventasPorProducto">
+        <tr class="table-columns-productos" *ngFor="let producto of ventasPorProducto">
             <td>{{ producto.nombreProducto }}</td>
             <td>{{ producto.cantidad }}</td>
             <td>${{ producto.importe }}</td>
@@ -19,10 +19,10 @@
         </tr>
         <tr></tr>
         <tr>
-            <td>Total:</td>
+            <td class="total-ventas"><h3>Total de las ventas({{ getTotalCantidad() }})</h3>:</td>
             <td></td>
             <td></td>
-            <td>${{ getTotalVentas() }}</td>
+            <td class="total-ventas"><h3>${{ getTotalVentas() }}</h3></td>
         </tr>
     </tbody>
 </table>
