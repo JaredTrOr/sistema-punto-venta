@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Monsterrat', sans-serif;
+    color: var(--text-color);
 }
 
 :root {
@@ -16,6 +17,15 @@
     --main-purple: #5259ff;
     --main-purple-hover: #3f46e5;
     ---error-red: #ff5252;
+    --background: #F5F8FB;
+    --text-color: #495A6F;
+    --border-color: #D9D9D9;
+    --card-color: #C3CDE0;
+    --btn-limpiar: #142233;
+    --btn-primary: #397CF7;
+    --desh: #F5F8FB;
+    --navbar-gray: rgb(94, 94, 94);
+    --navbar-color: #142233;
 }
 
 @font-face {
@@ -34,6 +44,7 @@
 
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Monsterrat-bold';
+    margin: 0;
 }
 
 .btns {
@@ -53,7 +64,7 @@ a {
 
 .input-text {
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 20px;
     width: 100%;
     border: 1px solid var(--light-gray);
 }
@@ -87,4 +98,21 @@ a {
 
 .red {
     color: red;
+}
+
+.white {
+    color: white !important;
+}
+
+.nav-icons {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

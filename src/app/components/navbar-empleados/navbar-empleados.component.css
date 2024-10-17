@@ -1,5 +1,5 @@
 nav {
-    background-color: var(--main-purple);
+    background-color: var(--navbar-color);
     color: var(--light);
     width: 100%;
     height: 8vh;
@@ -12,6 +12,7 @@ nav {
     margin: auto;
     list-style: none;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
