@@ -9,7 +9,7 @@
 
 .productos-vendidos-container > *{
     padding: 10px;
-    background-color: var(--main-purple);
+    background-color: var(--btn-primary);
     border-radius: 5px;
     color: var(--light);
 }
