@@ -1,33 +1,44 @@
 <!-- <app-navbar-admin></app-navbar-admin> -->
 <section class="p-5">
-    <h2>Ventas por corte</h2>
+  <div class="header-container">
+    <h2><i class="bi bi-file-earmark-text"></i> Resumen de ventas</h2>
 
     <div class="d-flex gap-3 ">
 
-        <button (click)="exportarPDF('Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())" 
-        *ngIf="ventasDespuesCorte.length" class="btns btn-exportar">
-          Exportar
-        </button>
+      <button
+        (click)="exportarPDF('Exportación de ventas del día ' + this.tiempo.getDate() +' a las ' + this.tiempo.getHora())"
+        *ngIf="ventasDespuesCorte.length" class="btns btn-generar-pdf">
+        Generar PDF
+      </button>
 
-        <button (click)="realizarCorte()" *ngIf="ventasDespuesCorte.length && ventasProductos==='ventasProducto'" class="btns btn-exportar">Realizar corte</button>
+      <button (click)="realizarCorte()" *ngIf="ventasDespuesCorte.length && ventasProductos==='ventasProducto'"
+        class="btns btn-generar-corte">Generar corte</button>
     </div>
+  </div>
 
-    <div class="mt-5 radio-buttons-container">
-      <div class="radio-button-row">
-        <input id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
-        <label for="radioVentasGeneral">  Ventas generales</label>
-      </div>
-
-      <div class="mt-3 radio-button-row">
-        <input id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto" [(ngModel)]="ventasProductos">
-        <label for="radioVentasProducto">  Ventas por producto</label>
+  <div class="mostrar-ventas-container mt-4">
+    <div class="header-radio-buttons-container">
+      <div>Mostrar por: </div>
+      <div class="radio-buttons-container">
+        <div class="radio-button-row">
+          <input class="radio-custom" id="radioVentasGeneral" type="radio" name="radioVenta" value="ventasGeneral" [(ngModel)]="ventasProductos">
+          <label class="custom-label" for="radioVentasGeneral">Notas</label>
+        </div>
+    
+        <div class="radio-button-row">
+          <input class="radio-custom" id="radioVentasProducto" type="radio" name="radioVenta" value="ventasProducto"
+            [(ngModel)]="ventasProductos">
+          <label class="custom-label" for="radioVentasProducto">Ventas</label>
+        </div>
       </div>
     </div>
-
-    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte" [origen]="'empleado'"></app-ventas-general>
-
+  
+    <app-ventas-general *ngIf="ventasProductos === 'ventasGeneral'" [ventas]="ventasDespuesCorte"
+      [origen]="'empleado'"></app-ventas-general>
+  
     <div *ngIf="ventasProductos === 'ventasProducto'" class="ventas-producto-container">
       <app-ventas-productos [ventasPorProducto]="ventasPorProducto"></app-ventas-productos>
     </div>
+  </div>
 
 </section>

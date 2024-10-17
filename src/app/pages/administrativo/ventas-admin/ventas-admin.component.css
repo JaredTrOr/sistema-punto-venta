@@ -1,3 +1,7 @@
+section {
+    background-color: var(--background);
+}
+
 .btn-exportar {
     padding: 1rem;
     background-color: var(--light);
@@ -11,4 +15,65 @@
 .ventas-producto-container {
     height: 60vh;
     overflow-y: scroll;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light);
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.btn-generar-pdf {
+    background-color: var(--background);
+    border: 1px solid var(--gray);
+    border-radius: 15px;
+}
+
+.btn-generar-corte {
+    background-color: var(--btn-primary);
+    border-radius: 15px;
+    color: var(--light);
+}
+
+.mostrar-ventas-container {
+    background-color: var(--light);
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.header-radio-buttons-container {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.radio-buttons-container {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    background-color: var(--light-white-gray);
+    border: 1px solid var(--gray);
+    border-radius: 10px;
+}
+
+.radio-custom {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--desh);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.radio-custom:checked+.custom-label {
+    background-color: var(--light);
 }
