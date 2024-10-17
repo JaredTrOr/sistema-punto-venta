@@ -1,15 +1,53 @@
 .main-container {
     display: grid;
-    grid-template-columns: 40rem 1fr;
-    height: 92vh;
+    grid-template-columns: 30rem 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: var(--background);
 }
 
 .main-container > * {
-    margin: 0.7rem;
-    padding: 1.3rem;
+    padding: 1rem;
+    border-radius: 20px;
+    background-color: var(--light);
+    border: 2px solid var(--border-color);
+    height: 85vh;
+}
 
-    border-radius: 5px;
-    background-color: var(--light-white-gray);
+.productos-container {
+    overflow-y: scroll;
+    position: relative;
+}
+
+.productos-container::-webkit-scrollbar {
+    display: none;
+}
+
+.venta-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.empty-card {
+    text-align: center;
+}
+
+.cart-icon-disabled {
+    font-size: 3rem;
+}
+
+.disabled-color {
+    color: var(--light-gray);
+}
+
+.box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.5rem;
+    
 }
 
 .venta-title {
@@ -19,14 +57,17 @@
 .carrito-venta {
     margin-top: 1rem;
     width: 100%;
-    height: 60vh;
     overflow: scroll;
+}
 
-    border-bottom: 2px dotted var(--black);
+.carrito-venta::-webkit-scrollbar {
+    display: none;
 }
 
 .cantidad-precio {
-    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,9 +89,27 @@ table tbody tr {
 }
 
 .botones-total > * { height: 4.2rem; }
-.btn-pagar { background-color: var(--main-purple); color: var(--light); }
-.btn-pagar:hover { background-color: var(--main-purple-hover); }
-.btn-limpiar { background-color: var(--dark); color: var(--light); }
+.btn-pagar { background-color: var(--btn-primary); color: var(--light); font-weight: bold; }
+/* .btn-pagar:hover { background-color: var(--main-purple-hover); } */
+.btn-limpiar { 
+    background-color: var(--dark); 
+    color: var(--light);
+    font-weight: bold;
+    font-size: 2rem;
+    padding: 0;
+}
+
+.btn-pagar.disabled {
+    background-color: var(--light-gray);
+    color: var(--dark);
+    cursor: not-allowed;
+}
+
+.btn-limpiar.disabled {
+    background-color: var(--light-gray);
+    color: var(--dark);
+    cursor: not-allowed;
+}
 
 .cantidad-producto {
     background-color: var(--light);
@@ -76,19 +135,10 @@ table tbody tr {
     padding: 0;
 }
 
-.box-container {
-    height: 61vh;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: 1.5rem;
-    
-    overflow: scroll;
-}
-
 .box {
-    background-color: var(--light);
-    border: 1px solid var(--gray);
-    border-radius: 3px;
+    background-color: var(--background);
+    border: 3px solid var(--gray);
+    border-radius: 20px;
     height: 14rem; 
     padding: 1rem;
     cursor: pointer;
@@ -149,4 +199,44 @@ table tbody tr {
 .borrar {
     background-color: var(--dark);
     color: var(--light);
+}
+
+.inputs-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.buscador {
+    padding: 0.5rem;
+    border: none;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    width: 100%;
+}
+
+.filtro-categoria {
+    padding: 0.5rem;
+    border: none;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.btn-cancel-modal {
+    background-color: var(--dark); 
+    color: var(--light);
+    font-weight: bold;
+    width: 5rem;
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.btn-realizar-compra {
+    background-color: var(--btn-primary); 
+    color: var(--light);
+    font-weight: bold;
+    width: 10rem;
+    font-size: 2rem;
+    padding: 1rem;
 }
