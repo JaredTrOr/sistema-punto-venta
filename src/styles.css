@@ -26,6 +26,8 @@
     --desh: #F5F8FB;
     --navbar-gray: rgb(94, 94, 94);
     --navbar-color: #142233;
+    --navbar-hover: #2B486A;
+    --disabled-icon: #465B73; 
 }
 
 @font-face {

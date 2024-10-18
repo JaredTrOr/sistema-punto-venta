@@ -1,19 +1,47 @@
 <nav>
-    <div class="nav-container">
-        <div class="d-flex gap-5">
-            <a class="nav-item" routerLink="/ventas">
-                <i class="bi bi-basket2-fill nav-icons"></i>
-                Productos
-            </a>
-            <a class="nav-item" routerLink="/mostrar-ventas">
-                <i class="bi bi-card-text nav-icons"></i>
-                Ventas realizadas
-            </a>
-        </div>
-        <div>
-            <a class="nav-item" routerLink="/inicio-sesion">
-                <i class="bi bi-box-arrow-left nav-icons"></i>
-            </a>
-        </div>
+    <div *ngIf="!isAccordionOpen" class="navbar-collapse">
+      <i 
+        (click)="toggleAccordion()"
+        class="bi bi-chevron-compact-down nav-icons icon-collapse"
+      ></i>
     </div>
-</nav>
+  
+    <div class="nav" [ngClass]="{'open': isAccordionOpen}">
+      <div class="nav-container">
+        <div class="d-flex gap-5">
+          <a 
+            class="nav-item" 
+            routerLink="/ventas" 
+            [ngClass]="{'active': isActive('/ventas'), 'disabled-nav': !isActive('/ventas')}"
+          >
+            <i class="bi bi-basket2-fill nav-icons"
+            [ngClass]="{'disabled-nav': !isActive('/ventas')}"></i>
+            Productos
+          </a>
+          <a 
+            class="nav-item" 
+            routerLink="/mostrar-ventas" 
+            [ngClass]="{'active': isActive('/mostrar-ventas'), 'disabled-nav': !isActive('/mostrar-ventas')}"
+          >
+            <i class="bi bi-card-text nav-icons"
+            [ngClass]="{'disabled-nav': !isActive('/mostrar-ventas')}">
+            </i>
+            Ventas realizadas
+          </a>
+        </div>
+        <div class="nav-right">
+          <div>
+            <i (click)="toggleAccordion()" class="bi bi-chevron-compact-up nav-icons icon-collapse"></i>
+          </div>
+          <a 
+            class="nav-item" 
+            routerLink="/inicio-sesion" 
+            [ngClass]="{'active': isActive('/inicio-sesion'), 'disabled-nav': !isActive('/inicio-sesion')}"
+          >
+            <i class="bi bi-box-arrow-left nav-icons"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
