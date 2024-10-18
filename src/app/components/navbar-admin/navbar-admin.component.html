@@ -1,14 +1,77 @@
 <nav>
-    <div class="nav-container">
-        <div class="item-container">
-            <a routerLink="/admin-ventas-filtros">Ventas</a>
-            <a routerLink="/cortes">Cortes</a>
-            <a routerLink="/admin-productos">Productos</a>
-            <a routerLink="/categorias">Categorias</a>
-            <a routerLink="/seleccionar-sucursal">Sucursales</a>
-        </div>
-        <div>
-            <a routerLink="/inicio-sesion">Salir <i class="bi bi-box-arrow-right"></i></a>
+    <div *ngIf="!isAccordionOpen" class="navbar-collapse">
+        <i 
+          (click)="toggleAccordion()"
+          class="bi bi-chevron-compact-down nav-icons icon-collapse"
+        ></i>
+      </div>
+
+    <div class="nav" [ngClass]="{'open': isAccordionOpen}">
+        <div class="nav-container">
+            <div class="d-flex gap-5">
+                <a 
+                  class="nav-item" 
+                  routerLink="/admin-ventas-filtros" 
+                  [ngClass]="{'active': isActive('/admin-ventas-filtros'), 'disabled-nav': !isActive('/admin-ventas-filtros')}"
+                >
+                  <i class="bi bi-receipt nav-icons"
+                  [ngClass]="{'disabled-nav': !isActive('/admin-ventas-filtros')}"></i>
+                  Ventas
+                </a>
+                <a 
+                  class="nav-item" 
+                  routerLink="/cortes" 
+                  [ngClass]="{'active': isActive('/cortes'), 'disabled-nav': !isActive('/cortes')}"
+                >
+                  <i class="bi bi-card-text nav-icons"
+                  [ngClass]="{'disabled-nav': !isActive('/cortes')}">
+                  </i>
+                  Cortes
+                </a>
+                <a 
+                  class="nav-item" 
+                  routerLink="/admin-productos" 
+                  [ngClass]="{'active': isActive('/admin-productos'), 'disabled-nav': !isActive('/admin-productos')}"
+                >
+                  <i class="bi bi-basket2-fill nav-icons"
+                  [ngClass]="{'disabled-nav': !isActive('/admin-productos')}">
+                  </i>
+                  Productos
+                </a>
+                <a 
+                  class="nav-item" 
+                  routerLink="/categorias" 
+                  [ngClass]="{'active': isActive('/categorias'), 'disabled-nav': !isActive('/categorias')}"
+                >
+                  <i class="bi bi-list-task nav-icons"
+                  [ngClass]="{'disabled-nav': !isActive('/categorias')}">
+                  </i>
+                  Categorias
+                </a>
+                <a 
+                  class="nav-item" 
+                  routerLink="/seleccionar-sucursal" 
+                  [ngClass]="{'active': isActive('/seleccionar-sucursal'), 'disabled-nav': !isActive('/seleccionar-sucursal')}"
+                >
+                  <i class="bi bi-shop nav-icons"
+                  [ngClass]="{'disabled-nav': !isActive('/seleccionar-sucursal')}">
+                  </i>
+                  Seleccionar sucursal
+                </a>
+            </div>
+
+            <div class="nav-right">
+                <div>
+                  <i (click)="toggleAccordion()" class="bi bi-chevron-compact-up nav-icons icon-collapse"></i>
+                </div>
+                <a 
+                  class="nav-item" 
+                  routerLink="/inicio-sesion" 
+                  [ngClass]="{'active': isActive('/inicio-sesion'), 'disabled-nav': !isActive('/inicio-sesion')}"
+                >
+                  <i class="bi bi-box-arrow-left nav-icons"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>

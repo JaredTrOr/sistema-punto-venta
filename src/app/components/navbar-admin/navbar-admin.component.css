@@ -1,15 +1,25 @@
 nav {
-    background-color: var(--main-purple);
+    background-color: var(--navbar-color);
     color: var(--light);
-    width: 100vw;
-    height: 8vh;
-    display: flex;
-    align-items: center;
+    text-align: center;
 }
 
-.item-container {
+.navbar-collapse {
+    height: 2rem;
+}
+
+.icon-collapse {
+    cursor: pointer;
+}
+
+.nav {
+    display: none;
+    width: 100%;
+}
+
+.nav.open {
     display: flex;
-    gap: 2rem;
+    align-items: center;
 }
 
 .nav-container {
@@ -17,7 +27,33 @@ nav {
     margin: auto;
     list-style: none;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 .nav-container p {margin: 0; padding: 0;}
+
+.nav-icons.disabled-nav {
+    color: var(--navbar-disabled);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-item {
+    padding-inline: 1.5rem;
+    padding-block: 10px;
+}
+  
+.nav-item.active {
+    background-color: var(--navbar-hover);
+    color: var(--light);
+}
+  
+  .nav-item.disabled-nav {
+    color: var(--navbar-disabled); 
+  }
+  
