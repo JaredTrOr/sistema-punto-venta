@@ -30,13 +30,13 @@ export class VentasComponent implements OnInit{
   busquedaTexto = '';
 
   loadingData: boolean = true;
-  isOnline = navigator.onLine;
 
   //Variables para el modal
   numerosTecladoProductos: number[] = Array.from( { length: 9 }, (_, i) => i + 1);
   productoSeleccionadoModal!: ProductoVenta;
   numerosDisplay: string = '';
-
+  ordenarPor: string[] = [];
+  ordenarPorSeleccionado: string = 'Reciente';
   //Modal cambio
   recibido!: number;
   
@@ -49,232 +49,232 @@ export class VentasComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    // this.getProductosLocal();
-    // this.getCategoriasLocal();
+    this.getProductosLocal();
+    this.getCategoriasLocal();
     this.loadingData = false;
-
-    this.productos = [
-      {
-        idProducto: 'A001',
-        idProductoNumerico: 1001,
-        imagen: 'producto1.jpg',
-        descripcion: 'Laptop 14 pulgadas',
-        categoria: 'Electrónica',
-        precio: 15000,
-        precioPromo: 14000,
-        precioMin: 13500,
-        status: 1
-      },
-      {
-        idProducto: 'A002',
-        idProductoNumerico: 1002,
-        imagen: 'producto2.jpg',
-        descripcion: 'Smartphone 6 pulgadas',
-        categoria: 'Electrónica',
-        precio: 8000,
-        precioPromo: 7500,
-        precioMin: 7300,
-        status: 1
-      },
-      {
-        idProducto: 'A003',
-        idProductoNumerico: 1003,
-        imagen: 'producto3.jpg',
-        descripcion: 'Audífonos Bluetooth',
-        categoria: 'Accesorios',
-        precio: 1200,
-        precioPromo: 1000,
-        precioMin: 900,
-        status: 1
-      },
-      {
-        idProducto: 'A004',
-        idProductoNumerico: 1004,
-        imagen: 'producto4.jpg',
-        descripcion: 'Mouse inalámbrico',
-        categoria: 'Accesorios',
-        precio: 500,
-        precioPromo: 450,
-        precioMin: 400,
-        status: 1
-      },
-      {
-        idProducto: 'A005',
-        idProductoNumerico: 1005,
-        imagen: 'producto5.jpg',
-        descripcion: 'Teclado mecánico',
-        categoria: 'Electrónica',
-        precio: 2000,
-        precioPromo: 1800,
-        precioMin: 1700,
-        status: 1
-      },
-      {
-        idProducto: 'A006',
-        idProductoNumerico: 1006,
-        imagen: 'producto6.jpg',
-        descripcion: 'Cámara digital',
-        categoria: 'Fotografía',
-        precio: 5000,
-        precioPromo: 4500,
-        precioMin: 4300,
-        status: 1
-      },
-      {
-        idProducto: 'A007',
-        idProductoNumerico: 1007,
-        imagen: 'producto7.jpg',
-        descripcion: 'Tablet 10 pulgadas',
-        categoria: 'Electrónica',
-        precio: 9000,
-        precioPromo: 8500,
-        precioMin: 8300,
-        status: 1
-      },
-      {
-        idProducto: 'A008',
-        idProductoNumerico: 1008,
-        imagen: 'producto8.jpg',
-        descripcion: 'Monitor 24 pulgadas',
-        categoria: 'Electrónica',
-        precio: 4000,
-        precioPromo: 3700,
-        precioMin: 3600,
-        status: 1
-      },
-      {
-        idProducto: 'A009',
-        idProductoNumerico: 1009,
-        imagen: 'producto9.jpg',
-        descripcion: 'Consola de videojuegos',
-        categoria: 'Entretenimiento',
-        precio: 12000,
-        precioPromo: 11500,
-        precioMin: 11000,
-        status: 1
-      },
-      {
-        idProducto: 'A010',
-        idProductoNumerico: 1010,
-        imagen: 'producto10.jpg',
-        descripcion: 'Smartwatch deportivo',
-        categoria: 'Accesorios',
-        precio: 2500,
-        precioPromo: 2300,
-        precioMin: 2200,
-        status: 1
-      },
-      {
-        idProducto: 'A001',
-        idProductoNumerico: 1001,
-        imagen: 'producto1.jpg',
-        descripcion: 'Laptop 14 pulgadas',
-        categoria: 'Electrónica',
-        precio: 15000,
-        precioPromo: 14000,
-        precioMin: 13500,
-        status: 1
-      },
-      {
-        idProducto: 'A002',
-        idProductoNumerico: 1002,
-        imagen: 'producto2.jpg',
-        descripcion: 'Smartphone 6 pulgadas',
-        categoria: 'Electrónica',
-        precio: 8000,
-        precioPromo: 7500,
-        precioMin: 7300,
-        status: 1
-      },
-      {
-        idProducto: 'A003',
-        idProductoNumerico: 1003,
-        imagen: 'producto3.jpg',
-        descripcion: 'Audífonos Bluetooth',
-        categoria: 'Accesorios',
-        precio: 1200,
-        precioPromo: 1000,
-        precioMin: 900,
-        status: 1
-      },
-      {
-        idProducto: 'A004',
-        idProductoNumerico: 1004,
-        imagen: 'producto4.jpg',
-        descripcion: 'Mouse inalámbrico',
-        categoria: 'Accesorios',
-        precio: 500,
-        precioPromo: 450,
-        precioMin: 400,
-        status: 1
-      },
-      {
-        idProducto: 'A005',
-        idProductoNumerico: 1005,
-        imagen: 'producto5.jpg',
-        descripcion: 'Teclado mecánico',
-        categoria: 'Electrónica',
-        precio: 2000,
-        precioPromo: 1800,
-        precioMin: 1700,
-        status: 1
-      },
-      {
-        idProducto: 'A006',
-        idProductoNumerico: 1006,
-        imagen: 'producto6.jpg',
-        descripcion: 'Cámara digital',
-        categoria: 'Fotografía',
-        precio: 5000,
-        precioPromo: 4500,
-        precioMin: 4300,
-        status: 1
-      },
-      {
-        idProducto: 'A007',
-        idProductoNumerico: 1007,
-        imagen: 'producto7.jpg',
-        descripcion: 'Tablet 10 pulgadas',
-        categoria: 'Electrónica',
-        precio: 9000,
-        precioPromo: 8500,
-        precioMin: 8300,
-        status: 1
-      },
-      {
-        idProducto: 'A008',
-        idProductoNumerico: 1008,
-        imagen: 'producto8.jpg',
-        descripcion: 'Monitor 24 pulgadas',
-        categoria: 'Electrónica',
-        precio: 4000,
-        precioPromo: 3700,
-        precioMin: 3600,
-        status: 1
-      },
-      {
-        idProducto: 'A009',
-        idProductoNumerico: 1009,
-        imagen: 'producto9.jpg',
-        descripcion: 'Consola de videojuegos',
-        categoria: 'Entretenimiento',
-        precio: 12000,
-        precioPromo: 11500,
-        precioMin: 11000,
-        status: 1
-      },
-      {
-        idProducto: 'A010',
-        idProductoNumerico: 1010,
-        imagen: 'producto10.jpg',
-        descripcion: 'Smartwatch deportivo',
-        categoria: 'Accesorios',
-        precio: 2500,
-        precioPromo: 2300,
-        precioMin: 2200,
-        status: 1
-      }
-    ];
+    this.ordenarPor = ['Reciente', 'Alfabético', 'Popular', 'Precio'];
+    // this.productos = [
+    //   {
+    //     idProducto: 'A001',
+    //     idProductoNumerico: 1001,
+    //     imagen: 'producto1.jpg',
+    //     descripcion: 'Laptop 14 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 15000,
+    //     precioPromo: 14000,
+    //     precioMin: 13500,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A002',
+    //     idProductoNumerico: 1002,
+    //     imagen: 'producto2.jpg',
+    //     descripcion: 'Smartphone 6 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 8000,
+    //     precioPromo: 7500,
+    //     precioMin: 7300,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A003',
+    //     idProductoNumerico: 1003,
+    //     imagen: 'producto3.jpg',
+    //     descripcion: 'Audífonos Bluetooth',
+    //     categoria: 'Accesorios',
+    //     precio: 1200,
+    //     precioPromo: 1000,
+    //     precioMin: 900,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A004',
+    //     idProductoNumerico: 1004,
+    //     imagen: 'producto4.jpg',
+    //     descripcion: 'Mouse inalámbrico',
+    //     categoria: 'Accesorios',
+    //     precio: 500,
+    //     precioPromo: 450,
+    //     precioMin: 400,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A005',
+    //     idProductoNumerico: 1005,
+    //     imagen: 'producto5.jpg',
+    //     descripcion: 'Teclado mecánico',
+    //     categoria: 'Electrónica',
+    //     precio: 2000,
+    //     precioPromo: 1800,
+    //     precioMin: 1700,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A006',
+    //     idProductoNumerico: 1006,
+    //     imagen: 'producto6.jpg',
+    //     descripcion: 'Cámara digital',
+    //     categoria: 'Fotografía',
+    //     precio: 5000,
+    //     precioPromo: 4500,
+    //     precioMin: 4300,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A007',
+    //     idProductoNumerico: 1007,
+    //     imagen: 'producto7.jpg',
+    //     descripcion: 'Tablet 10 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 9000,
+    //     precioPromo: 8500,
+    //     precioMin: 8300,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A008',
+    //     idProductoNumerico: 1008,
+    //     imagen: 'producto8.jpg',
+    //     descripcion: 'Monitor 24 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 4000,
+    //     precioPromo: 3700,
+    //     precioMin: 3600,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A009',
+    //     idProductoNumerico: 1009,
+    //     imagen: 'producto9.jpg',
+    //     descripcion: 'Consola de videojuegos',
+    //     categoria: 'Entretenimiento',
+    //     precio: 12000,
+    //     precioPromo: 11500,
+    //     precioMin: 11000,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A010',
+    //     idProductoNumerico: 1010,
+    //     imagen: 'producto10.jpg',
+    //     descripcion: 'Smartwatch deportivo',
+    //     categoria: 'Accesorios',
+    //     precio: 2500,
+    //     precioPromo: 2300,
+    //     precioMin: 2200,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A001',
+    //     idProductoNumerico: 1001,
+    //     imagen: 'producto1.jpg',
+    //     descripcion: 'Laptop 14 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 15000,
+    //     precioPromo: 14000,
+    //     precioMin: 13500,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A002',
+    //     idProductoNumerico: 1002,
+    //     imagen: 'producto2.jpg',
+    //     descripcion: 'Smartphone 6 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 8000,
+    //     precioPromo: 7500,
+    //     precioMin: 7300,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A003',
+    //     idProductoNumerico: 1003,
+    //     imagen: 'producto3.jpg',
+    //     descripcion: 'Audífonos Bluetooth',
+    //     categoria: 'Accesorios',
+    //     precio: 1200,
+    //     precioPromo: 1000,
+    //     precioMin: 900,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A004',
+    //     idProductoNumerico: 1004,
+    //     imagen: 'producto4.jpg',
+    //     descripcion: 'Mouse inalámbrico',
+    //     categoria: 'Accesorios',
+    //     precio: 500,
+    //     precioPromo: 450,
+    //     precioMin: 400,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A005',
+    //     idProductoNumerico: 1005,
+    //     imagen: 'producto5.jpg',
+    //     descripcion: 'Teclado mecánico',
+    //     categoria: 'Electrónica',
+    //     precio: 2000,
+    //     precioPromo: 1800,
+    //     precioMin: 1700,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A006',
+    //     idProductoNumerico: 1006,
+    //     imagen: 'producto6.jpg',
+    //     descripcion: 'Cámara digital',
+    //     categoria: 'Fotografía',
+    //     precio: 5000,
+    //     precioPromo: 4500,
+    //     precioMin: 4300,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A007',
+    //     idProductoNumerico: 1007,
+    //     imagen: 'producto7.jpg',
+    //     descripcion: 'Tablet 10 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 9000,
+    //     precioPromo: 8500,
+    //     precioMin: 8300,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A008',
+    //     idProductoNumerico: 1008,
+    //     imagen: 'producto8.jpg',
+    //     descripcion: 'Monitor 24 pulgadas',
+    //     categoria: 'Electrónica',
+    //     precio: 4000,
+    //     precioPromo: 3700,
+    //     precioMin: 3600,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A009',
+    //     idProductoNumerico: 1009,
+    //     imagen: 'producto9.jpg',
+    //     descripcion: 'Consola de videojuegos',
+    //     categoria: 'Entretenimiento',
+    //     precio: 12000,
+    //     precioPromo: 11500,
+    //     precioMin: 11000,
+    //     status: 1
+    //   },
+    //   {
+    //     idProducto: 'A010',
+    //     idProductoNumerico: 1010,
+    //     imagen: 'producto10.jpg',
+    //     descripcion: 'Smartwatch deportivo',
+    //     categoria: 'Accesorios',
+    //     precio: 2500,
+    //     precioPromo: 2300,
+    //     precioMin: 2200,
+    //     status: 1
+    //   }
+    // ];
   
   }
 
@@ -427,21 +427,29 @@ export class VentasComponent implements OnInit{
       confirmButtonText: "Si, limpiar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
+      
       if (result.isConfirmed) {
         this.carritoProductos = [];
       }
     });
   }
 
-  filtrarCategoria(): Producto[] {
+  filtrar(): Producto[] {
+    const startsWithMatch = this.productos.some(producto =>
+      producto.descripcion.toLowerCase().startsWith(this.busquedaTexto.toLowerCase())
+    );
+  
     const productosFiltrados = this.productos.filter(producto => {
+      const matchesBusqueda = startsWithMatch
+        ? producto.descripcion.toLowerCase().startsWith(this.busquedaTexto.toLowerCase())
+        : producto.descripcion.toLowerCase().includes(this.busquedaTexto.toLowerCase());
+  
       return (
-        (producto.descripcion.includes(this.busquedaTexto.toUpperCase())) &&
+        matchesBusqueda &&
         (this.categoriaSeleccionada === 'todos' || producto.categoria === this.categoriaSeleccionada)
       );
     });
-
+  
     return productosFiltrados;
   }
 

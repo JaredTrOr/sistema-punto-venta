@@ -197,7 +197,7 @@ table tbody tr {
 }
 
 .borrar {
-    background-color: var(--dark);
+    background-color: var(--navbar-color);
     color: var(--light);
 }
 
@@ -205,6 +205,18 @@ table tbody tr {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.btn-guardar {
+    background-color: var(--btn-primary);
+    color: var(--light);
+    padding: 2rem;
+    font-size: 2rem;
+}
+
+.btn-borrar {
+    padding: 2rem;
+    font-size: 2rem;
 }
 
 .buscador {
@@ -239,4 +251,9 @@ table tbody tr {
     width: 10rem;
     font-size: 2rem;
     padding: 1rem;
+}
+
+.modal-footer {
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
 }

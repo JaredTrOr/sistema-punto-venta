@@ -65,6 +65,9 @@
                 <option value="todos">Todos</option>
                 <option *ngFor="let categoria of categorias" value="{{ categoria.descripcion }}">{{ categoria.descripcion }}</option>
             </select>
+            <select [(ngModel)]="ordenarPorSeleccionado" class="filtro-categoria" name="" id="">
+                <option *ngFor="let item of ordenarPor" value="{{ item }}">{{ item }}</option>
+            </select>
             <input [(ngModel)]="busquedaTexto" type="text" class="buscador" placeholder="Buscar por nombre">
         </div>
 
@@ -72,7 +75,7 @@
             <p class="venta-title">Categoría &gt; {{ categoriaSeleccionada }}</p>
 
             <div class="box-container">
-                <div (click)="agregarProducto(producto)" *ngFor="let producto of filtrarCategoria()" class="box">
+                <div (click)="agregarProducto(producto)" *ngFor="let producto of filtrar()" class="box">
                     <!-- <h3>ID: {{ producto.idProductoNumerico ? producto.idProductoNumerico : producto.idProducto }}</h3> -->
                      <div></div>
 
@@ -101,15 +104,16 @@
             disabled
         >
         </div>
+
         <div class="modal-body numbers-grid">
             <div *ngFor="let numero of numerosTecladoProductos" (click)="escribirNumeros(numero)">{{ numero }}</div>
             <div class="cero" (click)="escribirNumeros(0)">0</div>
-            <div (click)="borrarNumeros()" class="borrar"><i class="bi bi-arrow-left"></i></div>
+            <div (click)="borrarNumeros()" class="borrar"><i class="bi bi-arrow-left white"></i></div>
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btns btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button (click)="guardarCambios()" data-bs-dismiss="modal" type="button" class="btns btn btn-success">Guardar cambios</button>
+            <button type="button" class="btns btn-danger btn btn-borrar" data-bs-dismiss="modal"><i class="white bi bi-x-lg"></i></button>
+            <button (click)="guardarCambios()" data-bs-dismiss="modal" type="button" class="btns btn btn-guardar"><i class="white bi bi-check2"></i></button>
         </div>
     </div>
     </div>
